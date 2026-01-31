@@ -1,0 +1,19 @@
+
+# 1. Autoriser tous les robots (Google, Bing, DuckDuckGo, etc.)
+User-agent: *
+
+# 2. Interdire les pages inutiles pour le SEO ou privées
+# (Ajoute ici les routes que tu ne veux pas voir sur Google)
+Disallow: /admin
+Disallow: /login
+Disallow: /dashboard
+Disallow: /api/
+
+# 3. Optimisation pour les ressources
+# On autorise les images et le JS car Google en a besoin pour voir ton interface React
+Allow: /src/assets/
+Allow: /public/
+
+# 4. Indiquer ton plan de site pour booster l'indexation
+# (Remplace "gamewave.com" par ton vrai nom de domaine une fois en ligne)
+Sitemap: https://www.gamewave.com/sitemap.xml
