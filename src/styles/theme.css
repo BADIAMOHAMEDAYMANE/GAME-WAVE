@@ -170,6 +170,8 @@ body {
     background: transparent;
 }
 
+
+
 .ads-sidebar.left {
     border-right: 1px solid var(--border);
 }
@@ -223,6 +225,71 @@ body {
     align-items: center;
     background-color: var(--card);
     transition: background-color 0.3s ease;
+}
+.image-wrapper {
+    position: relative;
+    background: #000;
+}
+.img-original {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+    filter: blur(10px);
+    opacity: 0;
+}
+.img-original, .img-ai-upscaled {
+    backface-visibility: hidden; /* Évite les micro-tremblements pendant le scale */
+}
+
+.img-ai-upscaled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-ai-upscaled.loaded {
+    opacity: 1;
+}
+.img-original.visible {
+    opacity: 1;
+    filter: blur(0);
+}
+
+/* Petit badge AI (optionnel) pour le style High-Tech */
+.ai-tag {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(34, 211, 238, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-size: 8px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: bold;
+    z-index: 5;
+    pointer-events: none;
+}
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.loading-shimmer {
+    background: linear-gradient(90deg,
+    var(--card) 25%,
+    rgba(34, 211, 238, 0.05) 50%,
+    var(--card) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
 }
 
 .hero-img {
@@ -327,6 +394,7 @@ body {
 .game-card {
     position: relative;
     overflow: hidden;
+    cursor: pointer;
     border: 1px solid transparent;
     display: flex;
     flex-direction: column;
@@ -340,6 +408,7 @@ body {
 .game-card:nth-child(2) { animation-delay: 0.1s; }
 .game-card:nth-child(3) { animation-delay: 0.15s; }
 
+
 .game-card:hover {
     border-color: var(--primary);
     box-shadow: 0 0 20px rgba(34, 211, 238, 0.3), 0 0 40px rgba(34, 211, 238, 0.2), 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -351,10 +420,12 @@ body {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
+    cursor: pointer;
     border-radius: var(--radius);
     overflow: hidden;
     background: var(--card);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .image-wrapper::before {
@@ -502,6 +573,16 @@ body {
     visibility: hidden;
     transition: all 0.3s ease;
     z-index: 999;
+}
+.skeleton-text {
+    height: 18px;
+    width: 60%;
+    margin: 10px 4px;
+    border-radius: 4px;
+    background: var(--card); /* Même couleur que tes cartes */
+    background-image: linear-gradient(90deg, var(--card) 25%, rgba(255,255,255,0.05) 50%, var(--card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
 }
 
 .menu-overlay.active {

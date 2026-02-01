@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
+import './MobileMenu.css'
 
 export default function MobileMenu() {
     const [isOpen, setIsOpen] = useState(false)
 
-    // Bloquer le scroll du body quand le menu est ouvert
     useEffect(() => {
         if (isOpen) {
             document.body.classList.add('menu-open')

@@ -1,0 +1,56 @@
+.hero-section {
+    position: relative;
+    height: 450px;
+    margin: 20px 40px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: var(--card);
+    transition: background-color 0.3s ease;
+}
+
+.hero-img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 70%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hero-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--bg) 20%, rgba(2, 6, 23, 0.7) 50%, transparent 100%);
+    z-index: 2;
+    transition: background 0.3s ease;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    padding: 60px;
+    max-width: 500px;
+}
+
+.hero-content h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 42px;
+    margin: 15px 0;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+    transition: color 0.3s ease;
+}
+
+.hero-content p { color: white; opacity: 0.9; margin-bottom: 25px; line-height: 1.6; }
+.hero-badge { background: var(--primary); color: #000; padding: 5px 12px; border-radius: 6px; font-weight: 800; font-size: 12px; }
+.hero-btn { background: linear-gradient(45deg, var(--primary), var(--secondary)); border: none; color: white; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.hero-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(168, 85, 247, 0.4); }
+
+@media (max-width: 768px) {
+    .hero-section { height: 300px; margin: 15px; }
+    .hero-content { padding: 30px; }
+    .hero-content h1 { font-size: 28px; }
+}
