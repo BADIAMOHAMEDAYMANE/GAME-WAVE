@@ -1,4 +1,5 @@
 import GameCard from './GameCard'
+import './CategorySection.css'
 
 export default function CategorySection({ category }) {
     return (

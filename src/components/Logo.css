@@ -1,0 +1,18 @@
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.5));
+    color: var(--text);
+}
+
+.logo-slogan {
+    fill: #e5e7eb;
+    transition: fill 0.3s ease;
+}
+
+[data-theme='light'] .logo-slogan {
+    fill: #000000 !important;
+}

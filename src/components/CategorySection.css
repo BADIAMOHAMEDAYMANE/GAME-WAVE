@@ -1,0 +1,18 @@
+.category { padding: 30px 40px; }
+.category-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 32px; }
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .category { padding: 25px 30px; }
+}
+
+@media (max-width: 768px) {
+    .category { padding: 20px 15px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+
+@media (max-width: 380px) {
+    .grid { gap: 10px; }
+    .category-header h2 { font-size: 18px; }
+}

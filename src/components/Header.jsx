@@ -1,6 +1,7 @@
 import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
 import MobileMenu from './MobileMenu.jsx';
+import './Header.css';
 
 export default function Header() {
     return (
