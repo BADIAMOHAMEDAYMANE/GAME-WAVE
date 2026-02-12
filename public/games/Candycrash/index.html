@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Candy Crush - Portail Jeux</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<div class="game-container">
+    <div class="main-layout">
+        <div class="game-area">
+
+            <!-- Écran de sélection du mode -->
+            <div id="modeSelection">
+                <h2>🍬 Candy Crush</h2>
+                <button id="endlessMode">Mode Infini ♾️</button>
+                <button id="timedMode">Mode Chrono ⏱️</button>
+            </div>
+
+            <!-- Contrôles compacts en jeu -->
+            <div class="compact-controls" style="display: none;">
+                <div class="score-badge">
+                    <i class="fa-solid fa-star"></i>
+                    <span id="score">0</span>
+                </div>
+                <div class="timer-badge">
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="timer">Mode Infini</span>
+                </div>
+                <button id="fullscreenBtn" class="menu-btn">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+                <button id="changeMode" class="menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Grille de jeu -->
+            <div class="grid" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ping Pong Pro - Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <script>
+        window.adsbygoogle = window.adsbygoogle || [];
+        const adBreak = adConfig = function(o) {adsbygoogle.push(o);}
+    </script>
+</head>
+<body>
+
+<div class="main-layout">
+    <main class="content-center">
+        <div class="game-container" id="fullscreen-target">
+            <div class="game-area">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div style="width: 40px;"></div> <h1 class="mb-0">PING PONG <span class="text-primary-glow">PRO</span></h1>
+
+                    <button id="expand-btn" title="Plein écran" style="background: none; border: none; color: #64748b; cursor: pointer; font-size: 1.2rem; transition: color 0.3s;">
+                        <i class="fa-solid fa-expand"></i>
+                    </button>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <canvas id="canvas" width="600" height="400"></canvas>
+                </div>
+
+                <div class="button-group">
+                    <button id="start-btn" class="btn-game btn-start">Démarrer</button>
+                    <button id="pause-btn" class="btn-game btn-pause">Pause</button>
+                    <button id="restart-btn" class="btn-game btn-restart">Restart</button>
+                </div>
+
+                <div class="controls-hint">
+                    <span><strong>Gaucher:</strong> W / S</span>
+                    <span class="separator">|</span>
+                    <span><strong>Droitier:</strong> ↑ / ↓</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <aside class="ads-sidebar right">
+        <div class="ad-unit">ADVERTISEMENT</div>
+    </aside>
+</div>
+
+<div class="modal fade" id="message-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content custom-modal">
+            <div class="modal-body text-center">
+                <h2 id="message"></h2>
+                <button type="button" id="message-modal-close" class="btn-game btn-start mt-4">Rejouer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cube - Pro Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+<div class="game-container" id="fullscreen-target">
+    <div class="game-wrapper">
+        <div id="game_console"></div>
+
+        <button id="expand-btn" title="Plein écran" style="position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; padding: 8px 12px; border-radius: 8px; z-index: 100002;">
+            <i class="fa-solid fa-expand"></i>
+        </button>
+
+        <div class="controls-info" id="controlsInfo">
+            <h3>THE CUBE</h3>
+            <button class="start-btn" id="startBtn">START GAME</button>
+        </div>
+    </div>
+
+    <div class="game-info">
+        <div class="info-card"><div class="info-label">DEATHS</div><div class="info-value" id="deaths_display">0</div></div>
+        <div class="info-card"><div class="info-label">TIME</div><div class="info-value" id="time_display">00:00:00</div></div>
+        <div class="info-card"><div class="info-label">LEVEL</div><div class="info-value" id="level_display">1</div></div>
+    </div>
+
+    <div class="victory-screen" id="victoryScreen">
+        <div class="victory-content">
+            <h2>🎉 YOU WIN! 🎉</h2>
+            <p>Next Level ?</p>
+            <button class="start-btn" id="nextLevelBtn">NEXT LEVEL</button>
+        </div>
+    </div>
+
+    <div class="victory-screen" id="gameOverScreen">
+        <div class="victory-content" style="border-color: #ff4d4d;">
+            <h2 style="color: #ff4d4d;">💀 GAME OVER 💀</h2>
+            <button class="start-btn" id="retryBtn" style="background: #ff4d4d;">RESTART</button>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

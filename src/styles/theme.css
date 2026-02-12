@@ -39,6 +39,7 @@ body {
     display: flex;
     width: 100%;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 .content-center {
@@ -46,6 +47,8 @@ body {
     min-width: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 10px;
 }
 
 .skip-link {
@@ -71,6 +74,7 @@ body {
    ========================================================================== */
 .ads-sidebar {
     width: 180px;
+    flex-shrink: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;

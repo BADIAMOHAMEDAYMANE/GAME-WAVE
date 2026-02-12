@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './GameCard.css'
 
 export default function GameCard({ game }) {
@@ -6,6 +7,7 @@ export default function GameCard({ game }) {
     const [isAiReady, setIsAiReady] = useState(false) // Pour ton effet HD
 
     return (
+        <Link to={`/play/${game.id}`} className="game-link">
         <div className="game-card">
             <div className={`image-wrapper ${!isLoaded ? 'loading-shimmer' : ''}`}>
                 <img
@@ -25,8 +27,6 @@ export default function GameCard({ game }) {
                         loading="lazy"
                     />
                 )}
-
-                {/* Badges - On ne les affiche que quand c'est chargé */}
                 {isLoaded && game.isNew && <span className="badge">New</span>}
                 {isAiReady && <div className="ai-tag">HD</div>}
             </div>
@@ -36,5 +36,6 @@ export default function GameCard({ game }) {
                 <div className="skeleton-text"></div>
             )}
         </div>
+            </Link>
     )
 }

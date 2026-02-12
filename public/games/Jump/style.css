@@ -1,0 +1,467 @@
+/* ==========================================================================
+   VARIABLES & THEMES
+   ========================================================================== */
+:root {
+    --x: 0px;
+    --y: 0px;
+    --primary: #22d3ee;
+    --secondary: #a855f7;
+    --bg: #020617;
+    --card: #0f172a;
+    --text: #e5e7eb;
+    --radius: 18px;
+    --border: rgba(255, 255, 255, 0.1);
+    --root-clr: #22d3ee;
+    --tile-size: 25px;
+}
+
+[data-theme='light'] {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --border: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   CUSTOM SCROLLBAR STYLE (Le style demandé)
+   ========================================================================== */
+/* Largeur du scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Fond de la barre (Track) */
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+/* La partie mobile (Thumb) */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    border-radius: 10px;
+    border: 2px solid var(--bg); /* Crée un effet de bordure interne */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* Support Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--bg);
+}
+
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    /* On autorise le défilement sur l'axe vertical uniquement */
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    background: var(--bg);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    display: flex;
+    flex-direction: column; /* Aligne le container et le footer l'un sous l'autre */
+    align-items: center;
+    min-height: 100vh; /* S'assure que le body fait au moins la taille de l'écran */
+}
+/* ==========================================================================
+   GAME CONTAINER
+   ========================================================================== */
+
+.game-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1 0 auto; /* Force le container à prendre l'espace nécessaire et pousse le footer vers le bas */
+}
+
+/* ==========================================================================
+   THEME TOGGLE
+   ========================================================================== */
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.3s ease;
+    z-index: 100001;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle:hover {
+    background: var(--primary);
+    color: var(--bg);
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   GAME WRAPPER
+   ========================================================================== */
+
+.game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    width: 100%;
+}
+
+#game_console {
+    width: 100%;
+    max-width: 1000px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .65), rgba(0, 0, 0, 1)), var(--root-clr);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   GAME INFO CARDS
+   ========================================================================== */
+
+.game-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    min-width: 180px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.info-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+.info-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* ==========================================================================
+   TILES & GAME ELEMENTS
+   ========================================================================== */
+
+.tile {
+    position: absolute;
+    user-select: none;
+}
+
+.ground {
+    background: var(--root-clr);
+    box-sizing: border-box;
+    border-top: 5px solid rgba(0, 0, 0, .25);
+    border-right: 5px solid rgba(0, 0, 0, .65);
+    border-bottom: 5px solid rgba(0, 0, 0, .65);
+    border-left: 5px solid rgba(0, 0, 0, .25);
+    z-index: 2;
+}
+
+.innerwall {
+    background: var(--root-clr);
+}
+
+.lava {
+    background: conic-gradient(at 50% 0%, transparent 0deg 153deg, rgba(0, 0, 0, .5) 155deg 190deg, rgba(255, 255, 255, .5) 192deg 205deg, transparent 207deg 360deg),
+    conic-gradient(at 50% 0%, transparent 0deg 153deg, var(--root-clr) 155deg 195deg, var(--root-clr) 197deg 205deg, transparent 207deg 360deg);
+}
+
+.spleft {
+    transform: rotate(-90deg);
+}
+
+.sptop {
+    transform: rotate(180deg);
+}
+
+.spright {
+    transform: rotate(90deg);
+}
+
+.portal1::after, .portal2::after {
+    content: '';
+    width: 150%;
+    height: 150%;
+    position: absolute;
+    top: -25%;
+    left: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 3px, rgba(0, 0, 0, .75) 6px, rgba(0, 0, 0, .75) 10px, rgba(0, 0, 0, .5) 11px, rgba(0, 0, 0, .5) 15px, rgba(0, 0, 0, .25) 16px, rgba(0, 0, 0, .25) 20px), var(--root-clr);
+    animation: portal 2s linear infinite;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+@keyframes portal {
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.nextlevel {
+    background: var(--secondary);
+    box-shadow: 0 0 20px var(--secondary);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   PLAYER
+   ========================================================================== */
+
+#player2 {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    z-index: 10000;
+}
+
+#player2::before {
+    content: '';
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: radial-gradient(circle at 65% 90%, white 2px, transparent 3px),
+    radial-gradient(circle at 35% 90%, white 2px, transparent 3px);
+    z-index: 10001;
+}
+
+#player2::after {
+    content: '';
+    width: 20px;
+    height: 25px;
+    background: radial-gradient(circle at 60% 30%, white 2px, transparent 3px),
+    radial-gradient(circle at 50% 40%, black 5px, transparent 6px),
+    linear-gradient(to top, white, gold, orangered 50%),
+    orangered;
+    position: absolute;
+    top: -4px;
+    left: 2.5px;
+    z-index: 10000;
+    border-radius: 15px 15px 4px 4px;
+    animation: blink2 4s linear infinite;
+}
+
+@keyframes blink2 {
+    5%, 15% {
+        background: linear-gradient(to top, transparent 75%, orangered 75%), radial-gradient(circle at 60% 30%, white 2px, transparent 3px), radial-gradient(circle at 50% 40%, black 5px, transparent 6px), linear-gradient(to top, white, gold, orangered 50%), orangered;
+    }
+    10% {
+        background: linear-gradient(to top, transparent 50%, orangered 50%), radial-gradient(circle at 60% 30%, white 2px, transparent 3px), radial-gradient(circle at 50% 40%, black 5px, transparent 6px), linear-gradient(to top, white, gold, orangered 50%), orangered;
+    }
+}
+
+.goleft::after {
+    transform: skewX(10deg);
+}
+
+.goright::after {
+    transform: skewX(-10deg);
+}
+
+.trailBall {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: darkorange;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: trail 0.75s linear forwards;
+}
+
+@keyframes trail {
+    100% {
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   DEATH & VICTORY SCREEN
+   ========================================================================== */
+
+#player2.dying {
+    animation: death 0.8s ease-out forwards;
+}
+
+@keyframes death {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.death-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: orangered;
+    border-radius: 50%;
+    animation: deathParticle 1s ease-out forwards;
+}
+
+@keyframes deathParticle {
+    100% {
+        transform: translate(var(--x), var(--y)) scale(0);
+        opacity: 0;
+    }
+}
+
+.victory-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.victory-screen.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.victory-content {
+    background: var(--card);
+    border: 2px solid var(--primary);
+    border-radius: var(--radius);
+    padding: 50px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   MODALS & INFO
+   ========================================================================== */
+
+.controls-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid var(--primary);
+    border-radius: var(--radius);
+    padding: 30px;
+    text-align: center;
+    z-index: 100000;
+    backdrop-filter: blur(10px);
+}
+
+.hidden {
+    display: none;
+}
+
+.start-btn, .restart-btn {
+    margin-top: 15px;
+    padding: 12px 30px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(34, 211, 238, 0.4);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.game-footer {
+    width: 100%;
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text);
+    opacity: 0.6;
+    flex-shrink: 0; /* Empêche le footer de s'écraser */
+}
+
+/* ==========================================================================
+   AJOUTS POUR LE MODE PLEIN ÉCRAN
+   ========================================================================== */
+#fullscreen-target:fullscreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg);
+    width: 100vw;
+    height: 100vh;
+}
+
+#fullscreen-target:fullscreen .game-wrapper {
+    max-width: 1200px;
+    border: none;
+    box-shadow: none;
+}

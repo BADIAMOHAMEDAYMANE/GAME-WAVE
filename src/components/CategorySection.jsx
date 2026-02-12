@@ -1,12 +1,12 @@
-import GameCard from './GameCard'
-import './CategorySection.css'
+import GameCard from './GameCard';
+import './CategorySection.css';
 
 export default function CategorySection({ category }) {
     return (
         <section className="category">
             <div className="category-header">
                 <h2>{category.title}</h2>
-                <span>{category.count} jeux</span>
+                <span>{category.games.length} jeux</span>
             </div>
 
             <div className="grid">

@@ -1,84 +1,109 @@
+import hangmanImg from "/src/assets/Hangman.png";
+import SnakeImg from "/src/assets/Snakegame.png";
+import TicTacToeImg from "/src/assets/TicTacToe.png";
+import TetrisImg from "/src/assets/Tetris.png";
+import PingPongImg from "/src/assets/PingPong.png";
+import ArcheryImg from "/src/assets/Archery.png";
+import CandycrashImg from "/src/assets/Candy-crash.png";
+import CubeImg from "/src/assets/Cube.jpg";
+import MarioImg from "/src/assets/SuperMario.png";
+import BananiaImg from "/src/assets/Banania.jpg";
+import Img2048 from "/src/assets/2048.jpg";
+import ImgLoadRunner from "/src/assets/LoadRunner.jpg";
 export const categories = [
     {
         id: 1,
-        title: "Conduite",
+        title: "GAMES",
         games: [
             {
                 id: 1,
-                title: "Car Racer",
-                image: "https://www.goodwood.com/globalassets/.road--racing/race/historic/2021/2-february/list-best-racing-games-of-the-2000s/best-racing-games-of-the-2000s-list-goodwood-040220212.jpg?rxy=0.5,0.5&width=800&height=450",
+                title: "Hangman",
+                image: hangmanImg,
+                gamePath: "/games/Hangman/index.html",
                 isNew: true
             },
             {
                 id: 2,
-                title: "Moto Reader",
-                image: "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000069586/9e63a443cdf65d429ba2e13268003100003ef9afe69b6b194503d37b8bb339e1",
+                title: "Snake Game",
+                image: SnakeImg,
+                gamePath: "/games/Snake/index.html",
                 isNew: false
             },
             {
                 id: 3,
-                title: "Football Game",
-                image: "https://sf19-draftcdn-sg.ibytedtos.com/obj/ies-hotsoon-draft-sg/97da36dfdd52264ca5aebc299036665f",
+                title: "TicTacToe Game",
+                image: TicTacToeImg,
+                gamePath: "/games/TicTacToe/index.html",
                 isNew: false
             },
             {
                 id: 4,
-                title: "Tennis Game",
-                image: "https://i0.wp.com/waytoomany.games/wp-content/uploads/2022/06/Matchpoint-Tennis-Championships_20220624181913.jpg?ssl=1",
+                title: "Tetris Game",
+                image: TetrisImg,
+                gamePath: "/games/Tetris/index.html",
                 isNew: false
             },
             {
                 id: 5,
-                title: "Basketball Game",
-                image: "https://play-lh.googleusercontent.com/9FtYKHvS3RHtJxeROjmP2vjFL7eJUUfpsO6yKhBq8lqc2OfFuqr63tgwvnJEeYn9JXM=w526-h296-rw",
+                title: "PingPong Game",
+                image: PingPongImg,
+                gamePath: "/games/PingPong/index.html",
                 isNew: true
             },
             {
                 id: 6,
-                title: " Chess Game",
-                image: "https://play-lh.googleusercontent.com/askVKuYkgbtAOdVez7g1J3HDG2LuVZcNWWDZaB-OZwLhteR6pCW-ndfYb4e72pLZ7dQ=w526-h296-rw",
+                title: " Archery Game",
+                image: ArcheryImg,
+                gamePath: "/games/ArcheryGame/index.html",
                 isNew: false
             },
             {
                 id: 7,
-                title: "Card Games",
-                image: "https://imgs.crazygames.com/games/spider-frvr/cover_16x9-1746159133741.png?metadata=none&quality=60&width=412",
+                title: "Candy-crash Games",
+                image: CandycrashImg,
+                gamePath: "/games/Candycrash/index.html",
                 isNew: true
             },
             {
                 id: 8,
-                title: "Tic Tac Toe",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnSZ838aIzxfyMmew25f9zvLJGZjSefdIIAw&s",
+                title: "Banania",
+                image: BananiaImg,
+                gamePath: "/games/Banania/game/banania.html",
                 isNew: false
             },
             {
                 id: 9,
-                title: "Football Game",
-                image: "https://sf19-draftcdn-sg.ibytedtos.com/obj/ies-hotsoon-draft-sg/97da36dfdd52264ca5aebc299036665f",
+                title: "Jump",
+                image: CubeImg,
+                gamePath: "/games/Jump/index.html",
                 isNew: true
             },
             {
                 id: 10,
-                title: "Tennis Game",
-                image: "https://i0.wp.com/waytoomany.games/wp-content/uploads/2022/06/Matchpoint-Tennis-Championships_20220624181913.jpg?ssl=1",
+                title: "2048",
+                image: Img2048,
+                gamePath: "/games/2048/index.html",
                 isNew: false
             },
             {
                 id: 11,
-                title: "Basketball Game",
-                image: "https://play-lh.googleusercontent.com/9FtYKHvS3RHtJxeROjmP2vjFL7eJUUfpsO6yKhBq8lqc2OfFuqr63tgwvnJEeYn9JXM=w526-h296-rw",
+                title: "Load Runner",
+                image: ImgLoadRunner,
+                gamePath: "/games/LodeRunner/lodeRunner.html",
                 isNew: true
             },
             {
                 id: 12,
-                title: " Chess Game",
+                title: "Floppy Bird",
                 image: "https://play-lh.googleusercontent.com/askVKuYkgbtAOdVez7g1J3HDG2LuVZcNWWDZaB-OZwLhteR6pCW-ndfYb4e72pLZ7dQ=w526-h296-rw",
+                gamePath: "/games/floppybird/index.html",
                 isNew: false
             },
             {
                 id: 13,
-                title: "Basketball Game",
-                image: "https://play-lh.googleusercontent.com/9FtYKHvS3RHtJxeROjmP2vjFL7eJUUfpsO6yKhBq8lqc2OfFuqr63tgwvnJEeYn9JXM=w526-h296-rw",
+                title: "Mario Game",
+                image: MarioImg,
+                gamePath: "/games/Mario/index.html",
                 isNew: true
             },
             {

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - Pro Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main-layout" id="main-layout">
+    <div class="wrapper" id="game-container">
+
+        <div class="game-details">
+            <div class="score-container">
+                <span class="score-label">SCORE</span>
+                <span class="score">0</span>
+            </div>
+
+            <div class="top-controls">
+                <button id="theme-btn" class="control-btn">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button id="expand-btn" class="control-btn" title="Plein écran">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+            </div>
+
+            <div class="score-container high-score-box">
+                <span class="score-label">BEST</span>
+                <span class="high-score">0</span>
+            </div>
+        </div>
+
+        <div class="play-board">
+        </div>
+
+        <div id="game-over-overlay" class="hidden">
+            <h1>Game Over</h1>
+            <p id="final-score">Score final : 0</p>
+            <button id="replay-btn">RESTART</button>
+        </div>
+
+        <div class="controls">
+            <i data-key="ArrowLeft" class="fa-solid fa-arrow-left-long"></i>
+            <i data-key="ArrowUp" class="fa-solid fa-arrow-up-long"></i>
+            <i data-key="ArrowRight" class="fa-solid fa-arrow-right-long"></i>
+            <i data-key="ArrowDown" class="fa-solid fa-arrow-down-long"></i>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
