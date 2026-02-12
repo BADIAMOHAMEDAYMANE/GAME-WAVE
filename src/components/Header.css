@@ -10,6 +10,12 @@
     z-index: 1000;
 }
 
+@media (max-width: 1024px) {
+    .header {
+        padding: 12px 25px;
+    }
+}
+
 .header-actions {
     display: flex;
     align-items: center;

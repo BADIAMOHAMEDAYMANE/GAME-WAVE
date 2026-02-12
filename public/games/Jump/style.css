@@ -40,7 +40,8 @@
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(to bottom, var(--primary), var(--secondary));
     border-radius: 10px;
-    border: 2px solid var(--bg); /* Crée un effet de bordure interne */
+    border: 2px solid var(--bg);
+    /* Crée un effet de bordure interne */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -63,7 +64,8 @@
     padding: 0;
 }
 
-html, body {
+html,
+body {
     /* On autorise le défilement sur l'axe vertical uniquement */
     overflow-x: hidden;
     overflow-y: auto;
@@ -75,10 +77,13 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: var(--text);
     display: flex;
-    flex-direction: column; /* Aligne le container et le footer l'un sous l'autre */
+    flex-direction: column;
+    /* Aligne le container et le footer l'un sous l'autre */
     align-items: center;
-    min-height: 100vh; /* S'assure que le body fait au moins la taille de l'écran */
+    min-height: 100%;
+    /* S'assure que le body fait au moins la taille de l'écran */
 }
+
 /* ==========================================================================
    GAME CONTAINER
    ========================================================================== */
@@ -91,7 +96,8 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    flex: 1 0 auto; /* Force le container à prendre l'espace nécessaire et pousse le footer vers le bas */
+    flex: 1 0 auto;
+    /* Force le container à prendre l'espace nécessaire et pousse le footer vers le bas */
 }
 
 /* ==========================================================================
@@ -213,7 +219,7 @@ body {
 
 .lava {
     background: conic-gradient(at 50% 0%, transparent 0deg 153deg, rgba(0, 0, 0, .5) 155deg 190deg, rgba(255, 255, 255, .5) 192deg 205deg, transparent 207deg 360deg),
-    conic-gradient(at 50% 0%, transparent 0deg 153deg, var(--root-clr) 155deg 195deg, var(--root-clr) 197deg 205deg, transparent 207deg 360deg);
+        conic-gradient(at 50% 0%, transparent 0deg 153deg, var(--root-clr) 155deg 195deg, var(--root-clr) 197deg 205deg, transparent 207deg 360deg);
 }
 
 .spleft {
@@ -228,7 +234,8 @@ body {
     transform: rotate(90deg);
 }
 
-.portal1::after, .portal2::after {
+.portal1::after,
+.portal2::after {
     content: '';
     width: 150%;
     height: 150%;
@@ -254,9 +261,12 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.6;
     }
+
     50% {
         opacity: 1;
     }
@@ -281,7 +291,7 @@ body {
     left: 0;
     top: 0;
     background: radial-gradient(circle at 65% 90%, white 2px, transparent 3px),
-    radial-gradient(circle at 35% 90%, white 2px, transparent 3px);
+        radial-gradient(circle at 35% 90%, white 2px, transparent 3px);
     z-index: 10001;
 }
 
@@ -290,9 +300,9 @@ body {
     width: 20px;
     height: 25px;
     background: radial-gradient(circle at 60% 30%, white 2px, transparent 3px),
-    radial-gradient(circle at 50% 40%, black 5px, transparent 6px),
-    linear-gradient(to top, white, gold, orangered 50%),
-    orangered;
+        radial-gradient(circle at 50% 40%, black 5px, transparent 6px),
+        linear-gradient(to top, white, gold, orangered 50%),
+        orangered;
     position: absolute;
     top: -4px;
     left: 2.5px;
@@ -302,9 +312,12 @@ body {
 }
 
 @keyframes blink2 {
-    5%, 15% {
+
+    5%,
+    15% {
         background: linear-gradient(to top, transparent 75%, orangered 75%), radial-gradient(circle at 60% 30%, white 2px, transparent 3px), radial-gradient(circle at 50% 40%, black 5px, transparent 6px), linear-gradient(to top, white, gold, orangered 50%), orangered;
     }
+
     10% {
         background: linear-gradient(to top, transparent 50%, orangered 50%), radial-gradient(circle at 60% 30%, white 2px, transparent 3px), radial-gradient(circle at 50% 40%, black 5px, transparent 6px), linear-gradient(to top, white, gold, orangered 50%), orangered;
     }
@@ -348,6 +361,7 @@ body {
         transform: scale(1);
         opacity: 1;
     }
+
     100% {
         transform: scale(0) rotate(720deg);
         opacity: 0;
@@ -418,7 +432,8 @@ body {
     display: none;
 }
 
-.start-btn, .restart-btn {
+.start-btn,
+.restart-btn {
     margin-top: 15px;
     padding: 12px 30px;
     font-weight: 600;
@@ -445,7 +460,8 @@ body {
     padding: 30px 20px;
     color: var(--text);
     opacity: 0.6;
-    flex-shrink: 0; /* Empêche le footer de s'écraser */
+    flex-shrink: 0;
+    /* Empêche le footer de s'écraser */
 }
 
 /* ==========================================================================

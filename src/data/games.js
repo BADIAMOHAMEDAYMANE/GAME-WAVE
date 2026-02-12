@@ -10,6 +10,7 @@ import MarioImg from "/src/assets/SuperMario.png";
 import BananiaImg from "/src/assets/Banania.jpg";
 import Img2048 from "/src/assets/2048.jpg";
 import ImgLoadRunner from "/src/assets/LoadRunner.jpg";
+import FlappyBirdImg from "/src/assets/FlappyBird.jpg";
 export const categories = [
     {
         id: 1,
@@ -94,8 +95,8 @@ export const categories = [
             },
             {
                 id: 12,
-                title: "Floppy Bird",
-                image: "https://play-lh.googleusercontent.com/askVKuYkgbtAOdVez7g1J3HDG2LuVZcNWWDZaB-OZwLhteR6pCW-ndfYb4e72pLZ7dQ=w526-h296-rw",
+                title: "Flappy Bird",
+                image: FlappyBirdImg,
                 gamePath: "/games/floppybird/index.html",
                 isNew: false
             },

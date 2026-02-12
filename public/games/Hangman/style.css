@@ -1,9 +1,14 @@
 /* style.css - Version Optimisée et Complète */
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,700,900&display=swap");
 
+html,
 body {
+    height: 100%;
     margin: 0;
     padding: 0;
+}
+
+body {
     text-align: center;
     background-color: #222;
     overflow-x: hidden;
@@ -16,9 +21,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Aligne vers le haut pour libérer de la place pour les trous */
-    min-height: 100vh;
-    background-color: #5d4037; /* Couleur de terre par défaut */
+    justify-content: flex-start;
+    height: 100%;
+    /* Better for iframes */
+    background-color: #5d4037;
     padding: 10px;
     box-sizing: border-box;
     transition: background-color 0.3s ease;
@@ -84,9 +90,10 @@ body {
 /* --- TITRE ET SCORE --- */
 h1 {
     font-size: 2.2rem;
-    margin: 40px 0 10px 0; /* Marge haute pour ne pas toucher les boutons */
+    margin: 40px 0 10px 0;
+    /* Marge haute pour ne pas toucher les boutons */
     color: #ff7660;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
     font-weight: 900;
 }
 
@@ -98,7 +105,7 @@ h1 {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .score-label {
@@ -142,14 +149,20 @@ h1 {
 }
 
 @keyframes pulse-animation {
-    0% { box-shadow: 0 0 0 0px rgba(255, 118, 96, 0.7); }
-    100% { box-shadow: 0 0 0 15px rgba(255, 118, 96, 0); }
+    0% {
+        box-shadow: 0 0 0 0px rgba(255, 118, 96, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 0 0 15px rgba(255, 118, 96, 0);
+    }
 }
 
 /* --- GRILLE DE JEU (6 TROUS) --- */
 .game {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
+    /* Slightly wider standard */
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
@@ -157,8 +170,10 @@ h1 {
 }
 
 .hole {
-    flex: 1 0 33.33%; /* 3 trous par ligne */
-    height: 145px; /* Hauteur ajustée pour tenir dans l'écran */
+    flex: 1 0 33.33%;
+    /* 3 trous par ligne */
+    height: 145px;
+    /* Hauteur ajustée pour tenir dans l'écran */
     overflow: hidden;
     position: relative;
 }
@@ -192,11 +207,45 @@ h1 {
 
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 600px) {
-    h1 { font-size: 1.8rem; margin-top: 60px; }
-    .top-controls { width: 100%; justify-content: center; right: 0; top: 10px; }
-    .game { max-width: 360px; }
-    .hole { height: 110px; }
-    #start { font-size: 1.3rem; padding: 10px 25px; }
+    #game-container {
+        padding: 5px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-top: 50px;
+        margin-bottom: 5px;
+    }
+
+    .top-controls {
+        width: 100%;
+        justify-content: center;
+        right: 0;
+        top: 5px;
+    }
+
+    .score-container {
+        margin-bottom: 10px;
+        padding: 2px 15px;
+    }
+
+    #start {
+        font-size: 1.2rem;
+        padding: 8px 20px;
+        margin-bottom: 10px;
+    }
+
+    .game {
+        max-width: none;
+        /* Take all available width */
+        width: 100%;
+    }
+
+    .hole {
+        height: 28vw;
+        /* Use viewport width to scale holes proportionally */
+        max-height: 145px;
+    }
 }
 
 /* Gestion Plein Écran */

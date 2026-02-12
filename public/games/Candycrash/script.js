@@ -45,7 +45,7 @@ function candyCrushGame() {
     function resumeGame() {
         if (!isPaused) return;
         isPaused = false;
-        gameInterval = setInterval(gameLoop, 100);
+        gameInterval = setInterval(gameLoop, 50);
         if (currentMode === "timed") {
             timerInterval = setInterval(countdown, 1000);
         }
@@ -65,7 +65,7 @@ function candyCrushGame() {
             squares.push(square);
         }
 
-        // Événements de Drag & Drop
+        // Événements de Drag & Drop (Souris)
         squares.forEach(square => {
             square.addEventListener("dragstart", dragStart);
             square.addEventListener("dragend", dragEnd);
@@ -74,23 +74,30 @@ function candyCrushGame() {
             square.addEventListener("dragleave", dragLeave);
             square.addEventListener("drop", dragDrop);
         });
+
+        // Événements de Touch (Smartphone)
+        squares.forEach(square => {
+            square.addEventListener("touchstart", touchStart, { passive: false });
+            square.addEventListener("touchmove", touchMove, { passive: false });
+            square.addEventListener("touchend", touchEnd, { passive: false });
+        });
     }
 
     // --- GESTION DU DRAG & DROP ---
     let colorBeingDragged, colorBeingReplaced, squareIdBeingDragged, squareIdBeingReplaced;
 
     function dragStart() {
-        if(isPaused) return;
+        if (isPaused) return;
         colorBeingDragged = this.style.backgroundImage;
         squareIdBeingDragged = parseInt(this.id);
     }
 
     function dragOver(e) { e.preventDefault(); }
     function dragEnter(e) { e.preventDefault(); }
-    function dragLeave() {}
+    function dragLeave() { }
 
     function dragDrop() {
-        if(isPaused) return;
+        if (isPaused) return;
         colorBeingReplaced = this.style.backgroundImage;
         squareIdBeingReplaced = parseInt(this.id);
         this.style.backgroundImage = colorBeingDragged;
@@ -112,6 +119,57 @@ function candyCrushGame() {
             squares[squareIdBeingReplaced].style.backgroundImage = colorBeingReplaced;
             squares[squareIdBeingDragged].style.backgroundImage = colorBeingDragged;
         }
+    }
+
+    // --- LOGIQUE TOUCH (SMARTPHONE) ---
+    let hasSwapped = false;
+
+    function touchStart(e) {
+        if (isPaused) return;
+        const touch = e.touches[0];
+        const target = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (target && target.parentElement === grid) {
+            colorBeingDragged = target.style.backgroundImage;
+            squareIdBeingDragged = parseInt(target.id);
+            hasSwapped = false; // Reset for new swipe
+        }
+    }
+
+    function touchMove(e) {
+        if (isPaused || hasSwapped) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const target = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        if (target && target.parentElement === grid) {
+            squareIdBeingReplaced = parseInt(target.id);
+
+            if (squareIdBeingDragged !== undefined && squareIdBeingReplaced !== undefined && squareIdBeingDragged !== squareIdBeingReplaced) {
+                let validMoves = [
+                    squareIdBeingDragged - 1,
+                    squareIdBeingDragged - width,
+                    squareIdBeingDragged + 1,
+                    squareIdBeingDragged + width
+                ];
+
+                if (validMoves.includes(squareIdBeingReplaced)) {
+                    hasSwapped = true;
+                    colorBeingReplaced = target.style.backgroundImage;
+
+                    // Instant Visual Swap
+                    target.style.backgroundImage = colorBeingDragged;
+                    squares[squareIdBeingDragged].style.backgroundImage = colorBeingReplaced;
+
+                    // Finalize move logic
+                    dragEnd();
+                }
+            }
+        }
+    }
+
+    function touchEnd(e) {
+        if (isPaused) return;
+        // Logic handled in touchMove for better speed
     }
 
     // --- LOGIQUE DU JEU ---
@@ -141,7 +199,7 @@ function candyCrushGame() {
         for (let i = 0; i < 64; i++) {
             if (i % width > width - size) continue;
             let row = [];
-            for(let j=0; j<size; j++) row.push(i+j);
+            for (let j = 0; j < size; j++) row.push(i + j);
             let decidedColor = squares[i].style.backgroundImage;
             if (decidedColor && row.every(index => squares[index].style.backgroundImage === decidedColor)) {
                 score += points;
@@ -152,9 +210,9 @@ function candyCrushGame() {
     }
 
     function checkColumn(size, points) {
-        for (let i = 0; i < 64 - (width * (size-1)); i++) {
+        for (let i = 0; i < 64 - (width * (size - 1)); i++) {
             let column = [];
-            for(let j=0; j<size; j++) column.push(i + (j * width));
+            for (let j = 0; j < size; j++) column.push(i + (j * width));
             let decidedColor = squares[i].style.backgroundImage;
             if (decidedColor && column.every(index => squares[index].style.backgroundImage === decidedColor)) {
                 score += points;
@@ -182,7 +240,7 @@ function candyCrushGame() {
         scoreDisplay.innerHTML = score;
         isPaused = false;
 
-        gameInterval = setInterval(gameLoop, 100);
+        gameInterval = setInterval(gameLoop, 50);
 
         if (mode === "timed") {
             timeLeft = 120;
