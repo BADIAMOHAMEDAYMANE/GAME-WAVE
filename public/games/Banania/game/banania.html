@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Banania - Game Edition</title>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-REMPLACER_ICI"
         crossorigin="anonymous"></script>
 
@@ -53,13 +54,13 @@
 
         /* Force le canvas de ton jeu à être grand et centré */
         canvas.canv {
-            max-width: 98% !important;
-            max-height: 98% !important;
-            width: auto !important;
-            height: auto !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
             display: block !important;
             object-fit: contain !important;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            /* box-shadow removed for cleaner full-screen look */
         }
 
         /* Fullscreen Button */
@@ -84,6 +85,24 @@
             border-color: rgba(255, 255, 255, 0.6);
             transform: scale(1.05);
         }
+
+        #joystick-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: auto;
+        }
+
+        @media (min-width: 768px) {
+            #joystick-container {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -94,6 +113,7 @@
 
         <div id="game-container">
         </div>
+        <div id="joystick-container"></div>
     </div>
 
     <script>
@@ -145,7 +165,7 @@
 
             // 3. On bloque la fonction de redimensionnement de game.js
             // qui essaie de forcer le plein écran (ce qui cache les pubs)
-            window.onresize = null;
+            // window.onresize = null; // We might want to keep it or handle it ourselves
         });
     </script>
 

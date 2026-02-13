@@ -9,7 +9,7 @@ const AUTHOR = "Benjamin";
 const JOYSTICK_SIZE = 0.4;// In terms of the smaller of the two screen dimensions
 const IS_TOUCH_DEVICE = true == ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch);
 
-const UPS = IS_TOUCH_DEVICE ? 15 : 60;// Reduced framerate on mobile
+const UPS = 60;// Keep 60 FPS on all devices for responsiveness
 const NUM_RESOURCES = 197;
 const IMAGE_DIR = "images/";
 const SOUND_DIR = "sound/";
@@ -102,13 +102,51 @@ if (IS_TOUCH_DEVICE) {
 
 
         let mindim = Math.min(window.innerWidth, window.innerHeight);
-        JOYSTICK.width = mindim * JOYSTICK_SIZE;
-        JOYSTICK.height = mindim * JOYSTICK_SIZE;
+        // JOYSTICK.width = mindim * JOYSTICK_SIZE;
+        // JOYSTICK.height = mindim * JOYSTICK_SIZE;
 
-        render_joystick();
+        // render_joystick();
 
     };
     window.onresize(null);
+}
+
+// Initialize nipplejs - Global (CSS handles visibility)
+if (document.getElementById('joystick-container')) {
+    const joystickOptions = {
+        zone: document.getElementById('joystick-container'),
+        mode: 'static',
+        position: { left: '75px', bottom: '75px' },
+        color: 'white',
+        size: 100,
+        threshold: 0.1 // Keep a tiny threshold for stability
+    };
+    const manager = nipplejs.create(joystickOptions);
+
+    let currentJoystickDir = DIR_NONE;
+
+    manager.on('move', function (evt, data) {
+        if (data.direction && data.distance > 2) { // Extremely low distance threshold for 'agility'
+            const angle = data.direction.angle;
+            let newDir = DIR_NONE;
+
+            if (angle === 'up') newDir = DIR_UP;
+            else if (angle === 'down') newDir = DIR_DOWN;
+            else if (angle === 'left') newDir = DIR_LEFT;
+            else if (angle === 'right') newDir = DIR_RIGHT;
+
+            if (newDir !== DIR_NONE && newDir !== currentJoystickDir) {
+                input.joystick_dir = newDir;
+                game.last_dir_pressed = newDir;
+                currentJoystickDir = newDir;
+            }
+        }
+    });
+
+    manager.on('end', function () {
+        input.joystick_dir = DIR_NONE;
+        currentJoystickDir = DIR_NONE;
+    });
 }
 
 // GLOBAL VARIABLES
@@ -880,12 +918,10 @@ function CLASS_input() {
         document.addEventListener('mouseup', handle_mouseup_global, false);
 
         // Handle touch events
-
-        document.addEventListener("touchstart", handle_touch_global, false);
-
-        document.addEventListener("touchmove", handle_touch_global, false);
-
-        document.addEventListener("touchend", handle_touchend_global, false);
+        // Disabled to prevent conflict with nipplejs
+        // document.addEventListener("touchstart", handle_touch_global, false);
+        // document.addEventListener("touchmove", handle_touch_global, false);
+        // document.addEventListener("touchend", handle_touchend_global, false);
 
         // Handle mouse controls (CANVAS)
         CANVAS.addEventListener('mousemove', handle_mousemove, false);
