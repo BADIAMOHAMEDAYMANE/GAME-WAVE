@@ -1,12 +1,12 @@
 
 function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 {
-	var hiScoreInfo;
-	var canvas2, scoreStage;
-	var titleText;
-	var recordId = -1;
-	var savedKeyDownHander;
-	var timeOutHandler = null;
+	let hiScoreInfo;
+	let canvas2, scoreStage;
+	let titleText;
+	let recordId = -1;
+	let savedKeyDownHander;
+	let timeOutHandler = null;
 
 	init();
 	
@@ -31,7 +31,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 			inputHiScoreName();
 		} else {
 			anyKeyHandler();
-			if(typeof _waitTime == "undefined") _waitTime = 3500;
+			if(typeof _waitTime === "undefined") _waitTime = 3500;
 			timeOutHandler = setTimeout( function() { closeScoreTable(); }, _waitTime);
 		}
 	}
@@ -45,7 +45,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 	
 	function getHiScoreInfo()
 	{
-		var infoJSON, levelMap;
+		let infoJSON, levelMap;
 	
 		if(_dataId == 1) {
 			infoJSON = getStorage(STORAGE_HISCORE_INFO2);
@@ -54,11 +54,11 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 		}
 		
 		if(infoJSON) {
-			var infoObj = JSON.parse(infoJSON);
+			const infoObj = JSON.parse(infoJSON);
 			hiScoreInfo = infoObj;
 		} else {
 			hiScoreInfo = [];
-			for(var i = 0; i < MAX_HISCORE_RECORD; i++) {
+			for(let i = 0; i < MAX_HISCORE_RECORD; i++) {
 				hiScoreInfo[i] = {s:0 , n:"" , l: 0};
 			}
 			
@@ -88,7 +88,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 	
 	function setHiScoreInfo()
 	{
-		var infoJSON = JSON.stringify(hiScoreInfo);
+		const infoJSON = JSON.stringify(hiScoreInfo);
 		
 		if(_dataId == 1) 
 			setStorage(STORAGE_HISCORE_INFO2, infoJSON); 
@@ -98,11 +98,11 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 
 	function updateScoreInfo()
 	{
-		var addId = -1;
+		let addId = -1;
 		
 		if(_curScoreInfo.s <= 0) return addId; //don't save if scroe <= 0
 		
-		for(var i = 0; i < MAX_HISCORE_RECORD; i++) {
+		for(let i = 0; i < MAX_HISCORE_RECORD; i++) {
 			_curScoreInfo.n = "";
 			if(_curScoreInfo.s >= hiScoreInfo[i].s) {
 				addId = i;
@@ -123,7 +123,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 		canvas2.height = canvasY;
 	
 		//Set canvas top left position
-		var left = ((screenX1 - canvasX)/2|0),
+		const left = ((screenX1 - canvasX)/2|0),
 			top  = ((screenY1 - canvasY)/2|0);
 		canvas2.style.left = (left>0?left:0) + "px";
 		canvas2.style.top =  (top>0?top:0) + "px";
@@ -146,37 +146,37 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 	function setScoreBackground()
 	{
 		//set background color
-		var background = new createjs.Shape();
+		const background = new createjs.Shape();
 		background.graphics.beginFill("black").drawRect(0, 0, canvas2.width, canvas2.height);
 		scoreStage.addChild(background);
 	}	
 	
 	function getNameStartPos(nameLength, itemId) 
 	{
-		var x = (4+(MAX_HISCORE_NAME_LENGTH-nameLength)/2)*tileWScale;
-		var y = (itemId * 1.2 + 5) * tileHScale;
+		const x = (4+(MAX_HISCORE_NAME_LENGTH-nameLength)/2)*tileWScale;
+		const y = (itemId * 1.2 + 5) * tileHScale;
 		
 		return { x: x, y: y };
 	}
 	
 	function drawHiScoreList()
 	{
-		var title = "LODE RUNNER " + ((_dataId == 1)?"2":"1") + " HIGH SCORES";
-		var barTile;
+		const title = "LODE RUNNER " + ((_dataId == 1)?"2":"1") + " HIGH SCORES";
+		let barTile;
 
 		drawText((NO_OF_TILES_X-title.length)/2*tileWScale, 0.5*tileHScale, title, scoreStage);
 		drawText(0.5*tileWScale, 3*tileHScale, "NO", scoreStage);
 		drawText(7*tileWScale, 3*tileHScale, "NAME", scoreStage);
 		drawText(14.5*tileWScale, 3*tileHScale, "LEVEL  SCORE", scoreStage);
 
-		for(var x = 0; x < NO_OF_TILES_X; x++) {
+		for(let x = 0; x < NO_OF_TILES_X; x++) {
 			barTile = new createjs.Bitmap(preload.getResult("ground"));
 			barTile.setTransform(x * tileWScale, 4.5*tileHScale , tileScale, tileScale);
 			scoreStage.addChild(barTile); 
 		}		
 	
-		for(var i = 0; i < MAX_HISCORE_RECORD; i++) {
-			var pos = getNameStartPos(hiScoreInfo[i].n.length, i);
+		for(let i = 0; i < MAX_HISCORE_RECORD; i++) {
+			const pos = getNameStartPos(hiScoreInfo[i].n.length, i);
 			
 			drawText(0.5*tileWScale, pos.y, ("0"+(i+1)).slice(-2) + ".", scoreStage); //no
 			
@@ -210,10 +210,10 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 	
 	function inputHiScoreName() 
 	{
-		var name, nameText;
-		var curPos = 0;
-		var savedKeyDownHander, hiScoreTicker;
-		var cursor;
+		let name, nameText;
+		let curPos = 0;
+		let savedKeyDownHander, hiScoreTicker;
+		let cursor;
 
 		initInput();
 		
@@ -222,7 +222,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 			name = []; //array of char 
 			nameText = []; //text object
 			
-			var pos = getNameStartPos(0, recordId);
+			const pos = getNameStartPos(0, recordId);
 			cursor = new createjs.Sprite(textData, "FLASH");
 			cursor.setTransform(pos.x-tileWScale/2, pos.y , tileScale, tileScale);
 			scoreStage.addChild(cursor);
@@ -239,7 +239,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 		
 		function cutTailSpace()
 		{
-			for(var i = name.length-1; i >= 0; i--) {
+			for(let i = name.length-1; i >= 0; i--) {
 				if(name[i] == " ") name.splice(i,1);
 				else break;
 			}
@@ -264,14 +264,14 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 		
 		function removeNameText()
 		{
-			for(var i = 0; i < nameText.length; i++) 
+			for(let i = 0; i < nameText.length; i++) 
 			scoreStage.removeChild(nameText[i]);
 		}
 		
 		function array2String(name)
 		{
-			var nameString = "";
-			for(var i = 0; i < name.length; i++) {
+			let nameString = "";
+			for(let i = 0; i < name.length; i++) {
 				nameString += name[i];
 			}
 			return nameString;
@@ -279,7 +279,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 	
 		function redrawName()
 		{
-			var pos = getNameStartPos(name.length, recordId); 
+			const pos = getNameStartPos(name.length, recordId); 
 			removeNameText();
 			nameText = drawText(pos.x, pos.y, array2String(name), scoreStage, "D");
 
@@ -295,7 +295,7 @@ function showScoreTable(_dataId, _curScoreInfo, _callbackFun, _waitTime)
 		{
 			if(!event){ event = window.event; } //cross browser issues exist
 			
-			var code = event.keyCode;
+			let code = event.keyCode;
 			
 			if(curPos >= MAX_HISCORE_NAME_LENGTH && 
 			   code != KEYCODE_BKSPACE && code != KEYCODE_LEFT && code != KEYCODE_ENTER) 

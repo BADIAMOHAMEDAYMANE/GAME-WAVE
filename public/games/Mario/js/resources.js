@@ -1,12 +1,12 @@
 //simple resource loader
 (function() {
-    var resourceCache = {};
-    var loading = [];
-    var readyCallbacks = [];
+    const resourceCache = {};
+
+    const readyCallbacks = [];
 
     // Load an image url or an array of image urls
     function load(urlOrArr) {
-        if(urlOrArr instanceof Array) {
+        if(Array.isArray(urlOrArr)) {
             urlOrArr.forEach(function(url) {
                 _load(url);
             });
@@ -21,7 +21,7 @@
             return resourceCache[url];
         }
         else {
-            var img = new Image();
+            const img = new Image();
             img.onload = function() {
                 resourceCache[url] = img;
 
@@ -39,8 +39,8 @@
     }
 
     function isReady() {
-        var ready = true;
-        for(var k in resourceCache) {
+        let ready = true;
+        for(const k in resourceCache) {
             if(resourceCache.hasOwnProperty(k) &&
                !resourceCache[k]) {
                 ready = false;
@@ -53,7 +53,7 @@
         readyCallbacks.push(func);
     }
 
-    window.resources = {
+    globalThis.resources = {
         load: load,
         get: get,
         onReady: onReady,

@@ -83,8 +83,8 @@ function updatePlayer() {
     if (!gameStarted || dead) return;
 
     const rect = gc.getBoundingClientRect();
-    let px = parseFloat(pl.style.left);
-    let py = parseFloat(pl.style.top);
+    let px = Number.parseFloat(pl.style.left);
+    let py = Number.parseFloat(pl.style.top);
 
     let mx = 0;
     if (d[37]) { mx -= x_speed; pl.className = 'goleft'; }
@@ -92,10 +92,10 @@ function updatePlayer() {
     if (!d[37] && !d[39]) pl.className = '';
 
     if (mx !== 0) {
-        let nextX = px + mx;
-        let checkX = (mx > 0) ? nextX + tile_size - 4 : nextX + 4;
-        let wallTop = document.elementFromPoint(rect.left + checkX, rect.top + py + 4);
-        let wallBot = document.elementFromPoint(rect.left + checkX, rect.top + py + tile_size - 4);
+        const nextX = px + mx;
+        const checkX = (mx > 0) ? nextX + tile_size - 4 : nextX + 4;
+        const wallTop = document.elementFromPoint(rect.left + checkX, rect.top + py + 4);
+        const wallBot = document.elementFromPoint(rect.left + checkX, rect.top + py + tile_size - 4);
 
         if (!isSolid(wallTop) && !isSolid(wallBot)) {
             px = nextX;
@@ -193,8 +193,8 @@ function buildGame(isNew = true, forceReset = false) {
 
     let ratioX = 0, ratioY = 0;
     if (!isNew && !forceReset && pl) {
-        ratioX = parseFloat(pl.style.left) / (gc.offsetWidth / cols);
-        ratioY = parseFloat(pl.style.top) / (gc.offsetWidth / cols);
+        ratioX = Number.parseFloat(pl.style.left) / (gc.offsetWidth / cols);
+        ratioY = Number.parseFloat(pl.style.top) / (gc.offsetWidth / cols);
     }
 
     gc.innerHTML = `<div id="${player}"></div>`;
@@ -222,8 +222,8 @@ function buildGame(isNew = true, forceReset = false) {
 
     // Positionnement
     const s = levels[level_num].start.split(',');
-    const startX = (tile_size * parseFloat(s[0]));
-    const startY = (tile_size * parseFloat(s[1]));
+    const startX = (tile_size * Number.parseFloat(s[0]));
+    const startY = (tile_size * Number.parseFloat(s[1]));
 
     // Retour à la position de départ si nouveau niveau, retry après mort, ou forceReset
     if (isNew || forceReset) {
@@ -250,12 +250,12 @@ const expandBtn = document.getElementById('expand-btn');
 const fullscreenTarget = document.getElementById('fullscreen-target');
 
 expandBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-        fullscreenTarget.requestFullscreen().catch(err => console.log(err));
-        expandBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
-    } else {
+    if (document.fullscreenElement) {
         document.exitFullscreen();
         expandBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
+    } else {
+        fullscreenTarget.requestFullscreen().catch(err => console.log(err));
+        expandBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
     }
 });
 
@@ -300,12 +300,12 @@ function secondsToTime(s) {
     return `${h}:${m}:${sec}`;
 }
 
-window.addEventListener('keydown', e => {
+globalThis.addEventListener('keydown', e => {
     if([37,38,39,40].includes(e.keyCode)) e.preventDefault();
     d[e.keyCode] = true;
 });
 
-window.addEventListener('keyup', e => {
+globalThis.addEventListener('keyup', e => {
     d[e.keyCode] = false;
 });
 

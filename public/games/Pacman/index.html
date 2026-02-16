@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pac-Man</title>
+    <meta name="description"
+        content="Pac-Man est un jeu d'arcade classique des années 80. Ce jeu utilise HTML5 pour une version améliorée avec plusieurs niveaux et une intelligence artificielle avancée pour les fantômes.">
+    <meta name="keywords" content="Pac-Man, jeu d'arcade, HTML5, Javascript">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="./static/style/index.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <div class="top-controls">
+            <button id="expand-btn" class="control-btn" title="Plein écran">
+                <i class="fa-solid fa-expand"></i>
+            </button>
+        </div>
+        <div class="wrapper">
+            <div class="mod-panel">
+                <div class="bd">
+                    <canvas id="canvas" width="960" height="640">Votre navigateur ne supporte pas le canvas.</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="./static/script/game.js"></script>
+    <script src="./static/script/index.js"></script>
+    <script src="./static/script/fullscreen.js"></script>
+</body>
+
+</html>

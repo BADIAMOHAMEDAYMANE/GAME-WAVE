@@ -1,5 +1,5 @@
 (function() {
-  var Level = Mario.Level = function(options) {
+  const Level = Mario.Level = function(options) {
     this.playerPos = options.playerPos;
     this.scrolling = options.scrolling;
     this.loader = options.loader;
@@ -50,7 +50,7 @@
     this.items = [];
     this.pipes = [];
 
-    for (var i = 0; i < 15; i++) {
+    for (let i = 0; i < 15; i++) {
       this.statics[i] = [];
       this.scenery[i] = [];
       this.blocks[i] = [];
@@ -59,7 +59,7 @@
   };
 
   Level.prototype.putFloor = function(start, end) {
-    for (var i = start; i < end; i++) {
+    for (let i = start; i < end; i++) {
       this.statics[13][i] = new Mario.Floor([16*i,208], this.floorSprite);
       this.statics[14][i] = new Mario.Floor([16*i,224], this.floorSprite);
     }
@@ -75,13 +75,13 @@
 
   Level.prototype.putWall = function(x, y, height) {
     //y is the bottom of the wall in this case.
-    for (var i = y-height; i < y; i++) {
+    for (let i = y-height; i < y; i++) {
       this.statics[i][x] = new Mario.Floor([16*x, 16*i], this.wallSprite);
     }
   };
 
   Level.prototype.putPipe = function(x, y, height) {
-    for (var i = y - height; i < y; i++) {
+    for (let i = y - height; i < y; i++) {
       if (i === y - height) {
         this.statics[i][x] = new Mario.Floor([16*x, 16*i], this.pipeLEndSprite);
         this.statics[i][x+1] = new Mario.Floor([16*x+16, 16*i], this.pipeREndSprite);
@@ -134,7 +134,7 @@
   };
 
   Level.prototype.putBigHill = function(x, y) {
-    var px = x*16, py = y*16;
+    const px = x*16, py = y*16;
     this.scenery[y][x] = new Mario.Prop([px, py], this.hillSprites[0]);
     this.scenery[y][x+1] = new Mario.Prop([px+16, py], this.hillSprites[3]);
     this.scenery[y-1][x+1] = new Mario.Prop([px+16, py-16], this.hillSprites[0]);
@@ -170,7 +170,7 @@
   };
 
   Level.prototype.putSmallHill = function(x, y) {
-    var px = x*16, py = y*16;
+    const px = x*16, py = y*16;
     this.scenery[y][x] = new Mario.Prop([px, py], this.hillSprites[0]);
     this.scenery[y][x+1] = new Mario.Prop([px+16, py], this.hillSprites[3]);
     this.scenery[y-1][x+1] = new Mario.Prop([px+16, py-16], this.hillSprites[1]);

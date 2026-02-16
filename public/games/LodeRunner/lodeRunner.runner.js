@@ -3,17 +3,17 @@
 // http://www.kingstone.com.tw/book/book_page.asp?kmcode=2014710650538
 //=============================================================================
 
-var STATE_OK_TO_MOVE = 1, STATE_FALLING = 2;
+const STATE_OK_TO_MOVE = 1, STATE_FALLING = 2;
 
 function moveRunner()
 {
-	var x = runner.pos.x;
-	var xOffset = runner.pos.xOffset;
-	var y = runner.pos.y;
-	var yOffset = runner.pos.yOffset;
+	const x = runner.pos.x;
+	const xOffset = runner.pos.xOffset;
+	const y = runner.pos.y;
+	const yOffset = runner.pos.yOffset;
 	
-	var curState;
-	var curToken, nextToken;
+	let curState;
+	let curToken, nextToken;
 	
 	curToken = map[x][y].base;
 	
@@ -54,7 +54,7 @@ function moveRunner()
 	
 	/****** Check Key Action ******/
 	
-	var moveStep = ACT_STOP;
+	let moveStep = ACT_STOP;
 	var stayCurrPos = 1;
 	
 	switch(keyAction) {
@@ -116,13 +116,13 @@ function moveRunner()
 
 function runnerMoveStep(action, stayCurrPos )
 {
-	var x = runner.pos.x;
-	var xOffset = runner.pos.xOffset;
-	var y = runner.pos.y;
-	var yOffset = runner.pos.yOffset;
+	let x = runner.pos.x;
+	let xOffset = runner.pos.xOffset;
+	let y = runner.pos.y;
+	let yOffset = runner.pos.yOffset;
 
-	var curToken, nextToken, centerX, centerY;
-	var curShape, newShape;
+	let curToken, nextToken, centerX, centerY;
+	let curShape, newShape;
 	
 	curShape = newShape = runner.shape;
 	
@@ -169,7 +169,7 @@ function runnerMoveStep(action, stayCurrPos )
 	}
 	
 	if ( action == ACT_DOWN || action == ACT_FALL) {
-		var holdOnBar = 0;
+		let holdOnBar = 0;
 		if(curToken == BAR_T) {
 			if( yOffset < 0) holdOnBar = 1;
 			else if(action == ACT_DOWN && y < maxTileY && map[x][y+1].act != LADDR_T) {
@@ -198,7 +198,7 @@ function runnerMoveStep(action, stayCurrPos )
 			
 			if (y < maxTileY && map[x][y+1].act == GUARD_T) { //over guard
 				//don't collision
-				var id = getGuardId(x, y+1);
+				const id = getGuardId(x, y+1);
 				if(yOffset > guard[id].pos.yOffset)	yOffset = guard[id].pos.yOffset;
 			}
 
@@ -335,7 +335,7 @@ function removeGold(x,y)
 
 function addGold(x, y)
 {
-	var tile;
+	let tile;
 	
 	map[x][y].base = GOLD_T;
 	tile = map[x][y].bitmap = new createjs.Bitmap(preload.getResult("gold"));
@@ -347,9 +347,9 @@ function addGold(x, y)
 
 function showHideLaddr()
 {
-	var haveHLadder = 0;
-	for(var y = 0; y < NO_OF_TILES_Y; y++) {
-		for(var x = 0; x < NO_OF_TILES_X; x++) {
+	let haveHLadder = 0;
+	for(let y = 0; y < NO_OF_TILES_Y; y++) {
+		for(let x = 0; x < NO_OF_TILES_X; x++) {
 			if( map[x][y].base == HLADR_T) {
 				haveHLadder = 1;
 				map[x][y].base =LADDR_T;
@@ -364,7 +364,7 @@ function showHideLaddr()
 
 function checkCollision(runnerX, runnerY)
 {
-	var x = -1, y = -1;
+	let x = -1, y = -1;
 	//var dbg = "NO";
 
 	switch(true) {
@@ -396,13 +396,13 @@ function checkCollision(runnerX, runnerY)
 			//var dh = Math.abs(runner.sprite.y - guard[i].sprite.y);
 			
       //change detect method ==> don't depend on scale 
-			var runnerPosX = runner.pos.x*tileW+runner.pos.xOffset;
-			var runnerPosY = runner.pos.y*tileH+runner.pos.yOffset;
-			var guardPosX = guard[i].pos.x*tileW+guard[i].pos.xOffset;
-			var guardPosY = guard[i].pos.y*tileH+guard[i].pos.yOffset;
+			const runnerPosX = runner.pos.x*tileW+runner.pos.xOffset;
+			const runnerPosY = runner.pos.y*tileH+runner.pos.yOffset;
+			const guardPosX = guard[i].pos.x*tileW+guard[i].pos.xOffset;
+			const guardPosY = guard[i].pos.y*tileH+guard[i].pos.yOffset;
 
-			var dw = Math.abs(runnerPosX - guardPosX);
-			var dh = Math.abs(runnerPosY - guardPosY);
+			const dw = Math.abs(runnerPosX - guardPosX);
+			const dh = Math.abs(runnerPosY - guardPosY);
 			
 			if( dw <= W4*3 && dh <= H4*3 ) {
 				setRunnerDead(); //07/04/2014
@@ -415,9 +415,9 @@ function checkCollision(runnerX, runnerY)
 //Page 276 misc.c (book)
 function ok2Dig(nextMove)
 {
-	var x = runner.pos.x;
-	var y = runner.pos.y;
-	var token, rc = 0;
+	const x = runner.pos.x;
+	const y = runner.pos.y;
+	let token, rc = 0;
 	
 	switch(nextMove) {
 	case ACT_DIG_LEFT:
@@ -443,7 +443,7 @@ function ok2Dig(nextMove)
 
 function digHole(action)
 {
-	var x,y, holeShape;
+	let x,y, holeShape;
 	
 	if(action == ACT_DIG_LEFT) {
 		x = runner.pos.x-1;
@@ -478,12 +478,12 @@ function digHole(action)
 
 function isDigging()
 {
-	var rc = 0;
+	let rc = 0;
 	
 	if(holeObj.action == ACT_DIGGING) {
-		var x = holeObj.pos.x, y = holeObj.pos.y;
+		const x = holeObj.pos.x, y = holeObj.pos.y;
 		if(map[x][y].act == GUARD_T) { //guard come close to the digging hole !
-			var id = getGuardId(x, y);
+			const id = getGuardId(x, y);
 			if(holeObj.sprite.currentAnimationFrame < 6 && guard[id].pos.yOffset > -H4) {
 				stopDigging(x,y);
 			}		
@@ -542,8 +542,8 @@ function stopDigging(x,y)
 
 function digComplete()
 {
-	var x = holeObj.pos.x;
-	var y = holeObj.pos.y + 1;
+	const x = holeObj.pos.x;
+	const y = holeObj.pos.y + 1;
 	
 	map[x][y].act = EMPTY_T;
 	holeObj.sprite.removeAllEventListeners ("animationend");
@@ -553,10 +553,10 @@ function digComplete()
 	fillHole(x, y);
 }
 
-var fillHoleObj = [];
+const fillHoleObj = [];
 function fillHole(x, y)
 {
-	var fillSprite = new createjs.Sprite(holeData, "fillHole");
+	const fillSprite = new createjs.Sprite(holeData, "fillHole");
 	
 	fillSprite.pos = { x:x, y:y }; //save position 11/18/2014
 	fillSprite.setTransform(x * tileWScale, y * tileHScale, tileScale, tileScale);
@@ -568,7 +568,7 @@ function fillHole(x, y)
 
 function moveFillHoleObj2Top()
 {
-	for(var i = 0; i < fillHoleObj.length; i++) {
+	for(let i = 0; i < fillHoleObj.length; i++) {
 		moveChild2Top(mainStage, fillHoleObj[i]);
 	}
 }
@@ -579,7 +579,7 @@ function fillComplete()
 	//var x = this.x / tileWScale | 0; //this : scope default to the dispatcher
 	//var y = this.y / tileHScale | 0;
 
-	var x = this.pos.x, y = this.pos.y; //get position 
+	const x = this.pos.x, y = this.pos.y; //get position 
 
 	map[x][y].bitmap.set({alpha:1}); //display block
 	this.removeAllEventListeners ("animationend");
@@ -612,7 +612,7 @@ function fillComplete()
 
 function removeFillHoleObj(spriteObj)
 {
-	for(var i = 0; i < fillHoleObj.length; i++) {
+	for(let i = 0; i < fillHoleObj.length; i++) {
 		if(fillHoleObj[i] == spriteObj) {
 			fillHoleObj.splice(i,1);
 			return;

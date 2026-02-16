@@ -1,10 +1,10 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (typeof globalThis.Mario === 'undefined')
+  globalThis.Mario = {};
 
   //TODO: On console the hitbox is smaller. Measure it and edit this.
 
-  var Goomba = Mario.Goomba = function(pos, sprite) {
+  const Goomba = Mario.Goomba = function(pos, sprite) {
     this.dying = false;
     Mario.Entity.call(this, {
       pos: pos,
@@ -48,19 +48,19 @@
       return;
     }
 
-    var h = this.pos[1] % 16 === 0 ? 1 : 2;
-    var w = this.pos[0] % 16 === 0 ? 1 : 2;
+    const h = this.pos[1] % 16 === 0 ? 1 : 2;
+    const w = this.pos[0] % 16 === 0 ? 1 : 2;
 
-    var baseX = Math.floor(this.pos[0] / 16);
-    var baseY = Math.floor(this.pos[1] / 16);
+    const baseX = Math.floor(this.pos[0] / 16);
+    const baseY = Math.floor(this.pos[1] / 16);
 
     if (baseY + h > 15) {
       delete level.enemies[this.idx];
       return;
     }
 
-    for (var i = 0; i < h; i++) {
-      for (var j = 0; j < w; j++) {
+    for (let i = 0; i < h; i++) {
+      for (let j = 0; j < w; j++) {
         if (level.statics[baseY + i][baseX + j]) {
           level.statics[baseY + i][baseX + j].isCollideWith(this);
         }
@@ -69,7 +69,7 @@
         }
       }
     }
-    var that = this;
+    const that = this;
     level.enemies.forEach(function(enemy){
       if (enemy === that) { //don't check collisions with ourselves.
         return;
@@ -88,8 +88,8 @@
     }
 
     //the first two elements of the hitbox array are an offset, so let's do this now.
-    var hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
-    var hpos2 = [ent.pos[0] + ent.hitbox[0], ent.pos[1] + ent.hitbox[1]];
+    const hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
+    const hpos2 = [ent.pos[0] + ent.hitbox[0], ent.pos[1] + ent.hitbox[1]];
 
     //if the hitboxes actually overlap
     if (!(hpos1[0] > hpos2[0]+ent.hitbox[2] || (hpos1[0]+this.hitbox[2] < hpos2[0]))) {

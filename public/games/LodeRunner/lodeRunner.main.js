@@ -16,39 +16,39 @@
  * ============================================================================= 
  */
 
-var screenX1, screenY1;
-var canvasX, canvasY;
+let screenX1, screenY1;
+let canvasX, canvasY;
 
-var tileW, tileH; //tile width & tile height
-var tileWScale, tileHScale; //tile width/height with scale
-var W2, W4;       //W2: 1/2 tile-width,  W4: 1/4 tile width
-var H2, H4;       //H2: 1/2 tile-height, H4: 1/4 tile height
+let tileW, tileH; //tile width & tile height
+let tileWScale, tileHScale; //tile width/height with scale
+let W2, W4;       //W2: 1/2 tile-width,  W4: 1/4 tile width
+let H2, H4;       //H2: 1/2 tile-height, H4: 1/4 tile height
 
-var mainStageX, mainStageY;
-var scroeStageX, scoreStageY;
+let mainStageX, mainStageY;
+let scroeStageX, scoreStageY;
 
-var canvas;
-var mainStage, scoreStage;
-var loadingTxt;
+let canvas;
+let mainStage, scoreStage;
+let loadingTxt;
 
-var gameState, lastGameState;
-var tileScale, xMove, yMove;
+let gameState, lastGameState;
+let tileScale, xMove, yMove;
 
-var speedMode = [16, 20, 25, 30, 35]; //slow   normal  fast 
-var speedText = ["VERY SLOW", "SLOW", "NORMAL", "FAST", "VERY FAST"];
-var speed = 2; //normal 
-var demoSpeed = 40;
+const speedMode = [16, 20, 25, 30, 35]; //slow   normal  fast 
+const speedText = ["VERY SLOW", "SLOW", "NORMAL", "FAST", "VERY FAST"];
+const speed = 2; //normal 
+const demoSpeed = 40;
 
-var levelData = levelData1; //Lode Runner 1
+const levelData = levelData1; //Lode Runner 1
 
-var curLevel = 1, maxLevel = 1;
-var playMode = PLAY_CLASSIC;
-var playData = 1; //1: lode runner 1,           2: lode runner 2, 3: user created, 
+let curLevel = 1, maxLevel = 1;
+let playMode = PLAY_CLASSIC;
+let playData = 1; //1: lode runner 1,           2: lode runner 2, 3: user created, 
 //4: lode runner 1 demo mode, 5: lode runner 2 demo mode
-var curTime = MAX_TIME_COUNT;
+let curTime = MAX_TIME_COUNT;
 
 function init() {
-	var screenSize = getScreenSize();
+	const screenSize = getScreenSize();
 	screenX1 = screenSize.x;
 	screenY1 = screenSize.y;
 
@@ -64,7 +64,7 @@ function init() {
 }
 
 function loadDataJS() {
-	var js = document.createElement('script');
+	const js = document.createElement('script');
 
 	js.type = "text/javascript";
 	js.src = "lodeRunner.wData.js";
@@ -91,7 +91,7 @@ function canvasReSize() {
 	canvas.height = canvasY;
 
 	//Set canvas top left position
-	var left = ((screenX1 - canvasX) / 2 | 0),
+	const left = ((screenX1 - canvasX) / 2 | 0),
 		top = ((screenY1 - canvasY) / 2 | 0);
 	canvas.style.left = (left > 0 ? left : 0) + "px";
 	canvas.style.top = (top > 0 ? top : 0) + "px";
@@ -130,7 +130,7 @@ function createStage() {
 
 function setBackground() {
 	//set background color
-	var background = new createjs.Shape();
+	const background = new createjs.Shape();
 	background.graphics.beginFill("#000000").drawRect(0, 0, canvas.width, canvas.height);
 	mainStage.addChild(background);
 	// document.body.style.background = "#301050"; // Removed to support dark/light mode toggle
@@ -146,7 +146,7 @@ function showCoverPage() {
 	waitIdleDemo(3000);
 }
 
-var idleTimer = null, startIdleTime;
+let idleTimer = null, startIdleTime;
 function waitIdleDemo(maxIdleTime) {
 	startIdleTime = new Date();
 	idleTimer = setInterval(function () { checkIdleTime(maxIdleTime); }, 200);
@@ -173,7 +173,7 @@ function stopDemoAndPlay() {
 	selectGame();
 }
 
-var stageClickListener = null, stagePressListener = null;
+let stageClickListener = null, stagePressListener = null;
 
 function enableStageClickEvent() {
 	disableStageClickEvent();
@@ -184,7 +184,7 @@ function enableStageClickEvent() {
 }
 
 function disableStageClickEvent() {
-	var rc = 0;
+	let rc = 0;
 
 	if (stageClickListener) { rc = 1; mainStage.off("click", stageClickListener); }
 	//if(stagePressListener) { rc = 1; mainStage.off("press", stagePressListener); }
@@ -209,8 +209,8 @@ function anyKeyDown() {
 }
 
 function checkIdleTime(maxIdleTime) {
-	var curTime = new Date();
-	var idleTime = (curTime - startIdleTime);
+	const curTime = new Date();
+	const idleTime = (curTime - startIdleTime);
 
 	if (idleTime > maxIdleTime) { //start demo
 		clearIdleDemoTimer();
@@ -221,11 +221,11 @@ function checkIdleTime(maxIdleTime) {
 }
 
 function selectGame() {
-	var infoJSON = getStorage(STORAGE_LASTPLAY_MODE);
+	const infoJSON = getStorage(STORAGE_LASTPLAY_MODE);
 	playMode = PLAY_NONE;
 
 	if (infoJSON) {
-		var infoObj = JSON.parse(infoJSON);
+		const infoObj = JSON.parse(infoJSON);
 		playMode = infoObj.m; //mode= 1: classic, 2:time 
 		playData = infoObj.d; //data= 1: lode runner 1, 2: lode runner 2
 	}
@@ -240,7 +240,7 @@ function selectGame() {
 	startGame();
 }
 
-var gameTicker = null;
+let gameTicker = null;
 var changingLevel = 0;
 function startPlayTicker() {
 	stopPlayTicker();
@@ -262,7 +262,7 @@ function stopPlayTicker() {
 }
 
 function startGame() {
-	var levelMap;
+	let levelMap;
 	gameState = GAME_WAITING;
 	startPlayTicker();
 	changingLevel = 1;
@@ -296,11 +296,11 @@ function startGame() {
 	setTimeout(function () { openingScreen(cycDiff * 2); }, 5);
 }
 
-var maxTileX = NO_OF_TILES_X - 1, maxTileY = NO_OF_TILES_Y - 1;
+const maxTileX = NO_OF_TILES_X - 1, maxTileY = NO_OF_TILES_Y - 1;
 
-var runner = null, guard = [];
-var map; //[x][y] = { base: base map, act : active map, state:, bitmap: }
-var guardCount, goldCount, goldComplete;
+let runner = null, guard = [];
+let map; //[x][y] = { base: base map, act : active map, state:, bitmap: }
+let guardCount, goldCount, goldComplete;
 
 function initVariable() {
 	guard = [];
@@ -330,10 +330,10 @@ function buildLevelMap(levelMap) {
 
 
 	//(2) draw map
-	var index = 0;
+	let index = 0;
 	for (var y = 0; y < NO_OF_TILES_Y; y++) {
 		for (var x = 0; x < NO_OF_TILES_X; x++) {
-			var id = levelMap.charAt(index++);
+			const id = levelMap.charAt(index++);
 
 			var curTile;
 			switch (id) {
@@ -429,7 +429,7 @@ function buildLevelMap(levelMap) {
 
 function moveSprite2Top() {
 	//move guard to top (z index)
-	for (var i = 0; i < guardCount; i++) {
+	for (let i = 0; i < guardCount; i++) {
 		moveChild2Top(mainStage, guard[i].sprite);
 	}
 
@@ -452,10 +452,10 @@ function buildGroundInfo() {
 	drawInfo(levelData);
 }
 
-var groundTile;
+let groundTile;
 function drawGround() {
 	groundTile = [];
-	for (var x = 0; x < NO_OF_TILES_X; x++) {
+	for (let x = 0; x < NO_OF_TILES_X; x++) {
 		groundTile[x] = new createjs.Bitmap(preload.getResult("ground"));
 		groundTile[x].setTransform(x * tileWScale, NO_OF_TILES_Y * tileHScale, tileScale, tileScale);
 		mainStage.addChild(groundTile[x]);
@@ -463,17 +463,17 @@ function drawGround() {
 }
 
 
-var runnerLife = RUNNER_LIFE;
-var curScore = 0;
-var curGetGold = 0, curGuardDeadNo = 0; //for modern mode 
+let runnerLife = RUNNER_LIFE;
+let curScore = 0;
+let curGetGold = 0, curGuardDeadNo = 0; //for modern mode 
 
-var infoY;
-var scoreTxt, scoreTile,
+let infoY;
+let scoreTxt, scoreTile,
 	lifeTxt, lifeTile,
 	levelTxt, levelTile,
 	demoTxt;
 
-var goldTxt, goldTile,
+let goldTxt, goldTile,
 	guardTxt, guardTile,
 	timeTxt, timeTile;
 
@@ -551,7 +551,7 @@ function drawLifeTxt() {
 }
 
 function drawLevelTxt() {
-	var xOffset = 20;
+	const xOffset = 20;
 
 	//if(playMode == PLAY_CLASSIC || playMode == PLAY_AUTO) xOffset = 20;
 	//else xOffset = 19;
@@ -579,10 +579,10 @@ function drawTimeTxt() {
 
 // draw score number 
 function drawScore(addScore) {
-	var digitNo;
+	let digitNo;
 
 	curScore += addScore;
-	for (var i = 0; i < scoreTile.length; i++)
+	for (let i = 0; i < scoreTile.length; i++)
 		mainStage.removeChild(scoreTile[i]);
 
 	//if(playMode == PLAY_CLASSIC || playMode == PLAY_AUTO) digitNo = 7;
@@ -592,14 +592,14 @@ function drawScore(addScore) {
 }
 
 function drawLife() {
-	for (var i = 0; i < lifeTile.length; i++)
+	for (let i = 0; i < lifeTile.length; i++)
 		mainStage.removeChild(lifeTile[i]);
 
 	lifeTile = drawText(16 * tileWScale, infoY, ("00" + runnerLife).slice(-3), mainStage);
 }
 
 function drawLevel() {
-	for (var i = 0; i < levelTile.length; i++)
+	for (let i = 0; i < levelTile.length; i++)
 		mainStage.removeChild(levelTile[i]);
 
 	switch (playMode) {
@@ -615,7 +615,7 @@ function drawLevel() {
 
 function drawGold(addGold) {
 	curGetGold += addGold;
-	for (var i = 0; i < goldTile.length; i++)
+	for (let i = 0; i < goldTile.length; i++)
 		mainStage.removeChild(goldTile[i]);
 
 	goldTile = drawText(1 * tileWScale, infoY, ("00" + curGetGold).slice(-3), mainStage);
@@ -624,7 +624,7 @@ function drawGold(addGold) {
 function drawGuard(addGuard) {
 	curGuardDeadNo += addGuard;
 	if (curGuardDeadNo > 100) curGuardDeadNo = 100;
-	for (var i = 0; i < guardTile.length; i++)
+	for (let i = 0; i < guardTile.length; i++)
 		mainStage.removeChild(guardTile[i]);
 
 	guardTile = drawText((6 + 2 / 3) * tileWScale, infoY, ("00" + curGuardDeadNo).slice(-3), mainStage);
@@ -636,14 +636,14 @@ function drawTime(decTime) {
 	if (decTime) curTime--;
 	if (curTime < 0) { curTime = 0; }
 
-	for (var i = 0; i < timeTile.length; i++)
+	for (let i = 0; i < timeTile.length; i++)
 		mainStage.removeChild(timeTile[i]);
 
 	timeTile = drawText((15 + 1 / 3) * tileWScale, infoY, ("00" + curTime).slice(-3), mainStage);
 }
 
 function setGroundInfoOrder() {
-	var i;
+	let i;
 
 	for (i = 0; i < groundTile.length; i++) moveChild2Top(mainStage, groundTile[i]);
 
@@ -673,13 +673,13 @@ function setGroundInfoOrder() {
 }
 
 function drawText(x, y, str, parentObj, numberType) {
-	var text = str.toUpperCase();
-	var textTile = [];
+	const text = str.toUpperCase();
+	const textTile = [];
 
-	if (typeof numberType == "undefined") numberType = "N";
+	if (typeof numberType === "undefined") numberType = "N";
 
-	for (var i = 0; i < text.length; i++) {
-		var code = text.charCodeAt(i);
+	for (let i = 0; i < text.length; i++) {
+		const code = text.charCodeAt(i);
 
 		switch (true) {
 			case (code >= 48 && code <= 57): //N0 ~ N9 or D0 ~ D9 
@@ -716,7 +716,7 @@ function drawText(x, y, str, parentObj, numberType) {
 	return textTile;
 }
 
-var playTickTimer = 0;
+let playTickTimer = 0;
 function playGame(deltaS) {
 	if (goldComplete && runner.pos.y == 0 && runner.pos.yOffset == 0) {
 		gameState = GAME_FINISH;
@@ -754,10 +754,10 @@ function showLevel(levelMap) {
 	buildGroundInfo();
 }
 
-var tipsText = null;
-var tipsRect = null;
+let tipsText = null;
+let tipsRect = null;
 function showTipsText(text, always) {
-	var x, y, width, height;
+	let x, y, width, height;
 
 	if (tipsText != null) {
 		mainStage.removeChild(tipsText);
@@ -798,8 +798,8 @@ var dspTrapTile = 0;
 function toggleTrapTile() {
 	dspTrapTile ^= 1;
 
-	for (var y = 0; y < NO_OF_TILES_Y; y++) {
-		for (var x = 0; x < NO_OF_TILES_X; x++) {
+	for (let y = 0; y < NO_OF_TILES_Y; y++) {
+		for (let x = 0; x < NO_OF_TILES_X; x++) {
 			if (map[x][y].base == TRAP_T) {
 				if (dspTrapTile) {
 					map[x][y].bitmap.set({ alpha: 0.5 }); //hidden tile
@@ -858,15 +858,15 @@ function stopAllSpriteObj() {
 }
 
 function gameOverAnimation() {
-	var gameOverImage = new createjs.Bitmap(preload.getResult("over"));
-	var bound = gameOverImage.getBounds();
-	var x = (NO_OF_TILES_X * tileWScale) / 2 | 0;
-	var y = (NO_OF_TILES_Y * tileHScale) / 2 | 0;
-	var regX = (bound.width) / 2 | 0;
-	var regY = (bound.height) / 2 | 0;
+	const gameOverImage = new createjs.Bitmap(preload.getResult("over"));
+	const bound = gameOverImage.getBounds();
+	const x = (NO_OF_TILES_X * tileWScale) / 2 | 0;
+	const y = (NO_OF_TILES_Y * tileHScale) / 2 | 0;
+	const regX = (bound.width) / 2 | 0;
+	const regY = (bound.height) / 2 | 0;
 
 
-	var rectBlock = new createjs.Shape();
+	const rectBlock = new createjs.Shape();
 	rectBlock.graphics.beginFill("black");
 	rectBlock.graphics.drawRect(-1, -1, bound.width + 2, bound.height + 2);
 
@@ -894,7 +894,7 @@ function gameOverAnimation() {
 	//stopAllSpriteObj();
 }
 
-var cycScreen, cycMaxRadius, cycDiff, cycX, cycY
+let cycScreen, cycMaxRadius, cycDiff, cycX, cycY
 
 function initCycVariable() {
 	cycX = NO_OF_TILES_X * tileWScale / 2;
@@ -934,7 +934,7 @@ function closingScreen(r) {
 		if (r < cycDiff * 2) r = 0;
 		setTimeout(function () { closingScreen(r); }, 5);
 	} else {
-		var levelMap;
+		let levelMap;
 
 		curAiVersion = AI_VERSION; //07/04/2014
 		initHotKeyVariable();      //07/09/2014
@@ -971,14 +971,14 @@ function menuIconDisable(hidden) {
 	}
 }
 
-var showStartTipsMsg = 0;
+let showStartTipsMsg = 0;
 function initShowDataMsg() {
 	showStartTipsMsg = 0;
 }
 
 function showDataMsg() {
 	if (!showStartTipsMsg) {
-		var nameTxt = null;
+		let nameTxt = null;
 		switch (playData) {
 			case 1:
 				nameTxt = "Lode Runner 1";
@@ -1061,8 +1061,8 @@ function decLevel(decValue) {
 
 
 function updateModernScoreInfo() {
-	var lastHiScore = modernScoreInfo[curLevel - 1];
-	var levelScore = (curTime + curGetGold + curGuardDeadNo) * SCORE_VALUE_PER_POINT;
+	let lastHiScore = modernScoreInfo[curLevel - 1];
+	const levelScore = (curTime + curGetGold + curGuardDeadNo) * SCORE_VALUE_PER_POINT;
 
 	if (lastHiScore < levelScore) {
 		modernScoreInfo[curLevel - 1] = (curTime + curGetGold + curGuardDeadNo) * SCORE_VALUE_PER_POINT;
@@ -1107,11 +1107,11 @@ function gameFinishTestModeCallback() {
 	back2EditMode(1);
 }
 
-var lastScoreTime, scoreDuration;
-var scoreIncValue, finalScore;
+let lastScoreTime, scoreDuration;
+let scoreIncValue, finalScore;
 
 function mainTick(event) {
-	var deltaS = event.delta / 1000;
+	const deltaS = event.delta / 1000;
 
 	switch (gameState) {
 		case GAME_START:

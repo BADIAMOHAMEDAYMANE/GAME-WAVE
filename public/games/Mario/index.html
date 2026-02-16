@@ -1,10 +1,11 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>Super Mario Bros - Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
@@ -23,6 +24,7 @@
             display: flex;
             flex-direction: column;
             font-family: 'Arial', sans-serif;
+            cursor: auto !important;
         }
 
         #main-container {
@@ -61,8 +63,7 @@
             display: block;
             image-rendering: -moz-crisp-edges;
             image-rendering: pixelated;
-            object-fit: contain;
-            /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); */
+            object-fit: fill;
         }
 
         /* Interface utilisateur (Bouton et Infos) */
@@ -75,7 +76,7 @@
 
         .btn-restart {
             background-color: #E74C3C;
-            color: white;
+            color: #595959;
             border: none;
             padding: 10px 20px;
             font-size: 16px;
@@ -95,7 +96,7 @@
         .info p {
             margin: 5px 0;
             font-size: 14px;
-            text-shadow: 1px 1px #000;
+            text-shadow: 2px 2px #000000;
         }
 
         /* Fullscreen Button */
@@ -150,11 +151,19 @@
             touch-action: manipulation;
         }
 
-        @media (min-width: 768px) {
+        /* Hide ONLY on desktop-size screens, keep visible on mobile landscape */
+        @media (min-width: 1024px) and (min-height: 600px) {
 
             #joystick-container,
             #jump-button {
                 display: none;
+            }
+        }
+
+        /* Hide internal fullscreen button on mobile */
+        @media (max-width: 1024px) {
+            .btn-fullscreen {
+                display: none !important;
             }
         }
     </style>
@@ -163,7 +172,7 @@
 <body>
 
     <div id="main-container">
-        <button class="btn-fullscreen" onclick="toggleFullscreen();">⛶ Fullscreen</button>
+        <button class="btn-fullscreen" id="fullscreen-btn">⛶ Fullscreen</button>
 
         <div id="game-wrapper">
 
@@ -191,17 +200,14 @@
                 } else if (elem.msRequestFullscreen) {
                     elem.msRequestFullscreen();
                 }
-            } else {
-                // Exit fullscreen
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
             }
         }
     </script>
@@ -261,7 +267,7 @@
                     // Update states only if changed
                     for (const dir in newDirections) {
                         if (newDirections[dir] !== currentDirections[dir]) {
-                            window.input.setKeyState(dir, newDirections[dir]);
+                            globalThis.input.setKeyState(dir, newDirections[dir]);
                             currentDirections[dir] = newDirections[dir];
                         }
                     }
@@ -271,7 +277,7 @@
 
         manager.on('end', function () {
             for (const dir in currentDirections) {
-                window.input.setKeyState(dir, false);
+                globalThis.input.setKeyState(dir, false);
                 currentDirections[dir] = false;
             }
         });
@@ -281,13 +287,13 @@
 
         const jumpStart = function (e) {
             e.preventDefault();
-            window.input.setKeyState('JUMP', true);
+            globalThis.input.setKeyState('JUMP', true);
             jumpBtn.style.backgroundColor = 'rgba(231, 76, 60, 0.9)';
         };
 
         const jumpEnd = function (e) {
             e.preventDefault();
-            window.input.setKeyState('JUMP', false);
+            globalThis.input.setKeyState('JUMP', false);
             jumpBtn.style.backgroundColor = 'rgba(231, 76, 60, 0.7)';
         };
 
@@ -296,6 +302,9 @@
         jumpBtn.addEventListener('mousedown', jumpStart);
         jumpBtn.addEventListener('mouseup', jumpEnd);
         jumpBtn.addEventListener('mouseleave', jumpEnd);
+
+        // Fullscreen button event handler
+        document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
     </script>
 
 </body>

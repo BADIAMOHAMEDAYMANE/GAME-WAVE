@@ -4,7 +4,8 @@
 
 .game-page-layout {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100dvh;
+    /* Use dvh */
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -126,7 +127,8 @@
 
 .game-page-layout.full-mode-active .game-main-content {
     padding: 0 !important;
-    height: 100vh;
+    height: 100dvh;
+    /* Use dvh */
 }
 
 .game-page-layout.full-mode-active .game-iframe-container {
@@ -164,5 +166,39 @@
     background: rgba(255, 255, 255, 0.3);
     color: #fff;
     position: fixed;
-    /* Keep it fixed in full mode */
+}
+
+/* Landscape Overrides - CRITICAL FIX */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .game-page-layout {
+        height: 100dvh !important;
+        overflow: hidden !important;
+    }
+
+    .game-main-content {
+        padding: 0 !important;
+        height: 100dvh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+    }
+
+    .game-iframe-container {
+        flex: 1 !important;
+        min-height: 0 !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+        border-width: 0 !important;
+        margin-bottom: 0 !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+    }
+
+    .game-page-layout:not(.full-mode-active) header {
+        display: none !important;
+    }
+
+    .display-mode-toggle {
+        display: none !important;
+    }
 }

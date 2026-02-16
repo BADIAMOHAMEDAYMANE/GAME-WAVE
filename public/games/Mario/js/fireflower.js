@@ -1,8 +1,8 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (globalThis.Mario === undefined)
+  globalThis.Mario = {};
 
-  var Fireflower = Mario.Fireflower = function(pos) {
+  const Fireflower = Mario.Fireflower = function(pos) {
     this.spawning = false;
     this.waiting = 0;
 
@@ -33,7 +33,7 @@
   Fireflower.prototype.update = function(dt) {
     if (this.spawning > 1) {
       this.spawning -= 1;
-      if (this.spawning == 1) this.vel[1] = -.5;
+      if (this.spawning === 1) this.vel[1] = -.5;
       return;
     }
     if (this.spawning) {
@@ -57,8 +57,8 @@
 
   Fireflower.prototype.isPlayerCollided = function() {
     //the first two elements of the hitbox array are an offset, so let's do this now.
-    var hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
-    var hpos2 = [player.pos[0] + player.hitbox[0], player.pos[1] + player.hitbox[1]];
+    const hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
+    const hpos2 = [player.pos[0] + player.hitbox[0], player.pos[1] + player.hitbox[1]];
 
     //if the hitboxes actually overlap
     if (!(hpos1[0] > hpos2[0]+player.hitbox[2] || (hpos1[0]+this.hitbox[2] < hpos2[0]))) {
@@ -69,6 +69,6 @@
   }
 
   //This should never be called, but just in case.
-  Fireflower.prototype.bump = function() {;}
+  Fireflower.prototype.bump = function() {};
 
 })();

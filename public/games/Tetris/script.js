@@ -3,7 +3,7 @@ Math.minmax = (value, limit) => {
 };
 
 const distance2D = (p1, p2) => {
-    return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
+    return Math.hypot((p2.x - p1.x), (p2.y - p1.y));
 };
 
 // Angle between the two points
@@ -15,7 +15,7 @@ const getAngle = (p1, p2) => {
 
 // The closest a ball and a wall cap can be
 const closestItCanBe = (cap, ball) => {
-    let angle = getAngle(cap, ball);
+    const angle = getAngle(cap, ball);
 
     const deltaX = Math.cos(angle) * (wallW / 2 + ballSize / 2);
     const deltaY = Math.sin(angle) * (wallW / 2 + ballSize / 2);
@@ -26,10 +26,10 @@ const closestItCanBe = (cap, ball) => {
 // Roll the ball around the wall cap
 const rollAroundCap = (cap, ball) => {
     // The direction the ball can't move any further because the wall holds it back
-    let impactAngle = getAngle(ball, cap);
+    const impactAngle = getAngle(ball, cap);
 
     // The direction the ball wants to move based on it's velocity
-    let heading = getAngle(
+    const heading = getAngle(
         { x: 0, y: 0 },
         { x: ball.velocityX, y: ball.velocityY }
     );
@@ -37,7 +37,7 @@ const rollAroundCap = (cap, ball) => {
     // The angle between the impact direction and the ball's desired direction
     // The smaller this angle is, the bigger the impact
     // The closer it is to 90 degrees the smoother it gets (at 90 there would be no collision)
-    let impactHeadingAngle = impactAngle - heading;
+    const impactHeadingAngle = impactAngle - heading;
 
     // Velocity distance if not hit would have occurred
     const velocityMagnitude = distance2D(
@@ -102,7 +102,7 @@ const holeSize = 18;
 const debugMode = false;
 
 let balls = [];
-let ballElements = [];
+const ballElements = [];
 let holeElements = [];
 
 // Theme management
@@ -139,34 +139,31 @@ function toggleFullscreen() {
         } else if (centerElement.msRequestFullscreen) {
             centerElement.msRequestFullscreen();
         }
-    } else {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
+    } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
     }
 }
 
 // Listen for fullscreen changes
 document.addEventListener('fullscreenchange', () => {
     const icon = fullscreenToggleBtn.querySelector('.fullscreen-icon');
-    icon.textContent = document.fullscreenElement ? '⛶' : '⛶';
+    icon.textContent = document.fullscreenElement ? '⊗' : '⛶';
 });
 
 document.addEventListener('webkitfullscreenchange', () => {
     const icon = fullscreenToggleBtn.querySelector('.fullscreen-icon');
-    icon.textContent = document.webkitFullscreenElement ? '⛶' : '⛶';
+    icon.textContent = document.webkitFullscreenElement ? '⊗' : '⛶';
 });
 
 document.addEventListener('mozfullscreenchange', () => {
     const icon = fullscreenToggleBtn.querySelector('.fullscreen-icon');
-    icon.textContent = document.mozFullScreenElement ? '⛶' : '⛶';
+    icon.textContent = document.mozFullScreenElement ? '⊗' : '⛶';
 });
 
 // Event listeners for theme and fullscreen
@@ -315,7 +312,7 @@ joystickHeadElement.addEventListener("mousedown", function (event) {
         mouseStartX = event.clientX;
         mouseStartY = event.clientY;
         gameInProgress = true;
-        window.requestAnimationFrame(main);
+        globalThis.requestAnimationFrame(main);
         noteElement.style.opacity = 0;
         joystickHeadElement.style.cssText = `
           animation: none;
@@ -324,7 +321,7 @@ joystickHeadElement.addEventListener("mousedown", function (event) {
     }
 });
 
-window.addEventListener("mousemove", function (event) {
+globalThis.addEventListener("mousemove", function (event) {
     if (gameInProgress) {
         const mouseDeltaX = -Math.minmax(mouseStartX - event.clientX, 15);
         const mouseDeltaY = -Math.minmax(mouseStartY - event.clientY, 15);
@@ -353,7 +350,7 @@ window.addEventListener("mousemove", function (event) {
     }
 });
 
-window.addEventListener("keydown", function (event) {
+globalThis.addEventListener("keydown", function (event) {
     // If not an arrow key or space or H or F was pressed then return
     if (![" ", "H", "h", "E", "e", "F", "f"].includes(event.key)) return;
 
@@ -383,7 +380,6 @@ window.addEventListener("keydown", function (event) {
     // Toggle fullscreen with F key
     if (event.key == "F" || event.key == "f") {
         toggleFullscreen();
-        return;
     }
 });
 
@@ -437,7 +433,7 @@ function resetGame() {
 
     // Remove previous hole elements
     holeElements.forEach((holeElement) => {
-        mazeElement.removeChild(holeElement);
+        holeElement.remove();
     });
     holeElements = [];
 
@@ -460,7 +456,7 @@ function main(timestamp) {
 
     if (previousTimestamp === undefined) {
         previousTimestamp = timestamp;
-        window.requestAnimationFrame(main);
+        globalThis.requestAnimationFrame(main);
         return;
     }
 
@@ -710,7 +706,7 @@ function main(timestamp) {
                         if (distance <= holeSize / 2) {
                             // The ball fell into a hole
                             holeElements[hi].style.backgroundColor = "red";
-                            throw Error("The ball fell into a hole");
+                            throw new Error("The ball fell into a hole");
                         }
                     });
                 }
@@ -733,7 +729,7 @@ function main(timestamp) {
             )
         ) {
             noteElement.innerHTML = `Congrats, you did it!
-          ${!hardMode ? "<p>Press H for hard mode</p>" : ""}
+          ${hardMode ? "" : "<p>Press H for hard mode</p>"}
           <p>Press F for fullscreen | Press Space to restart</p>
           <p>
             Follow me
@@ -745,7 +741,7 @@ function main(timestamp) {
             gameInProgress = false;
         } else {
             previousTimestamp = timestamp;
-            window.requestAnimationFrame(main);
+            globalThis.requestAnimationFrame(main);
         }
     } catch (error) {
         if (error.message == "The ball fell into a hole") {

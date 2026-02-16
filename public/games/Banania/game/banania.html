@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Banania - Game Edition</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
@@ -21,6 +21,8 @@
             background-color: #000;
             display: flex;
             flex-direction: column;
+            touch-action: none;
+            overscroll-behavior: none;
         }
 
         #main-layout {
@@ -50,17 +52,20 @@
             justify-content: center;
             background-color: #111;
             position: relative;
+            overflow: hidden;
+            width: 100%;
+            touch-action: none;
         }
 
         /* Force le canvas de ton jeu à être grand et centré */
         canvas.canv {
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            display: block !important;
-            object-fit: contain !important;
-            /* box-shadow removed for cleaner full-screen look */
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            width: auto;
+            height: auto;
+            touch-action: none;
         }
 
         /* Fullscreen Button */
@@ -103,6 +108,13 @@
                 display: none;
             }
         }
+
+        /* Hide internal fullscreen button on mobile */
+        @media (max-width: 1024px) {
+            .btn-fullscreen {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
@@ -132,17 +144,15 @@
                 } else if (elem.msRequestFullscreen) {
                     elem.msRequestFullscreen();
                 }
-            } else {
-                // Exit fullscreen
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+            } else if (document.exitFullscreen) {
+                // Exit fullscreen (use else-if chain so 'else' doesn't only contain an 'if')
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
             }
         }
     </script>
@@ -153,10 +163,10 @@
 
     <script type="text/javascript">
         // CORRECTIF CRUCIAL POUR TON CODE
-        window.addEventListener('load', function () {
+        globalThis.addEventListener('load', function () {
             // 1. On trouve le canvas créé par game.js
-            var canvas = document.querySelector('canvas.canv');
-            var container = document.getElementById('game-container');
+            const canvas = document.querySelector('canvas.canv');
+            const container = document.getElementById('game-container');
 
             if (canvas && container) {
                 // 2. On le déplace dans le conteneur entre les pubs
@@ -167,6 +177,53 @@
             // qui essaie de forcer le plein écran (ce qui cache les pubs)
             // window.onresize = null; // We might want to keep it or handle it ourselves
         });
+
+        // Prevent page scrolling when game controls are used
+        const GAME_CONTROL_KEYS = new Set([
+            37, // Left arrow
+            38, // Up arrow
+            39, // Right arrow
+            40, // Down arrow
+            32, // Space
+            13, // Enter
+            27, // Escape
+            'ArrowLeft',
+            'ArrowUp',
+            'ArrowRight',
+            'ArrowDown',
+            ' ',
+            'Enter',
+            'Escape',
+            'w', 'W', // Movement alternatives
+            'a', 'A',
+            'd', 'D',
+            's', 'S',
+            'j', 'J', // Jump
+            'k', 'K'  // Action
+        ]);
+
+        document.addEventListener('keydown', function(e) {
+            // Check if key is a game control key
+            if (GAME_CONTROL_KEYS.has(e.keyCode) || GAME_CONTROL_KEYS.has(e.key)) {
+                e.preventDefault();
+            }
+        }, false);
+
+        document.addEventListener('keyup', function(e) {
+            // Check if key is a game control key
+            if (GAME_CONTROL_KEYS.has(e.keyCode) || GAME_CONTROL_KEYS.has(e.key)) {
+                e.preventDefault();
+            }
+        }, false);
+
+        // Prevent scrolling on touch devices
+        document.addEventListener('touchmove', function(e) {
+            // Allow scrolling on specific elements if needed
+            const target = e.target.closest('[data-allow-scroll]');
+            if (!target) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 
 </body>

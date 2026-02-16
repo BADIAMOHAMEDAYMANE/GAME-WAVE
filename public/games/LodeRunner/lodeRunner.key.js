@@ -1,6 +1,6 @@
-var keyAction = ACT_STOP; //// keyLastLeftRight = ACT_RIGHT;
-var shiftLevelNum = 0;
-var runnerDebug = 0;
+let keyAction = ACT_STOP; //// keyLastLeftRight = ACT_RIGHT;
+let shiftLevelNum = 0;
+const runnerDebug = 0;
 
 function pressShiftKey(code)
 {
@@ -101,7 +101,7 @@ function debugKeyPress(code)
 	}
 }
 
-var godMode = 0, godModeKeyPressed = 0;
+let godMode = 0, godModeKeyPressed = 0;
 
 function initHotKeyVariable()
 {

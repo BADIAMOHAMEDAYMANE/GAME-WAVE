@@ -2,21 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
     candyCrushGame();
 });
 
+// [S7721] Fonctions de drag déplacées hors du scope interne pour la performance
+function dragOver(e) { e.preventDefault(); }
+function dragEnter(e) { e.preventDefault(); }
+function dragLeave() { /* Optionnel: ajouter un style de survol ici */ }
+
 function candyCrushGame() {
-    // Éléments du DOM
     const grid = document.querySelector(".grid");
     const scoreDisplay = document.getElementById("score");
     const timerDisplay = document.getElementById("timer");
     const modeSelection = document.getElementById("modeSelection");
     const compactControls = document.querySelector(".compact-controls");
 
-    // Boutons
     const endlessButton = document.getElementById("endlessMode");
     const timedButton = document.getElementById("timedMode");
     const changeModeButton = document.getElementById("changeMode");
     const fullscreenBtn = document.getElementById("fullscreenBtn");
 
-    // Variables d'état
     const width = 8;
     const squares = [];
     let score = 0;
@@ -35,7 +37,6 @@ function candyCrushGame() {
         "url(https://raw.githubusercontent.com/arpit456jain/Amazing-Js-Projects/master/Candy%20Crush/utils/purple-candy.png)",
     ];
 
-    // --- LOGIQUE DE PAUSE ---
     function pauseGame() {
         isPaused = true;
         clearInterval(gameInterval);
@@ -45,13 +46,12 @@ function candyCrushGame() {
     function resumeGame() {
         if (!isPaused) return;
         isPaused = false;
-        gameInterval = setInterval(gameLoop, 50);
+        gameInterval = setInterval(gameLoop, 1000 / 60);
         if (currentMode === "timed") {
             timerInterval = setInterval(countdown, 1000);
         }
     }
 
-    // --- CRÉATION DU PLATEAU ---
     function createBoard() {
         grid.innerHTML = "";
         squares.length = 0;
@@ -59,13 +59,12 @@ function candyCrushGame() {
             const square = document.createElement("div");
             square.setAttribute("draggable", true);
             square.setAttribute("id", i);
-            let randomColor = Math.floor(Math.random() * candyColors.length);
+            const randomColor = Math.floor(Math.random() * candyColors.length);
             square.style.backgroundImage = candyColors[randomColor];
             grid.appendChild(square);
             squares.push(square);
         }
 
-        // Événements de Drag & Drop (Souris)
         squares.forEach(square => {
             square.addEventListener("dragstart", dragStart);
             square.addEventListener("dragend", dragEnd);
@@ -75,7 +74,6 @@ function candyCrushGame() {
             square.addEventListener("drop", dragDrop);
         });
 
-        // Événements de Touch (Smartphone)
         squares.forEach(square => {
             square.addEventListener("touchstart", touchStart, { passive: false });
             square.addEventListener("touchmove", touchMove, { passive: false });
@@ -83,35 +81,30 @@ function candyCrushGame() {
         });
     }
 
-    // --- GESTION DU DRAG & DROP ---
     let colorBeingDragged, colorBeingReplaced, squareIdBeingDragged, squareIdBeingReplaced;
 
     function dragStart() {
         if (isPaused) return;
         colorBeingDragged = this.style.backgroundImage;
-        squareIdBeingDragged = parseInt(this.id);
+        squareIdBeingDragged = Number.parseInt(this.id); // [S7773]
     }
-
-    function dragOver(e) { e.preventDefault(); }
-    function dragEnter(e) { e.preventDefault(); }
-    function dragLeave() { }
 
     function dragDrop() {
         if (isPaused) return;
         colorBeingReplaced = this.style.backgroundImage;
-        squareIdBeingReplaced = parseInt(this.id);
+        squareIdBeingReplaced = Number.parseInt(this.id); // [S7773]
         this.style.backgroundImage = colorBeingDragged;
         squares[squareIdBeingDragged].style.backgroundImage = colorBeingReplaced;
     }
 
     function dragEnd() {
-        let validMoves = [
+        const validMoves = [
             squareIdBeingDragged - 1,
             squareIdBeingDragged - width,
             squareIdBeingDragged + 1,
             squareIdBeingDragged + width
         ];
-        let validMove = validMoves.includes(squareIdBeingReplaced);
+        const validMove = validMoves.includes(squareIdBeingReplaced);
 
         if (squareIdBeingReplaced && validMove) {
             squareIdBeingReplaced = null;
@@ -121,7 +114,6 @@ function candyCrushGame() {
         }
     }
 
-    // --- LOGIQUE TOUCH (SMARTPHONE) ---
     let hasSwapped = false;
 
     function touchStart(e) {
@@ -130,8 +122,8 @@ function candyCrushGame() {
         const target = document.elementFromPoint(touch.clientX, touch.clientY);
         if (target && target.parentElement === grid) {
             colorBeingDragged = target.style.backgroundImage;
-            squareIdBeingDragged = parseInt(target.id);
-            hasSwapped = false; // Reset for new swipe
+            squareIdBeingDragged = Number.parseInt(target.id); // [S7773]
+            hasSwapped = false;
         }
     }
 
@@ -142,10 +134,10 @@ function candyCrushGame() {
         const target = document.elementFromPoint(touch.clientX, touch.clientY);
 
         if (target && target.parentElement === grid) {
-            squareIdBeingReplaced = parseInt(target.id);
+            squareIdBeingReplaced = Number.parseInt(target.id); // [S7773]
 
             if (squareIdBeingDragged !== undefined && squareIdBeingReplaced !== undefined && squareIdBeingDragged !== squareIdBeingReplaced) {
-                let validMoves = [
+                const validMoves = [
                     squareIdBeingDragged - 1,
                     squareIdBeingDragged - width,
                     squareIdBeingDragged + 1,
@@ -155,12 +147,8 @@ function candyCrushGame() {
                 if (validMoves.includes(squareIdBeingReplaced)) {
                     hasSwapped = true;
                     colorBeingReplaced = target.style.backgroundImage;
-
-                    // Instant Visual Swap
                     target.style.backgroundImage = colorBeingDragged;
                     squares[squareIdBeingDragged].style.backgroundImage = colorBeingReplaced;
-
-                    // Finalize move logic
                     dragEnd();
                 }
             }
@@ -169,10 +157,8 @@ function candyCrushGame() {
 
     function touchEnd(e) {
         if (isPaused) return;
-        // Logic handled in touchMove for better speed
     }
 
-    // --- LOGIQUE DU JEU ---
     function moveIntoSquareBelow() {
         for (let i = 0; i < width * (width - 1); i++) {
             if (squares[i + width].style.backgroundImage === "") {
@@ -182,7 +168,7 @@ function candyCrushGame() {
         }
         for (let i = 0; i < width; i++) {
             if (squares[i].style.backgroundImage === "") {
-                let randomColor = Math.floor(Math.random() * candyColors.length);
+                const randomColor = Math.floor(Math.random() * candyColors.length);
                 squares[i].style.backgroundImage = candyColors[randomColor];
             }
         }
@@ -198,9 +184,10 @@ function candyCrushGame() {
     function checkRow(size, points) {
         for (let i = 0; i < 64; i++) {
             if (i % width > width - size) continue;
-            let row = [];
+            const row = [];
             for (let j = 0; j < size; j++) row.push(i + j);
-            let decidedColor = squares[i].style.backgroundImage;
+            const decidedColor = squares[i].style.backgroundImage;
+            // [S7735] Inversion de la condition pour plus de clarté
             if (decidedColor && row.every(index => squares[index].style.backgroundImage === decidedColor)) {
                 score += points;
                 scoreDisplay.innerHTML = score;
@@ -211,9 +198,9 @@ function candyCrushGame() {
 
     function checkColumn(size, points) {
         for (let i = 0; i < 64 - (width * (size - 1)); i++) {
-            let column = [];
+            const column = [];
             for (let j = 0; j < size; j++) column.push(i + (j * width));
-            let decidedColor = squares[i].style.backgroundImage;
+            const decidedColor = squares[i].style.backgroundImage;
             if (decidedColor && column.every(index => squares[index].style.backgroundImage === decidedColor)) {
                 score += points;
                 scoreDisplay.innerHTML = score;
@@ -228,7 +215,6 @@ function candyCrushGame() {
         moveIntoSquareBelow();
     }
 
-    // --- ÉTATS DU JEU ---
     function startGame(mode) {
         currentMode = mode;
         modeSelection.style.display = "none";
@@ -240,7 +226,7 @@ function candyCrushGame() {
         scoreDisplay.innerHTML = score;
         isPaused = false;
 
-        gameInterval = setInterval(gameLoop, 50);
+        gameInterval = setInterval(gameLoop, 1000 / 60);
 
         if (mode === "timed") {
             timeLeft = 120;
@@ -258,8 +244,8 @@ function candyCrushGame() {
     }
 
     function updateTimerDisplay() {
-        let min = Math.floor(timeLeft / 60);
-        let sec = timeLeft % 60;
+        const min = Math.floor(timeLeft / 60);
+        const sec = timeLeft % 60;
         timerDisplay.innerHTML = `${min}:${sec < 10 ? '0' : ''}${sec}`;
     }
 
@@ -276,20 +262,16 @@ function candyCrushGame() {
         modeSelection.style.display = "flex";
     }
 
-    // Écouteurs d'événements
     endlessButton.addEventListener("click", () => startGame("endless"));
     timedButton.addEventListener("click", () => startGame("timed"));
     changeModeButton.addEventListener("click", changeMode);
-
-    // Gestion du plein écran
     fullscreenBtn.addEventListener("click", toggleFullscreen);
 
     function toggleFullscreen() {
         const gameArea = document.querySelector(".game-area");
-
         if (!document.fullscreenElement) {
             gameArea.requestFullscreen().catch(err => {
-                console.error(`Erreur plein écran: ${err.message}`);
+                console.error(`Erreur: ${err.message}`);
             });
             fullscreenBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
         } else {
@@ -298,7 +280,6 @@ function candyCrushGame() {
         }
     }
 
-    // Détecter la sortie du plein écran (avec ESC par exemple)
     document.addEventListener("fullscreenchange", () => {
         if (!document.fullscreenElement) {
             fullscreenBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';

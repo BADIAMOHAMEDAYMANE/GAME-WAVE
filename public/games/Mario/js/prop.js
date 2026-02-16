@@ -1,9 +1,9 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (globalThis.Mario === undefined)
+  globalThis.Mario = {};
 
   //props do even less than entities, so they don't need to inherit really
-  var Prop = Mario.Prop = function(pos, sprite) {
+  const Prop = Mario.Prop = function(pos, sprite) {
     this.pos = pos;
     this.sprite = sprite;
   }

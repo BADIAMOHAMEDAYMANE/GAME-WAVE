@@ -62,15 +62,14 @@ const changeDirection = e => {
 };
 
 const initGame = () => {
+    // Logic tick only (keeps existing movement speed)
     if (gameOver) return handleGameOver();
-
-    let html = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
 
     if (snakeX === foodX && snakeY === foodY) {
         updateFoodPosition();
         snakeBody.push([foodY, foodX]);
         score++;
-        highScore = score >= highScore ? score : highScore;
+        highScore = Math.max(score, highScore);
         localStorage.setItem("high-score", highScore);
         scoreElement.innerText = score;
         highScoreElement.innerText = highScore;
@@ -89,24 +88,37 @@ const initGame = () => {
     }
 
     for (let i = 0; i < snakeBody.length; i++) {
-        html += `<div class="head" style="grid-area: ${snakeBody[i][0]} / ${snakeBody[i][1]}"></div>`;
         if (i !== 0 && snakeBody[0][0] === snakeBody[i][0] && snakeBody[0][1] === snakeBody[i][1]) {
             gameOver = true;
+            break;
         }
     }
-    playBoard.innerHTML = html;
 };
+
+// Render at 60 FPS (separate from logic)
+function renderGame() {
+    let html = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
+    for (const segment of snakeBody) {
+        html += `<div class="head" style="grid-area: ${segment[0]} / ${segment[1]}"></div>`;
+    }
+    playBoard.innerHTML = html;
+}
+
+function renderLoop() {
+    renderGame();
+    requestAnimationFrame(renderLoop);
+}
 
 // --- PLEIN ÉCRAN ---
 expandBtn.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+        expandBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
+    } else {
         gameContainer.requestFullscreen().catch(err => {
             console.error(`Erreur : ${err.message}`);
         });
         expandBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
-    } else {
-        document.exitFullscreen();
-        expandBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
     }
 });
 
@@ -126,8 +138,8 @@ document.addEventListener("fullscreenchange", () => {
     }
 });
 
-window.addEventListener("keydown", (e) => {
-    if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight", " "].includes(e.key)) {
+globalThis.addEventListener("keydown", (e) => {
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)) {
         e.preventDefault();
     }
 }, false);
@@ -140,3 +152,5 @@ document.addEventListener("keydown", changeDirection);
 
 updateFoodPosition();
 setIntervalId = setInterval(initGame, 125);
+// Start smooth rendering loop (60 FPS) while keeping logic tick at 125ms
+requestAnimationFrame(renderLoop);

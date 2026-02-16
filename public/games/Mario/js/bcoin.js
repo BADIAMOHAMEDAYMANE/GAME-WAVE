@@ -1,8 +1,8 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (globalThis.Mario === undefined)
+  globalThis.Mario = {};
 
-  var Bcoin = Mario.Bcoin = function(pos) {
+  const Bcoin = Mario.Bcoin = function(pos) {
     Mario.Entity.call(this, {
       pos: pos,
       sprite: level.bcoinSprite(),
@@ -40,6 +40,6 @@
     this.sprite.update(dt);
   }
 
-  Bcoin.prototype.checkCollisions = function() {;}
+  Bcoin.prototype.checkCollisions = function() {};
 
 })();

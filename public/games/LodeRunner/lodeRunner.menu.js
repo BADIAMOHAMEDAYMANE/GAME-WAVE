@@ -1,10 +1,10 @@
-var LODERUNNER_NAME1 = "Lode Runner 1"; //"Lode Runner";
-var LODERUNNER_NAME2 = "Lode Runner 2"; //"Championship Lode Runner";
-var USER_CREATED_NAME = "User Created"; //user defined level
+const LODERUNNER_NAME1 = "Lode Runner 1"; //"Lode Runner";
+const LODERUNNER_NAME2 = "Lode Runner 2"; //"Championship Lode Runner";
+const USER_CREATED_NAME = "User Created"; //user defined level
 
 function saveKeyHandler(newHandler)
 {
-	var keyHandler, clickState; 
+	let keyHandler, clickState; 
 	
 	keyHandler = document.onkeydown;
 	clickState = disableStageClickEvent();
@@ -22,15 +22,15 @@ function restoreKeyHandler(stateObj)
 
 function helpMenuClass(_stage, _bitmap, _editBitmap, _demoBitmap, _scale)
 {
-	var HELP_BORDER_SIZE = 24;
+	const HELP_BORDER_SIZE = 24;
 	
-	var saveStateObj;
-	var stage, helpBitmap = [], bitmapId, scale;
-	var helpBorder, helpBackground; //versionText;
-	var startX, startY, menuX, menuY;
-	var closeBoxSize;
-	var callBackFun, callBackArgs;
-	var coverBackgroundObj, closeIcon;
+	let saveStateObj;
+	let stage, helpBitmap = [], bitmapId, scale;
+	let helpBorder, helpBackground; //versionText;
+	let startX, startY, menuX, menuY;
+	let closeBoxSize;
+	let callBackFun, callBackArgs;
+	let coverBackgroundObj, closeIcon;
 
 	stage = _stage;
 	helpBitmap[0] = _bitmap;
@@ -41,7 +41,7 @@ function helpMenuClass(_stage, _bitmap, _editBitmap, _demoBitmap, _scale)
 
 	this.showHelp = function(id, callback, args)
 	{
-		if(typeof args == "undefined") args = null;
+		if(typeof args === "undefined") args = null;
 		callBackFun = callback;
 		callBackArgs = args;
 		closeBoxSize = 12*scale+2;
@@ -71,10 +71,10 @@ function helpMenuClass(_stage, _bitmap, _editBitmap, _demoBitmap, _scale)
 
 	function drawHelpMenu()
 	{
-		var borderSize = HELP_BORDER_SIZE * scale;
-		var halfBorder = borderSize/2;
-		var bitmapW = helpBitmap[bitmapId].getBounds().width * scale;
-		var bitmapH = helpBitmap[bitmapId].getBounds().height * scale;
+		const borderSize = HELP_BORDER_SIZE * scale;
+		const halfBorder = borderSize/2;
+		const bitmapW = helpBitmap[bitmapId].getBounds().width * scale;
+		const bitmapH = helpBitmap[bitmapId].getBounds().height * scale;
 	
 		menuX = bitmapW + borderSize;
 		menuY = bitmapH + borderSize;
@@ -88,13 +88,13 @@ function helpMenuClass(_stage, _bitmap, _editBitmap, _demoBitmap, _scale)
 		helpBackground = new createjs.Shape();
 		versionText = new createjs.Text("Ver " + VERSION + "." + AI_VERSION, (16*scale) + "px Helvetica", "#FFF");
 	
-		var helpG = helpBorder.graphics;
+		const helpG = helpBorder.graphics;
 	
 		helpBorder.alpha = 0.8;
 		helpG.beginFill("#FF0").drawRoundRect(startX, startY, menuX, menuY, halfBorder).endFill();
 		
 	
-		var helpB = helpBackground.graphics;
+		const helpB = helpBackground.graphics;
 	
 		helpBackground.alpha = 0.6;
 		helpB.beginFill("#190218")
@@ -132,8 +132,8 @@ function helpMenuClass(_stage, _bitmap, _editBitmap, _demoBitmap, _scale)
 	
 	function drawCloseIcon(mouseOver)
 	{
-		var cycle, cross;
-		var alpha, cycColor, crosColor;
+		let cycle, cross;
+		let alpha, cycColor, crosColor;
 		if(closeIcon == null) {
 			closeIcon = new createjs.Container();
 			cross = new createjs.Shape();
@@ -160,7 +160,7 @@ function helpMenuClass(_stage, _bitmap, _editBitmap, _demoBitmap, _scale)
 			crosColor = "white";
 		}
 		
-		var g = cycle.graphics; 
+		let g = cycle.graphics; 
 		g.clear();
 		cycle.alpha = alpha;	
 		g.beginFill(cycColor).dc(closeBoxSize/2, closeBoxSize/2, closeBoxSize*5/4);
@@ -209,16 +209,16 @@ function helpMenuClass(_stage, _bitmap, _editBitmap, _demoBitmap, _scale)
 
 function closeIconClass(_width, _height, _stage, _scale, _activeColor, _callBack, _args)
 {
-	var closeBoxSize = 12*_scale+2;
-	var closeIcon = null;;
+	const closeBoxSize = 12*_scale+2;
+	let closeIcon = null;;
 
 	drawCloseIcon(0);
 	return closeIcon; //must remove by contractor 
 
 	function drawCloseIcon(mouseOver)
 	{
-		var cycle, cross;
-		var alpha, cycColor, crosColor;
+		let cycle, cross;
+		let alpha, cycColor, crosColor;
 		if(closeIcon == null) {
 			closeIcon = new createjs.Container();
 			cross = new createjs.Shape();
@@ -245,7 +245,7 @@ function closeIconClass(_width, _height, _stage, _scale, _activeColor, _callBack
 			crosColor = "white";
 		}
 		
-		var g = cycle.graphics; 
+		let g = cycle.graphics; 
 		g.clear();
 		cycle.alpha = alpha;	
 		g.beginFill(cycColor).dc(closeBoxSize/2, closeBoxSize/2, closeBoxSize*5/4);
@@ -341,73 +341,73 @@ function closeIconClass(_width, _height, _stage, _scale, _activeColor, _callBack
 function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _screenX1, _screenY1, 
 					   _parentStage, _scale, _activeFun, _closeFun, _postFun)	
 {
-	var TITLE_TEXT_SIZE = 36 * _scale;
-	var TABS_TEXT_SIZE = 20  * _scale;
+	const TITLE_TEXT_SIZE = 36 * _scale;
+	const TABS_TEXT_SIZE = 20  * _scale;
 	
-	var TOP_BORDER1 = TITLE_TEXT_SIZE * 3/2 | 0;
-	var TOP_BORDER2 = TABS_TEXT_SIZE * 3/2 | 0;
-	var BORDER1 = 20 * _scale;
-	var BORDER2 = 16 * _scale;
-	var TABS_START_X = BORDER1;
-	var TABS_START_Y = TOP_BORDER1;
+	const TOP_BORDER1 = TITLE_TEXT_SIZE * 3/2 | 0;
+	const TOP_BORDER2 = TABS_TEXT_SIZE * 3/2 | 0;
+	const BORDER1 = 20 * _scale;
+	const BORDER2 = 16 * _scale;
+	const TABS_START_X = BORDER1;
+	const TABS_START_Y = TOP_BORDER1;
 	
-	var MAP_SCALE = _scale * 0.2;
-	var SELECT_SIZE_X = NO_OF_TILES_X*BASE_TILE_X*MAP_SCALE;
-	var SELECT_SIZE_Y = NO_OF_TILES_Y*BASE_TILE_Y*MAP_SCALE;
-	var SLIDE_PAGE_ITEMS = 3 * 10;
-	var SLIDE_GAP_X = BASE_TILE_X * _scale * 3/4;
-	var SLIDE_GAP_Y = BASE_TILE_Y * _scale * 3/4;
-	var SLIDE_ITEM_X = 3;
-	var SLIDE_ITEM_Y = 3;
-	var SLIDE_AREA_X = (SLIDE_GAP_X*2+SELECT_SIZE_X)*SLIDE_ITEM_X;
-	var SLIDE_AREA_Y = (SLIDE_GAP_Y*2+SELECT_SIZE_Y)*SLIDE_ITEM_Y;
+	const MAP_SCALE = _scale * 0.2;
+	const SELECT_SIZE_X = NO_OF_TILES_X*BASE_TILE_X*MAP_SCALE;
+	const SELECT_SIZE_Y = NO_OF_TILES_Y*BASE_TILE_Y*MAP_SCALE;
+	const SLIDE_PAGE_ITEMS = 3 * 10;
+	const SLIDE_GAP_X = BASE_TILE_X * _scale * 3/4;
+	const SLIDE_GAP_Y = BASE_TILE_Y * _scale * 3/4;
+	const SLIDE_ITEM_X = 3;
+	const SLIDE_ITEM_Y = 3;
+	const SLIDE_AREA_X = (SLIDE_GAP_X*2+SELECT_SIZE_X)*SLIDE_ITEM_X;
+	const SLIDE_AREA_Y = (SLIDE_GAP_Y*2+SELECT_SIZE_Y)*SLIDE_ITEM_Y;
 	
-	var CANVAS_SIZE_X = (BORDER1+BORDER2)*2 + SLIDE_AREA_X;
-	var CANVAS_SIZE_Y = TOP_BORDER1 + TOP_BORDER2 + BORDER2 + SLIDE_AREA_Y +BORDER1+BORDER2;
+	const CANVAS_SIZE_X = (BORDER1+BORDER2)*2 + SLIDE_AREA_X;
+	const CANVAS_SIZE_Y = TOP_BORDER1 + TOP_BORDER2 + BORDER2 + SLIDE_AREA_Y +BORDER1+BORDER2;
 
-	var BACKGROUND_COLOR = "#ff5050";
-	var BORDER1_COLOR = BACKGROUND_COLOR;
-	var BORDER2_COLOR = "white";
-	var TABS_ACTIVE_FILL_COLOR = BORDER2_COLOR;
-	var TABS_ACTIVE_LINE_COLOR = BORDER2_COLOR;
-	var TABS_ACTIVE_TEXT_COLOR = "black";	
-	var TABS_INACTIVE_FILL_COLOR = "#ccc";
-	var TABS_INACTIVE_LINE_COLOR = "#aaa";	
-	var TABS_INACTIVE_TEXT_COLOR = "#888";	
+	const BACKGROUND_COLOR = "#ff5050";
+	const BORDER1_COLOR = BACKGROUND_COLOR;
+	const BORDER2_COLOR = "white";
+	const TABS_ACTIVE_FILL_COLOR = BORDER2_COLOR;
+	const TABS_ACTIVE_LINE_COLOR = BORDER2_COLOR;
+	const TABS_ACTIVE_TEXT_COLOR = "black";	
+	const TABS_INACTIVE_FILL_COLOR = "#ccc";
+	const TABS_INACTIVE_LINE_COLOR = "#aaa";	
+	const TABS_INACTIVE_TEXT_COLOR = "#888";	
 
-	var SLIDE_BACKGROUND = "#EEEEFF";
-	var SLIDE_BOUNDLINE_COLOR = "red";
+	const SLIDE_BACKGROUND = "#EEEEFF";
+	const SLIDE_BOUNDLINE_COLOR = "red";
 	
-	var SELECT_TEXT_COLOR = "black";
-	var SELECT_TEXT_ACTIVE_COLOR = "red";
-	var SELECT_TEXT_SIZE = 20  * _scale;
+	const SELECT_TEXT_COLOR = "black";
+	const SELECT_TEXT_ACTIVE_COLOR = "red";
+	const SELECT_TEXT_SIZE = 20  * _scale;
 	
-	var SELECT_MOUSE_OVER_COLOR = "gold";
-	var SELECT_MAP_BACKGROUND_COLOR = "black";
-	var SELECT_SCORE_COLOR = "white";
-	var SELECT_SCORE_SHADOW = "black";
-	var SELECT_CHECK_SHADOW_COLOR = "white";
+	const SELECT_MOUSE_OVER_COLOR = "gold";
+	const SELECT_MAP_BACKGROUND_COLOR = "black";
+	const SELECT_SCORE_COLOR = "white";
+	const SELECT_SCORE_SHADOW = "black";
+	const SELECT_CHECK_SHADOW_COLOR = "white";
 	
-	var TITLE_TEXT_COLOR = "white";
-	var TITLE_TEXT_SHADOW_COLOR = "gold";
+	const TITLE_TEXT_COLOR = "white";
+	const TITLE_TEXT_SHADOW_COLOR = "gold";
 	
-	var CLOSE_ICON_ACTIVE_COLOR = "#8080ff";
+	const CLOSE_ICON_ACTIVE_COLOR = "#8080ff";
 	
 	//////////////////////////////////////////////////
 	
-	var canvas1;
-	var coverBackgroundObj;
-	var dialogStage;
-	var slider;
-	var boundLine1, boundLine2;
+	let canvas1;
+	let coverBackgroundObj;
+	let dialogStage;
+	let slider;
+	let boundLine1, boundLine2;
 
-	var tabs = [], tabsLine;
+	let tabs = [], tabsLine;
 
-	var maxPages, activePage; //0 - 
-	var lastWheelFun = null;	
+	let maxPages, activePage; //0 - 
+	let lastWheelFun = null;	
 
-	var activeState = 0; //for edit mode only (1: active level shift, -1: active level deleted)
-	var levelDeleted = 0; //for edit mode only
+	let activeState = 0; //for edit mode only (1: active level shift, -1: active level deleted)
+	let levelDeleted = 0; //for edit mode only
 	
 	init();
 	function init()
@@ -462,7 +462,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		canvas1.width  = CANVAS_SIZE_X;
 		canvas1.height = CANVAS_SIZE_Y;
 	
-		var left = ((_screenX1 - canvas1.width)/2|0),
+		const left = ((_screenX1 - canvas1.width)/2|0),
 			top  = ((_screenY1 - canvas1.height)/2|0);
 		canvas1.style.left = (left>0?left:0) + "px";
 		canvas1.style.top =  (top>0?top:0) + "px";
@@ -493,7 +493,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 	
 	function setBackground()
 	{
-		var background = new createjs.Shape();
+		const background = new createjs.Shape();
 		background.graphics.beginFill(BACKGROUND_COLOR).drawRoundRect(0, 0, CANVAS_SIZE_X, CANVAS_SIZE_Y, 8*_scale)
 		.endFill();
 		dialogStage.addChild(background);
@@ -526,9 +526,9 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 	
 	function createBorder1()
 	{
-		var border1 = new createjs.Container();	
-		var vBorder1 = new createjs.Shape();
-		var vBorder2 = new createjs.Shape();
+		const border1 = new createjs.Container();	
+		const vBorder1 = new createjs.Shape();
+		const vBorder2 = new createjs.Shape();
 		
 		vBorder1.graphics.beginFill(BORDER1_COLOR)
 			      .drawRect(BORDER1+BORDER2, 0, SLIDE_AREA_X, TOP_BORDER1+TOP_BORDER2).endFill();
@@ -543,11 +543,11 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 	
 	function createBorder2()
 	{
-		var border2 = new createjs.Container();	
-		var vBorder1 = new createjs.Shape();
-		var vBorder2 = new createjs.Shape();
-		var hBorder1 = new createjs.Shape(); 
-		var hBorder2 = new createjs.Shape(); 
+		const border2 = new createjs.Container();	
+		const vBorder1 = new createjs.Shape();
+		const vBorder2 = new createjs.Shape();
+		const hBorder1 = new createjs.Shape(); 
+		const hBorder2 = new createjs.Shape(); 
 		
 		
 		vBorder1.graphics.beginFill(BORDER2_COLOR)
@@ -572,7 +572,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 	
 	function clearTabs()
 	{
-		for(var i = 0; i < tabs.length; i++) {
+		for(let i = 0; i < tabs.length; i++) {
 			dialogStage.removeChild(tabs[i]);
 		}
 		dialogStage.removeChild(tabsLine);
@@ -580,12 +580,12 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 	
 	function createTabs(tabsOnly)
 	{
-		var tabBackground, tabText;
-		var textWidth, textHeight;
-		var tabsStartX = BORDER1;
+		let tabBackground, tabText;
+		let textWidth, textHeight;
+		let tabsStartX = BORDER1;
 		
-		for(var i = 0; i < maxPages; i++) {
-			var tabsName = ("00" + (i * SLIDE_PAGE_ITEMS + 1)).slice(-3) + " - " + 
+		for(let i = 0; i < maxPages; i++) {
+			const tabsName = ("00" + (i * SLIDE_PAGE_ITEMS + 1)).slice(-3) + " - " + 
 				           ("00" + (i==maxPages-1?_levelData.length:((i+1) * SLIDE_PAGE_ITEMS))).slice(-3);
 			//debug(tabsName);
 			
@@ -651,7 +651,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function tabsInActiveAll()
 		{
-			for(var i = maxPages; i > 0; i--) {
+			for(let i = maxPages; i > 0; i--) {
 				tabsInActive(i-1);
 				moveChild2Top(dialogStage, tabs[i-1]);
 			}
@@ -670,37 +670,37 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 	
 	function setSlidePage(pages)
 	{
-		var startLevel = SLIDE_PAGE_ITEMS * pages+1;
-		var endLevel = (pages == maxPages-1)?_levelData.length:SLIDE_PAGE_ITEMS * (pages+1);
+		const startLevel = SLIDE_PAGE_ITEMS * pages+1;
+		let endLevel = (pages == maxPages-1)?_levelData.length:SLIDE_PAGE_ITEMS * (pages+1);
 		
-		var pageItems = endLevel - startLevel+1;
-		var selectItemX = SLIDE_ITEM_X;
-		var selectItemY = Math.ceil(pageItems/SLIDE_ITEM_X);
+		let pageItems = endLevel - startLevel+1;
+		const selectItemX = SLIDE_ITEM_X;
+		let selectItemY = Math.ceil(pageItems/SLIDE_ITEM_X);
 		
-		var slideX = SLIDE_AREA_X;
-		var slideY = (SLIDE_GAP_Y*2+SELECT_SIZE_Y) * (selectItemY < SLIDE_ITEM_Y?SLIDE_ITEM_Y:selectItemY);
-		var slideStartX = BORDER1 + BORDER2;
-		var slideStartY = TOP_BORDER1 + TOP_BORDER2 + BORDER2;
+		const slideX = SLIDE_AREA_X;
+		let slideY = (SLIDE_GAP_Y*2+SELECT_SIZE_Y) * (selectItemY < SLIDE_ITEM_Y?SLIDE_ITEM_Y:selectItemY);
+		const slideStartX = BORDER1 + BORDER2;
+		const slideStartY = TOP_BORDER1 + TOP_BORDER2 + BORDER2;
 		
-		var maxSliderY = slideStartY;
-		var minSliderY = slideStartY + SLIDE_AREA_Y - slideY;
+		const maxSliderY = slideStartY;
+		let minSliderY = slideStartY + SLIDE_AREA_Y - slideY;
 		
-		var background = new createjs.Shape();
-		var selectRect = [], selectText = [];
-		var delSelectObj = [];
+		const background = new createjs.Shape();
+		const selectRect = [], selectText = [];
+		const delSelectObj = [];
 		
-		var sliderMoved = 0; //while move ths silder don't active mouse click
-		var firstPressMoveY = 0; //keep  Y position while first press move
-		var closeClicked = 0, closeOver = 0;
+		let sliderMoved = 0; //while move ths silder don't active mouse click
+		let firstPressMoveY = 0; //keep  Y position while first press move
+		let closeClicked = 0, closeOver = 0;
 		
-		var activeItemY = -1; //for scroll to active Item
+		let activeItemY = -1; //for scroll to active Item
 		
 		
 		init();
 		
 		function init() 
 		{
-			var diffY;
+			let diffY;
 			
 			slider.removeAllChildren();
 			slider.removeAllEventListeners();
@@ -708,11 +708,11 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 			background.graphics.beginFill(SLIDE_BACKGROUND).drawRect(0, 0, slideX, slideY);
 			slider.addChild(background);
 		
-			var id = -1;
+			let id = -1;
 			
 			levelLoop:
-			for(var y = 0; y < selectItemY; y++) {
-				for(var x = 0; x < selectItemX; x++) {
+			for(let y = 0; y < selectItemY; y++) {
+				for(let x = 0; x < selectItemX; x++) {
 					//var id;
 				
 					if(++id >= pageItems) break levelLoop;
@@ -785,9 +785,9 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 				//---------------------
 				// move to block bound
 				//---------------------
-				var blockSizeY = (SLIDE_GAP_Y*2+SELECT_SIZE_Y);
-				var startY = maxSliderY
-				var mod = (maxSliderY - slider.y) % blockSizeY; //division remainder value to block bound
+				const blockSizeY = (SLIDE_GAP_Y*2+SELECT_SIZE_Y);
+				const startY = maxSliderY
+				const mod = (maxSliderY - slider.y) % blockSizeY; //division remainder value to block bound
 				
 				if(blockSizeY/2 > mod) {
 					evt.currentTarget.y += mod; //shift down
@@ -810,8 +810,8 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function createSelectLevel(x, y)
 		{
-			var id = y*selectItemX+x;
-			var textColor = SELECT_TEXT_COLOR, level = startLevel+id;;
+			const id = y*selectItemX+x;
+			let textColor = SELECT_TEXT_COLOR, level = startLevel+id;;
 			
 			if(_activeLevel == level) {
 				activeItemY = y;
@@ -833,7 +833,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 			selectRect[id].y = (SLIDE_GAP_Y*2+SELECT_SIZE_Y) * y + SLIDE_GAP_Y;
 			slider.addChild(selectRect[id]);
 			
-			if(playMode != PLAY_DEMO || (playMode == PLAY_DEMO && (typeof demoData[level-1] != "undefined"))) {
+			if(playMode != PLAY_DEMO || (playMode == PLAY_DEMO && (typeof demoData[level-1] !== "undefined"))) {
 				selectRect[id].on('click', selectClick);
 				selectRect[id].on('mouseover', selectMouseOver);
 				selectRect[id].on('mouseout', selectMouseOut);
@@ -845,9 +845,9 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 
 		function delSelectLevel(level)
 		{
-			var id = level - startLevel;  //level = startLevel + id
-			var x, y;
-			var tabsOnly = 1;
+			let id = level - startLevel;  //level = startLevel + id
+			let x, y;
+			let tabsOnly = 1;
 
 			//(1) remove deleted level
 			slider.removeChild(selectText[id]);
@@ -915,12 +915,12 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function buildSelectMap(level, id) 
 		{
-			var levelMap = _levelData[level-1];
-			var selectMap = new createjs.Container();	
-			var border = new createjs.Shape();
-			var background = new createjs.Shape();
+			const levelMap = _levelData[level-1];
+			const selectMap = new createjs.Container();	
+			const border = new createjs.Shape();
+			const background = new createjs.Shape();
 	
-			var borderSize = _scale*4+2;
+			const borderSize = _scale*4+2;
 	
 			border.graphics.beginFill(SELECT_MOUSE_OVER_COLOR)
 			      .drawRoundRect(-borderSize, -borderSize, SELECT_SIZE_X+2*borderSize, SELECT_SIZE_Y+2*borderSize, borderSize);
@@ -948,18 +948,18 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function level2Bitmap(levelMap)
 		{
-			var	canvas2 = document.createElement('canvas');
-			var stage = new createjs.Stage(canvas2);	
-			var container = new createjs.Container();	
-			var guardCount = 0, runner = 0;
+			const	canvas2 = document.createElement('canvas');
+			const stage = new createjs.Stage(canvas2);	
+			const container = new createjs.Container();	
+			let guardCount = 0, runner = 0;
 	
 			canvas2.width  = SELECT_SIZE_X;
 			canvas2.height = SELECT_SIZE_Y;
 	
-			var index = 0;
-			for(var y = 0; y < NO_OF_TILES_Y; y++) {
-				for(var x = 0; x < NO_OF_TILES_X; x++) {
-					var id = levelMap.charAt(index++);
+			let index = 0;
+			for(let y = 0; y < NO_OF_TILES_Y; y++) {
+				for(let x = 0; x < NO_OF_TILES_X; x++) {
+					const id = levelMap.charAt(index++);
 
 					var curTile;	
 					switch(id) {
@@ -1012,10 +1012,10 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		//for demo mode
 		function setDemoLevelInfo(selectObj, level) 
 		{
-			if(	typeof demoData[level-1] != "undefined") {
-				var bitmap = _checkBitmap.clone();
-				var startX = (SELECT_SIZE_X - _checkBitmap.getBounds().width*_scale)/2|0;
-				var startY = (SELECT_SIZE_Y - _checkBitmap.getBounds().height*_scale)/4|0;
+			if(	typeof demoData[level-1] !== "undefined") {
+				const bitmap = _checkBitmap.clone();
+				const startX = (SELECT_SIZE_X - _checkBitmap.getBounds().width*_scale)/2|0;
+				const startY = (SELECT_SIZE_Y - _checkBitmap.getBounds().height*_scale)/4|0;
 			
 				bitmap.setTransform(startX, startY, _scale, _scale);
 				bitmap.set({alpha:0.9});
@@ -1027,11 +1027,11 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		function setLevelInfo(selectObj, level)
 		{
 			if(modernScoreInfo[level-1] >= 0) {
-				var bitmap = _checkBitmap.clone();
-				var scoreText = new createjs.Text(modernScoreInfo[level-1],
+				const bitmap = _checkBitmap.clone();
+				const scoreText = new createjs.Text(modernScoreInfo[level-1],
 								"bold "+SELECT_TEXT_SIZE +"px Helvetica",SELECT_SCORE_COLOR);
-				var startX = (SELECT_SIZE_X - _checkBitmap.getBounds().width*_scale)/2|0;
-				var startY = (SELECT_SIZE_Y - _checkBitmap.getBounds().height*_scale)/4|0;
+				const startX = (SELECT_SIZE_X - _checkBitmap.getBounds().width*_scale)/2|0;
+				const startY = (SELECT_SIZE_Y - _checkBitmap.getBounds().height*_scale)/4|0;
 			
 				bitmap.setTransform(startX, startY, _scale, _scale);
 				bitmap.set({alpha:0.9});
@@ -1071,7 +1071,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function selectMouseOver()
 		{
-			var border = this.getChildAt(0);
+			const border = this.getChildAt(0);
 	
 			if(playMode == PLAY_EDIT) {
 				delSelectObj[this.myId].selectOver();	
@@ -1084,7 +1084,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function selectMouseOut()
 		{
-			var border = this.getChildAt(0);
+			const border = this.getChildAt(0);
 			
 			if(playMode == PLAY_EDIT) {
 				if(this.myId < delSelectObj.length)	delSelectObj[this.myId].selectOut();	
@@ -1098,7 +1098,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function wheelScroll(e)
 		{
-			var direction = e.detail?-e.detail:e.wheelDelta; //e.detail: for fireFox, e.wheelDelta: for chrome, IE
+			let direction = e.detail?-e.detail:e.wheelDelta; //e.detail: for fireFox, e.wheelDelta: for chrome, IE
 			direction = (direction>0)?1: -1;	
 	
 			
@@ -1129,8 +1129,8 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 		function delIcon()
 		{
-			var closeBoxSize = 12*_scale+1;
-			var cross, cycle, delIconObj;
+			const closeBoxSize = 12*_scale+1;
+			let cross, cycle, delIconObj;
 			
 			createCloseIcon();
 			
@@ -1170,7 +1170,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 		
 			function drawIcon(state) 
 			{
-				var cycAlpha, crosAlpha, cycColor, crosColor;
+				let cycAlpha, crosAlpha, cycColor, crosColor;
 			
 				crosColor = "white";	
 
@@ -1190,7 +1190,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 					break;
 				}
 			
-				var g = cycle.graphics; 
+				let g = cycle.graphics; 
 				g.clear();
 				cycle.alpha = cycAlpha;	
 				g.beginFill(cycColor).dc(closeBoxSize/2, closeBoxSize/2, closeBoxSize*7/6);
@@ -1269,7 +1269,7 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 	
 	function createTitle()
 	{
-		var titleText = new createjs.Text(_titleName, 
+		const titleText = new createjs.Text(_titleName, 
 					"italic bold " + TITLE_TEXT_SIZE + "px Helvetica",TITLE_TEXT_COLOR);
 		titleText.x = (CANVAS_SIZE_X - titleText.getBounds().width)/2|0;
 		titleText.y = (TOP_BORDER1 - titleText.getBounds().height)/2|0;
@@ -1284,48 +1284,48 @@ function selectDialog(_titleName, _checkBitmap, _levelData, _activeLevel, _scree
 //==============
 function menuDialog(_titleName, _itemList, _stage, _scale, _closeCallBack, _args)
 {
-	var TITLE_TEXT_SIZE = 48 * _scale;
-	var ITEM_TEXT_SIZE = 40 * _scale;
+	const TITLE_TEXT_SIZE = 48 * _scale;
+	const ITEM_TEXT_SIZE = 40 * _scale;
 	
-	var TITLE_TEXT_COLOR = "white";
-	var TITLE_TEXT_SHADOW_COLOR = "gold";
+	const TITLE_TEXT_COLOR = "white";
+	const TITLE_TEXT_SHADOW_COLOR = "gold";
 	
-	var ITEM_TEXT_COLOR = "white";
-	var ITEM_TEXT_SHADOW_COLOR = "gold";
+	const ITEM_TEXT_COLOR = "white";
+	const ITEM_TEXT_SHADOW_COLOR = "gold";
 	
-	var TITLE_AREA_Y = TITLE_TEXT_SIZE * 2 | 0;
+	const TITLE_AREA_Y = TITLE_TEXT_SIZE * 2 | 0;
 	
-	var ITEM_AREA_Y = ITEM_TEXT_SIZE * 3/2 | 0;
-	var ITEM_GAP_Y = ITEM_TEXT_SIZE * 2/3 | 0;
+	const ITEM_AREA_Y = ITEM_TEXT_SIZE * 3/2 | 0;
+	const ITEM_GAP_Y = ITEM_TEXT_SIZE * 2/3 | 0;
 	
-	var BOTTOM_AREA_Y = ITEM_AREA_Y/2|0; 
+	const BOTTOM_AREA_Y = ITEM_AREA_Y/2|0; 
 	
-	var BUTTON_BORDER_SIZE = 8 * _scale;
-	var BUTTON_ROUND_RADIUD = 2+ 4 * _scale; 
+	const BUTTON_BORDER_SIZE = 8 * _scale;
+	const BUTTON_ROUND_RADIUD = 2+ 4 * _scale; 
 
-	var COVER_BACKGROUND_COLOR = "black";
+	const COVER_BACKGROUND_COLOR = "black";
 	
-	var BUTTON_BACKGROUND_BORDER_COLOR = "white";
-	var BUTTON_BACKGROUND_COLOR = "#5b0680"; //"#890ee0";
-	var BUTTON_BACKGROUND_SHADOW = "gold";
-	var BUTTON_BACKGROUND_BORDER_SIZE = 8 * _scale;;
+	const BUTTON_BACKGROUND_BORDER_COLOR = "white";
+	const BUTTON_BACKGROUND_COLOR = "#5b0680"; //"#890ee0";
+	const BUTTON_BACKGROUND_SHADOW = "gold";
+	const BUTTON_BACKGROUND_BORDER_SIZE = 8 * _scale;;
 	
-	var BUTTON_BORDER_COLOR = "gold";
-	var BUTTON_COLOR = "#5d7cff";
+	const BUTTON_BORDER_COLOR = "gold";
+	const BUTTON_COLOR = "#5d7cff";
 	
-	var CLOSE_ICON_ACTIVE_COLOR = "#ff5050";
+	const CLOSE_ICON_ACTIVE_COLOR = "#ff5050";
 	
-	var screenX1 = _stage.canvas.width;
-	var screenY1 = _stage.canvas.height;
+	const screenX1 = _stage.canvas.width;
+	const screenY1 = _stage.canvas.height;
 	
-	var titleTextObj, titleWidth, titleHeight;
-	var	itemText = [], maxItemTextWidth, itemTextHeight;
-	var menuX, menuY;
-	var startX, startY;
+	let titleTextObj, titleWidth, titleHeight;
+	let	itemText = [], maxItemTextWidth, itemTextHeight;
+	let menuX, menuY;
+	let startX, startY;
 	
 	
-	var coverBackgroundObj, background1Obj, background2Obj, menuButtonObj; 
-	var closeIconObj = null;
+	let coverBackgroundObj, background1Obj, background2Obj, menuButtonObj; 
+	let closeIconObj = null;
 	
 	init();
 	
@@ -1354,7 +1354,7 @@ function menuDialog(_titleName, _itemList, _stage, _scale, _closeCallBack, _args
 	
 	function createText()
 	{
-		var textLength;
+		let textLength;
 		
 		titleTextObj = new createjs.Text(_titleName, 
 			"bold " + TITLE_TEXT_SIZE + "px Helvetica",TITLE_TEXT_COLOR);
@@ -1362,7 +1362,7 @@ function menuDialog(_titleName, _itemList, _stage, _scale, _closeCallBack, _args
 		titleHeight = titleTextObj.getBounds().height;
 		
 		maxItemTextWidth =0;
-		for(var i = 0; i < _itemList.length; i++) {
+		for(let i = 0; i < _itemList.length; i++) {
 			itemText[i] = new createjs.Text(_itemList[i].name, 
 				"bold " + ITEM_TEXT_SIZE + "px Helvetica",ITEM_TEXT_COLOR);
 			textLength = itemText[i].getBounds().width;
@@ -1401,17 +1401,17 @@ function menuDialog(_titleName, _itemList, _stage, _scale, _closeCallBack, _args
 	function createItemList()
 	{
 		menuButtonObj = []
-		for(var i = 0; i < itemText.length; i++) {
+		for(let i = 0; i < itemText.length; i++) {
 			menuButtonObj[i] = new createjs.Container();
 			
 			//child id = 0
-			var border = new createjs.Shape();
+			const border = new createjs.Shape();
 			border.graphics.beginFill(BUTTON_BACKGROUND_COLOR)
 				.drawRoundRect(-BUTTON_BORDER_SIZE, -BUTTON_BORDER_SIZE, 
 				maxItemTextWidth+BUTTON_BORDER_SIZE*2, ITEM_AREA_Y+BUTTON_BORDER_SIZE*2,BUTTON_ROUND_RADIUD).endFill();
 			
 			//child id = 1
-			var button = new createjs.Shape();
+			const button = new createjs.Shape();
 			button.graphics.beginFill(BUTTON_COLOR).drawRoundRect(0, 0, 
 				maxItemTextWidth, ITEM_AREA_Y,BUTTON_ROUND_RADIUD).endFill();
 			
@@ -1441,7 +1441,7 @@ function menuDialog(_titleName, _itemList, _stage, _scale, _closeCallBack, _args
 	function removeAllObj()
 	{
 		_stage.removeChild(coverBackgroundObj, titleTextObj, background1Obj, background2Obj);
-		for(var i = 0; i < itemText.length; i++) {
+		for(let i = 0; i < itemText.length; i++) {
 			_stage.removeChild(menuButtonObj[i]);
 		}
 		if(closeIconObj) _stage.removeChild(closeIconObj);
@@ -1460,8 +1460,8 @@ function menuDialog(_titleName, _itemList, _stage, _scale, _closeCallBack, _args
 	
 	function buttonMouseOver()
 	{
-		var border = this.getChildAt(0);
-		var text = this.getChildAt(2);
+		const border = this.getChildAt(0);
+		const text = this.getChildAt(2);
 	
 		border.graphics.clear();
 		border.graphics.beginFill(BUTTON_BORDER_COLOR)
@@ -1475,8 +1475,8 @@ function menuDialog(_titleName, _itemList, _stage, _scale, _closeCallBack, _args
 	
 	function buttonMouseOut()
 	{
-		var border = this.getChildAt(0);
-		var text = this.getChildAt(2);
+		const border = this.getChildAt(0);
+		const text = this.getChildAt(2);
 
 	
 		border.graphics.clear();
@@ -1498,7 +1498,7 @@ function mainMenuClose(callbackFun)
 
 function mainMenu(callbackFun)
 {
-	var mainMenuList = [
+	const mainMenuList = [
 		{ name: "CLASSIC MODE", activeFun: classicMenu },
 		{ name: "TRAINING MODE", activeFun:  modernMenu },
 		{ name: "EDIT MODE", activeFun:  editMenu },
@@ -1509,14 +1509,14 @@ function mainMenu(callbackFun)
 		mainMenuList.splice(3, 0, { name: "DEMO MODE", activeFun: demoMenu });
 	}	
 	
-	if(typeof callbackFun == "undefined") callbackFun = null;
+	if(typeof callbackFun === "undefined") callbackFun = null;
 	
 	menuDialog("MAIN MENU", mainMenuList, mainStage, tileScale, mainMenuClose, callbackFun);
 }
 
 function classicMenu(id, callbackFun)
 {
-	var classicMenuList = [
+	const classicMenuList = [
 		{ name: LODERUNNER_NAME1, activeFun: classicPlay },
 		{ name: LODERUNNER_NAME2, activeFun:  classicPlay }
 	];
@@ -1530,7 +1530,7 @@ function classicMenu(id, callbackFun)
 
 function modernMenu(id, callbackFun)
 {
-	var modernMenuList = [
+	const modernMenuList = [
 		{ name: LODERUNNER_NAME1, activeFun: modernPlay},
 		{ name: LODERUNNER_NAME2, activeFun: modernPlay}
 	];
@@ -1543,7 +1543,7 @@ function modernMenu(id, callbackFun)
 
 function demoMenu(id, callbackFun)
 {
-	var demoMenuList = [];
+	const demoMenuList = [];
 	if(!noDemoData1) {
 		demoMenuList.push({ name: LODERUNNER_NAME1, activeFun: demoPlay});
 	}
@@ -1642,16 +1642,16 @@ function helpMenuClose(callbackFun)
 function mainMenuIconClass( _screenX1, _screenY1, _scale, _mainMenuBitmap)
 {
 	//_scale = _scale*2/3;
-	var border = 4 * _scale + 2;
-	var mainMainCanvas, stage;
-	var	menuIcon, menuBG;
-	var saveStateObj;
-	var mouseOverHandler = null, mouseOutHandler = null, mouseClickHandler = null;
+	const border = 4 * _scale + 2;
+	let mainMainCanvas, stage;
+	let	menuIcon, menuBG;
+	let saveStateObj;
+	let mouseOverHandler = null, mouseOutHandler = null, mouseClickHandler = null;
 	
-	var bitmapX = _mainMenuBitmap.getBounds().width * _scale;
-	var bitmapY = _mainMenuBitmap.getBounds().height * _scale;	
-	var self = this;
-	var enabled = 0;
+	const bitmapX = _mainMenuBitmap.getBounds().width * _scale;
+	const bitmapY = _mainMenuBitmap.getBounds().height * _scale;	
+	const self = this;
+	let enabled = 0;
 	
 	init();
 	
@@ -1708,7 +1708,7 @@ function mainMenuIconClass( _screenX1, _screenY1, _scale, _mainMenuBitmap)
 		mainMainCanvas.width  = bitmapX+border*2;
 		mainMainCanvas.height = bitmapY+border*2;
 	
-		var left = (_screenX1 - mainMainCanvas.width - bitmapX/3),
+		const left = (_screenX1 - mainMainCanvas.width - bitmapX/3),
 			top  = (_screenY1 - mainMainCanvas.height - bitmapY/4);
 			//top  = bitmapY/4|0;
 		mainMainCanvas.style.left = left + "px";
@@ -1791,7 +1791,7 @@ function mainMenuIconClass( _screenX1, _screenY1, _scale, _mainMenuBitmap)
 function activeSelectMenu(activeFun, postFun)
 {
 	if(playMode == PLAY_EDIT) {
-		var editLevel = testLevelInfo.level> editLevels?0:testLevelInfo.level;
+		const editLevel = testLevelInfo.level> editLevels?0:testLevelInfo.level;
 		
 		selectDialog(USER_CREATED_NAME, checkBitmap, editLevelData, editLevel, screenX1, screenY1, 
 				mainStage, tileScale, activeFun, editSelectMenuClose, postFun)		
@@ -1827,16 +1827,16 @@ function activeSelectMenu(activeFun, postFun)
 function selectIconClass( _screenX1, _screenY1, _scale, _bitmap)
 {
 	//_scale = _scale*2/3;
-	var border = 4 * _scale + 2;
-	var selectCanvas, stage;
-	var	selectIcon, selectBG;
-	var saveStateObj;
-	var mouseOverHandler = null, mouseOutHandler = null, mouseClickHandler = null;
+	const border = 4 * _scale + 2;
+	let selectCanvas, stage;
+	let	selectIcon, selectBG;
+	let saveStateObj;
+	let mouseOverHandler = null, mouseOutHandler = null, mouseClickHandler = null;
 	
-	var bitmapX = _bitmap.getBounds().width * _scale;
-	var bitmapY = _bitmap.getBounds().height * _scale;	
-	var self = this;
-	var enabled = 0;
+	const bitmapX = _bitmap.getBounds().width * _scale;
+	const bitmapY = _bitmap.getBounds().height * _scale;	
+	const self = this;
+	let enabled = 0;
 	
 	init();
 	
@@ -1893,7 +1893,7 @@ function selectIconClass( _screenX1, _screenY1, _scale, _bitmap)
 		selectCanvas.width  = bitmapX+border*2;
 		selectCanvas.height = bitmapY+border*2;
 	
-		var left = (_screenX1 - selectCanvas.width - bitmapX/3),
+		const left = (_screenX1 - selectCanvas.width - bitmapX/3),
 			top  = bitmapY/4|0;
 			//top  = (_screenY1 - selectCanvas.height - bitmapY/4);
 		selectCanvas.style.left = left + "px";
@@ -2016,54 +2016,54 @@ function levelPassDialog(_level, _getGold, _guardDead, _time, _hiScore,
 						  _returnBitmap, _menuBitmap, _nextBitmap,
 						  _stage, _scale, _callBack)
 {
-	var TITLE_TEXT_SIZE = 48 * _scale;
-	var ITEM_TEXT_SIZE = 40 * _scale;
-	var GOLD_X = 32 * _scale;
+	const TITLE_TEXT_SIZE = 48 * _scale;
+	const ITEM_TEXT_SIZE = 40 * _scale;
+	const GOLD_X = 32 * _scale;
 	
-	var TITLE_TEXT_COLOR = "white";
-	var TITLE_SHADOW_COLOR = "yellow";
+	const TITLE_TEXT_COLOR = "white";
+	const TITLE_SHADOW_COLOR = "yellow";
 	
-	var ITEM_TEXT_COLOR = "white";
-	var TIME_NAME_COLOR = "#fad292";
-	var SCORE_NAME_COLOR = TIME_NAME_COLOR;
-	var HISCORE_NAME_COLOR = TIME_NAME_COLOR;
+	const ITEM_TEXT_COLOR = "white";
+	const TIME_NAME_COLOR = "#fad292";
+	const SCORE_NAME_COLOR = TIME_NAME_COLOR;
+	const HISCORE_NAME_COLOR = TIME_NAME_COLOR;
 	
-	var TEXT_GAP_Y = ITEM_TEXT_SIZE * 2/3 | 0;
+	const TEXT_GAP_Y = ITEM_TEXT_SIZE * 2/3 | 0;
 
-	var COVER_BACKGROUND_COLOR = "black";	
+	const COVER_BACKGROUND_COLOR = "black";	
 
-	var BACKGROUND_BORDER_COLOR = "white"
-	var BACKGROUND_COLOR = "#5b0680";
-	var BACKGROUND_SHADOW = "gold";
-	var BACKGROUND_BORDER_SIZE = 8 * _scale;
+	const BACKGROUND_BORDER_COLOR = "white"
+	const BACKGROUND_COLOR = "#5b0680";
+	const BACKGROUND_SHADOW = "gold";
+	const BACKGROUND_BORDER_SIZE = 8 * _scale;
 
-	var BUTTON_BORDER_SIZE = 8 * _scale;
-	var BUTTON_ROUND_RADIUD = 2+ 4 * _scale; 
-	var BUTTON_BORDER_COLOR = "gold";
-	var BUTTON_COLOR = "#eeffff"
-	var BUTTON_BACKGROUND_COLOR = BACKGROUND_COLOR;
+	const BUTTON_BORDER_SIZE = 8 * _scale;
+	const BUTTON_ROUND_RADIUD = 2+ 4 * _scale; 
+	const BUTTON_BORDER_COLOR = "gold";
+	const BUTTON_COLOR = "#eeffff"
+	const BUTTON_BACKGROUND_COLOR = BACKGROUND_COLOR;
 
-	var buttonX = _returnBitmap.getBounds().width * _scale,
+	const buttonX = _returnBitmap.getBounds().width * _scale,
 	   	buttonY = _returnBitmap.getBounds().height * _scale;
 	
-	var titleTextObj, goldTextObj, guardTextObj, timeTextObj;
-	var goldObj, guardObj, timeNameObj;
-	var scoreNameObj, scoreTextObj, 
+	let titleTextObj, goldTextObj, guardTextObj, timeTextObj;
+	let goldObj, guardObj, timeNameObj;
+	let scoreNameObj, scoreTextObj, 
 		hiScoreNameObj, hiScoreTextObj;
 	
-	var coverBackgroundObj, background1Obj, background2Obj, menuButtonObj;
-	var screenX1 = _stage.canvas.width;
-	var screenY1 = _stage.canvas.height;
+	let coverBackgroundObj, background1Obj, background2Obj, menuButtonObj;
+	const screenX1 = _stage.canvas.width;
+	const screenY1 = _stage.canvas.height;
 	
-	var menuX, menuY, startX, startY
-	var timeNameX, maxTextSize;
-	var menuButton = [];
-	var bitmap = [ _returnBitmap, _menuBitmap, _nextBitmap ];
+	let menuX, menuY, startX, startY
+	let timeNameX, maxTextSize;
+	const menuButton = [];
+	const bitmap = [ _returnBitmap, _menuBitmap, _nextBitmap ];
 
-	var centerX, xOffset, yOffset;
+	let centerX, xOffset, yOffset;
 
-	var levelScore = 0, goldPoint = 0, guardPoint = 0, timePoint = 0;
-	var countTime = 85, onePointValue = 100, countAddValue = 47;
+	let levelScore = 0, goldPoint = 0, guardPoint = 0, timePoint = 0;
+	const countTime = 85, onePointValue = 100, countAddValue = 47;
 	
 	init();
 	
@@ -2136,7 +2136,7 @@ function levelPassDialog(_level, _getGold, _guardDead, _time, _hiScore,
 		titleTextObj.y = startY + TITLE_TEXT_SIZE;
 		_stage.addChild(titleTextObj);
 		
-		var centerGap = 8*_scale;
+		const centerGap = 8*_scale;
 		
 		centerX = startX+ menuX/2|0;
 		xOffset = centerX;
@@ -2309,9 +2309,9 @@ function levelPassDialog(_level, _getGold, _guardDead, _time, _hiScore,
 	
 	function createButton()
 	{
-		var border, button;
+		let border, button;
 
-		for(var i = 0; i < 3; i++ ) {
+		for(let i = 0; i < 3; i++ ) {
 			menuButton[i] = new createjs.Container();
 			border = new createjs.Shape();	
 			button = new createjs.Shape();		
@@ -2355,7 +2355,7 @@ function levelPassDialog(_level, _getGold, _guardDead, _time, _hiScore,
 	
 	function buttonMouseOver()
 	{
-		var border = this.getChildAt(0);
+		const border = this.getChildAt(0);
 	
 		border.graphics.clear();
 		border.graphics.beginFill(BUTTON_BORDER_COLOR)
@@ -2368,7 +2368,7 @@ function levelPassDialog(_level, _getGold, _guardDead, _time, _hiScore,
 	
 	function buttonMouseOut()
 	{
-		var border = this.getChildAt(0);
+		const border = this.getChildAt(0);
 	
 		border.graphics.clear();
 		border.graphics.beginFill(BUTTON_BACKGROUND_COLOR)
@@ -2389,7 +2389,7 @@ function levelPassDialog(_level, _getGold, _guardDead, _time, _hiScore,
 		_stage.removeChild(scoreNameObj, scoreTextObj);
 		_stage.removeChild(hiScoreNameObj, hiScoreTextObj);
 		
-		for(var i = 0; i < 3; i++) {
+		for(let i = 0; i < 3; i++) {
 			_stage.removeChild(menuButton[i]);
 		}
 		_stage.update();
@@ -2399,38 +2399,38 @@ function levelPassDialog(_level, _getGold, _guardDead, _time, _hiScore,
 ////////////////////////////////////////////////////////////
 function yesNoDialog(_txtMsg, _yesBitmap, _noBitmap, _stage, _scale, _callBack)
 {
-	var TEXT_MSG_SIZE = 48 * _scale;
-	var TEXT_GAP_Y = TEXT_MSG_SIZE * 3/4 | 0;
+	const TEXT_MSG_SIZE = 48 * _scale;
+	const TEXT_GAP_Y = TEXT_MSG_SIZE * 3/4 | 0;
 	
-	var TEXT_MSG_COLOR = "white";
-	var TEXT_MSG_SHADOW_COLOR = "yellow";
+	const TEXT_MSG_COLOR = "white";
+	const TEXT_MSG_SHADOW_COLOR = "yellow";
 
-	var COVER_BACKGROUND_COLOR = "black";	
+	const COVER_BACKGROUND_COLOR = "black";	
 	
-	var BACKGROUND_BORDER_COLOR = "white"
-	var BACKGROUND_COLOR = "#5b0680";
-	var BACKGROUND_SHADOW = "gold";
-	var BACKGROUND_BORDER_SIZE = 8 * _scale;
+	const BACKGROUND_BORDER_COLOR = "white"
+	const BACKGROUND_COLOR = "#5b0680";
+	const BACKGROUND_SHADOW = "gold";
+	const BACKGROUND_BORDER_SIZE = 8 * _scale;
 	
-	var BUTTON_BORDER_SIZE = 8 * _scale;
-	var BUTTON_ROUND_RADIUD = 2+ 4 * _scale; 
-	var BUTTON_BORDER_COLOR = "gold";
-	var BUTTON_COLOR = "#eeffff"
-	var BUTTON_BACKGROUND_COLOR = BACKGROUND_COLOR;
+	const BUTTON_BORDER_SIZE = 8 * _scale;
+	const BUTTON_ROUND_RADIUD = 2+ 4 * _scale; 
+	const BUTTON_BORDER_COLOR = "gold";
+	const BUTTON_COLOR = "#eeffff"
+	const BUTTON_BACKGROUND_COLOR = BACKGROUND_COLOR;
 
-	var saveStateObj;
-	var textObj;
+	let saveStateObj;
+	let textObj;
 	
-	var coverBackgroundObj, background1Obj, background2Obj;
-	var screenX1 = _stage.canvas.width;
-	var screenY1 = _stage.canvas.height;
+	let coverBackgroundObj, background1Obj, background2Obj;
+	const screenX1 = _stage.canvas.width;
+	const screenY1 = _stage.canvas.height;
 	
-	var buttonX = _yesBitmap.getBounds().width * _scale,
+	const buttonX = _yesBitmap.getBounds().width * _scale,
 	   	buttonY = _yesBitmap.getBounds().height * _scale;
 	
-	var menuX, menuY, startX, startY
-	var menuButton = [];
-	var bitmap = [ _yesBitmap, _noBitmap ];
+	let menuX, menuY, startX, startY
+	const menuButton = [];
+	const bitmap = [ _yesBitmap, _noBitmap ];
 	
 	init();
 	
@@ -2459,10 +2459,10 @@ function yesNoDialog(_txtMsg, _yesBitmap, _noBitmap, _stage, _scale, _callBack)
 	
 	function initTxtMsg()
 	{
-		var maxTextSize = 0, tmpTextSize;
+		let maxTextSize = 0, tmpTextSize;
 		
 		textObj = [];
-		for(var i = 0; i < _txtMsg.length; i++) {
+		for(let i = 0; i < _txtMsg.length; i++) {
 			textObj[i] = new createjs.Text(_txtMsg[i], "bold " + TEXT_MSG_SIZE + "px Helvetica",TEXT_MSG_COLOR);
 			textObj[i].shadow = new createjs.Shadow(TEXT_MSG_SHADOW_COLOR, 0, 0, 10 );
 			tmpTextSize = textObj[i].getBounds().width;
@@ -2501,7 +2501,7 @@ function yesNoDialog(_txtMsg, _yesBitmap, _noBitmap, _stage, _scale, _callBack)
 	
 	function createTxtMsg()
 	{
-		for(var i = 0; i < textObj.length; i++) {
+		for(let i = 0; i < textObj.length; i++) {
 			textObj[i].x = startX + (menuX - textObj[i].getBounds().width)/2|0
 			textObj[i].y = startY + (TEXT_GAP_Y + TEXT_MSG_SIZE) * i + TEXT_GAP_Y;
 			_stage.addChild(textObj[i]);
@@ -2510,10 +2510,10 @@ function yesNoDialog(_txtMsg, _yesBitmap, _noBitmap, _stage, _scale, _callBack)
 	
 	function createButton()
 	{
-		var border, button;
-		var centerX = startX+ menuX/2|0;
+		let border, button;
+		const centerX = startX+ menuX/2|0;
 
-		for(var i = 0; i < 2; i++ ) {
+		for(let i = 0; i < 2; i++ ) {
 			menuButton[i] = new createjs.Container();
 			border = new createjs.Shape();	
 			button = new createjs.Shape();		
@@ -2556,7 +2556,7 @@ function yesNoDialog(_txtMsg, _yesBitmap, _noBitmap, _stage, _scale, _callBack)
 	
 	function buttonMouseOver()
 	{
-		var border = this.getChildAt(0);
+		const border = this.getChildAt(0);
 	
 		border.graphics.clear();
 		border.graphics.beginFill(BUTTON_BORDER_COLOR)
@@ -2569,7 +2569,7 @@ function yesNoDialog(_txtMsg, _yesBitmap, _noBitmap, _stage, _scale, _callBack)
 	
 	function buttonMouseOut()
 	{
-		var border = this.getChildAt(0);
+		const border = this.getChildAt(0);
 	
 		border.graphics.clear();
 		border.graphics.beginFill(BUTTON_BACKGROUND_COLOR)

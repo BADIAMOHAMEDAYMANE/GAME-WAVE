@@ -1,5 +1,5 @@
 
-var modernScoreInfo, editScoreInfo;
+let modernScoreInfo, editScoreInfo;
 
 //=======================
 // LOCAL STORAGE SET/GET 
@@ -7,15 +7,15 @@ var modernScoreInfo, editScoreInfo;
 
 function setLastPlayMode()
 {
-	var infoObj = { m:playMode, d:playData };
-	var infoJSON = JSON.stringify(infoObj);
+	const infoObj = { m:playMode, d:playData };
+	const infoJSON = JSON.stringify(infoObj);
 	
 	setStorage(STORAGE_LASTPLAY_MODE, infoJSON); 	
 }
 
 function getClassicInfo()
 {
-	var infoJSON;
+	let infoJSON;
 	
 	if(playData == 1) {
 		infoJSON = getStorage(STORAGE_CLASSIC_INFO1); 
@@ -30,7 +30,7 @@ function getClassicInfo()
 		curLevel = maxLevel = 1;
 		runnerLife = RUNNER_LIFE;
 	} else {
-		var infoObj = JSON.parse(infoJSON);
+		const infoObj = JSON.parse(infoJSON);
 		curScore = infoObj.s;
 		curLevel = infoObj.l;
 		maxLevel = infoObj.m;
@@ -41,8 +41,8 @@ function getClassicInfo()
 function setClassicInfo()
 {
 	maxLevel = (maxLevel < curLevel)?curLevel:maxLevel;
-	var infoObj = { s:curScore, l:curLevel, r:runnerLife, m: maxLevel };
-	var infoJSON = JSON.stringify(infoObj);
+	const infoObj = { s:curScore, l:curLevel, r:runnerLife, m: maxLevel };
+	const infoJSON = JSON.stringify(infoObj);
 	
 	if(playData == 1) setStorage(STORAGE_CLASSIC_INFO1, infoJSON); 
 	else setStorage(STORAGE_CLASSIC_INFO2, infoJSON); 
@@ -56,7 +56,7 @@ function clearClassicInfo()
 
 function getModernInfo()
 {
-	var infoJSON;
+	let infoJSON;
 	
 	if(playData == 1) {
 		infoJSON = getStorage(STORAGE_MODERN_INFO1); 
@@ -80,7 +80,7 @@ function getModernInfo()
 		curLevel = 1;
 		runnerLife = RUNNER_LIFE;
 	} else {
-		var infoObj = JSON.parse(infoJSON);
+		const infoObj = JSON.parse(infoJSON);
 		curScore = 0;
 		curLevel = infoObj.l;
 		runnerLife = RUNNER_LIFE;
@@ -90,8 +90,8 @@ function getModernInfo()
 
 function setModernInfo()
 {
-	var infoObj = { l:curLevel};
-	var infoJSON = JSON.stringify(infoObj);
+	const infoObj = { l:curLevel};
+	const infoJSON = JSON.stringify(infoObj);
 	
 	switch(playData) {
 	case 1:		
@@ -130,7 +130,7 @@ function clearModernInfo()
 
 function getModernScoreInfo()
 {
-	var infoJSON, levelSize;
+	let infoJSON, levelSize;
 	
 	switch(playData) {
 	case 1:
@@ -153,13 +153,13 @@ function getModernScoreInfo()
 	} 
 	if(infoJSON == null) {
 		modernScoreInfo = [];
-		for(var i = 0; i < levelSize; i++) modernScoreInfo[i] = -1;
+		for(let i = 0; i < levelSize; i++) modernScoreInfo[i] = -1;
 	}
 }
 
 function setModernScoreInfo()
 {
-	var infoJSON = JSON.stringify(modernScoreInfo);
+	const infoJSON = JSON.stringify(modernScoreInfo);
 	
 	switch(playData) {
 	case 1:		
@@ -184,7 +184,7 @@ function delEditLevel(level)
 {
 	if(level > editLevels || level< 1) return false;
 	
-	var delId = editLevelInfo[level-1];
+	const delId = editLevelInfo[level-1];
 	
 	editLevelInfo.splice(level-1,1); //delete id and shift others
 	editLevelInfo.push(delId); //put the deleted id to last of array
@@ -225,14 +225,14 @@ function initEditLevelInfo()
 {
 	editLevels = 0;
 	editLevelInfo = [];
-	for(var i = 0; i < MAX_EDIT_LEVEL; i++) {
+	for(let i = 0; i < MAX_EDIT_LEVEL; i++) {
 		editLevelInfo[i] = i+1;
 	}	
 }
 
 function getEditLevelInfo()
 {
-	var infoJSON, levelMap;
+	let infoJSON, levelMap;
 
 	if(editLevels >= 0) return; //just once
 	
@@ -240,7 +240,7 @@ function getEditLevelInfo()
 	editLevelData = [];
 	
 	if(infoJSON) {
-		var infoObj = JSON.parse(infoJSON);
+		const infoObj = JSON.parse(infoJSON);
 		editLevels = infoObj.no;
 		editLevelInfo = infoObj.id;
 	} else {
@@ -250,7 +250,7 @@ function getEditLevelInfo()
 		}
 	}
 	
-	for(var i = 0; i < editLevels; i++) {
+	for(let i = 0; i < editLevels; i++) {
 		levelMap = getStorage(STORAGE_USER_LEVEL + ("00"+(editLevelInfo[i])).slice(-3));
 		if(levelMap == null || levelMap.length !=  NO_OF_TILES_X * NO_OF_TILES_Y) {
 			debug("LOCAL STORAGE: get edit level map failed (" + i + ") !");
@@ -267,8 +267,8 @@ function getEditLevelInfo()
 
 function setEditLevelInfo()
 {
-	var infoObj = { no:editLevels, id: editLevelInfo};
-	var infoJSON = JSON.stringify(infoObj);
+	const infoObj = { no:editLevels, id: editLevelInfo};
+	const infoJSON = JSON.stringify(infoObj);
 	
 	setStorage(STORAGE_EDIT_INFO, infoJSON); 
 }
@@ -284,13 +284,13 @@ function initNewLevelInfo(testInfo)
 	testInfo.levelMap = "";
 	testInfo.pass = 0;
 	testInfo.modified = 0;
-	for(var i = 0; i < NO_OF_TILES_X * NO_OF_TILES_Y; i++) 
+	for(let i = 0; i < NO_OF_TILES_X * NO_OF_TILES_Y; i++) 
 		testInfo.levelMap += " "; //empty map
 }
 
 function compareWithExist(existLevelMap, testLevelMap)
 {
-	for(var i = 0; i < NO_OF_TILES_X * NO_OF_TILES_Y; i++) {
+	for(let i = 0; i < NO_OF_TILES_X * NO_OF_TILES_Y; i++) {
 		if(existLevelMap.charAt(i) != testLevelMap.charAt(i)) return 1;
 	}
 	return 0;
@@ -298,23 +298,23 @@ function compareWithExist(existLevelMap, testLevelMap)
 
 function getTestLevel(testInfo)
 {
-	var infoJSON;
+	let infoJSON;
 	
 	if((infoJSON = getStorage(STORAGE_TEST_LEVEL)) == null)	{
 		initNewLevelInfo(testInfo);
 	} else {
-		var init = testInfo.level<0?1:0;
-		var infoObj = JSON.parse(infoJSON);
+		const init = testInfo.level<0?1:0;
+		const infoObj = JSON.parse(infoJSON);
 		
 		testInfo.level  = infoObj.level;
 		testInfo.levelMap = infoObj.map;
 		testInfo.pass     = infoObj.pass;
 		
 		//BEGIN for debug ====================
-		var i = 0;
-		for(var y = 0; y < NO_OF_TILES_Y; y++) {
-			var string = ""
-			for(var x = 0; x < NO_OF_TILES_X; x++) {
+		let i = 0;
+		for(let y = 0; y < NO_OF_TILES_Y; y++) {
+			let string = ""
+			for(let x = 0; x < NO_OF_TILES_X; x++) {
 				string += testInfo.levelMap[i++];
 			}
 			debug('"' + string + '"');
@@ -339,8 +339,8 @@ function getTestLevel(testInfo)
 
 function setTestLevel(testInfo)
 {
-	var infoObj = { level:testInfo.level, map: testInfo.levelMap, pass: testInfo.pass};
-	var infoJSON = JSON.stringify(infoObj);
+	const infoObj = { level:testInfo.level, map: testInfo.levelMap, pass: testInfo.pass};
+	const infoJSON = JSON.stringify(infoObj);
 	
 	setStorage(STORAGE_TEST_LEVEL, infoJSON); 	
 }
@@ -352,7 +352,7 @@ function clearTestLevel()
 
 function createUserDefaultLevel()
 {
-	var myDefaultLevel =    //Double Happy 2014/05/25
+	const myDefaultLevel =    //Double Happy 2014/05/25
 		"0-------- ------- ---------0" +
 		"H     &  #   $   #         H" +
 		"H     #######S#######      H" +
@@ -378,7 +378,7 @@ function createUserDefaultLevel()
 //=========================
 function genUserLevel(levels)
 {
-	var levelMap = 
+	const levelMap = 
 		"                    H       " +
 		"                   &H       " +
 		"                   ##       " +
@@ -398,12 +398,12 @@ function genUserLevel(levels)
 	getEditLevelInfo();
 	while(editLevels > 0) delEditLevel(1); //clear all user level
 	
-	for(var i = 1; i <= levels; i++) {
-		var tmpMap = levelMap;
-		var no = i%5;
-		var str = "##########";
-		for(var j = 0; j < no; j++) {
-			var index = (no+j*2)*NO_OF_TILES_X;
+	for(let i = 1; i <= levels; i++) {
+		let tmpMap = levelMap;
+		const no = i%5;
+		const str = "##########";
+		for(let j = 0; j < no; j++) {
+			const index = (no+j*2)*NO_OF_TILES_X;
 			tmpMap = tmpMap.substr(0, index) + str + tmpMap.substr(index+str.length); 
 		}
 		addEditLevel(tmpMap);
@@ -415,15 +415,15 @@ function genUserLevel(levels)
 //=======================================
 function setStorage(key, value) 
 {
-	if(typeof(window.localStorage) != 'undefined'){ 
+	if(typeof(window.localStorage) !== 'undefined'){ 
 		window.localStorage.setItem(key,value); 
 	} 
 }
 
 function getStorage(key) 
 {
-	var value = null;
-	if(typeof(window.localStorage) != 'undefined'){ 
+	let value = null;
+	if(typeof(window.localStorage) !== 'undefined'){ 
 		value = window.localStorage.getItem(key); 
 	} 
 	return value;
@@ -431,7 +431,7 @@ function getStorage(key)
 
 function clearStorage(key) 
 {
-	if(typeof(window.localStorage) != 'undefined'){ 
+	if(typeof(window.localStorage) !== 'undefined'){ 
 		window.localStorage.removeItem(key); 
 	} 
 }

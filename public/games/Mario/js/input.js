@@ -1,9 +1,9 @@
 (function () {
-    var pressedKeys = {};
+    let pressedKeys = {};
 
     function setKey(event, status) {
-        var code = event.keyCode;
-        var key;
+        const code = event.keyCode;
+        let key;
 
         switch (code) {
             case 32:
@@ -21,7 +21,7 @@
             case 90:
                 key = 'RUN'; break;
             default:
-                key = String.fromCharCode(code);
+                key = String.fromCodePoint(code);
         }
 
         pressedKeys[key] = status;
@@ -29,17 +29,20 @@
 
     document.addEventListener('keydown', function (e) {
         setKey(e, true);
+        if ([32, 37, 38, 39, 40].includes(e.keyCode)) {
+            e.preventDefault();
+        }
     });
 
     document.addEventListener('keyup', function (e) {
         setKey(e, false);
     });
 
-    window.addEventListener('blur', function () {
+    globalThis.addEventListener('blur', function () {
         pressedKeys = {};
     });
 
-    window.input = {
+    globalThis.input = {
         isDown: function (key) {
             return pressedKeys[key.toUpperCase()];
         },

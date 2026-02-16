@@ -6,7 +6,7 @@
 //* "level 51" : Championship demo level (2014/04/27)
 //************************************************************
 
-var levelData2 = [
+const levelData2 = [
 //======<<< Level 001 >>>======
 
 "                            " +

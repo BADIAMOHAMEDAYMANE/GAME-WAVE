@@ -1,8 +1,8 @@
 (function() {
-  if (typeof Mario === 'undefined')
-    window.Mario = {};
+  if (typeof globalThis.Mario === 'undefined')
+    globalThis.Mario = {};
 
-  Flag = Mario.Flag = function(pos) {
+  let Flag = Mario.Flag = function(pos) {
     //afaik flags always have the same height and Y-position
     this.pos = [pos, 49];
     this.hitbox = [0,0,0,0];

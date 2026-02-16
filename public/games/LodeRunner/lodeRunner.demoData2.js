@@ -1,4 +1,4 @@
-var demoData2 = [
+const demoData2 = [
 	{
 		level: 1,
 		ai:1,

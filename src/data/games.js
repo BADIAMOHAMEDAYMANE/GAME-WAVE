@@ -1,16 +1,19 @@
-import hangmanImg from "/src/assets/Hangman.png";
-import SnakeImg from "/src/assets/Snakegame.png";
-import TicTacToeImg from "/src/assets/TicTacToe.png";
-import TetrisImg from "/src/assets/Tetris.png";
-import PingPongImg from "/src/assets/PingPong.png";
-import ArcheryImg from "/src/assets/Archery.png";
-import CandycrashImg from "/src/assets/Candy-crash.png";
-import CubeImg from "/src/assets/Cube.jpg";
-import MarioImg from "/src/assets/SuperMario.png";
-import BananiaImg from "/src/assets/Banania.jpg";
-import Img2048 from "/src/assets/2048.jpg";
-import ImgLoadRunner from "/src/assets/LoadRunner.jpg";
-import FlappyBirdImg from "/src/assets/FlappyBird.jpg";
+import hangmanImg from "../assets/Hangman.png";
+import SnakeImg from "../assets/Snakegame.png";
+import TicTacToeImg from "../assets/TicTacToe.png";
+import TetrisImg from "../assets/Tetris.png";
+import PingPongImg from "../assets/PingPong.png";
+import ArcheryImg from "../assets/Archery.png";
+import CandycrashImg from "../assets/Candy-crash.png";
+import CubeImg from "../assets/Cube.jpg";
+import MarioImg from "../assets/SuperMario.png";
+import BananiaImg from "../assets/Banania.jpg";
+import Img2048 from "../assets/2048.jpg";
+import ImgLoadRunner from "../assets/LoadRunner.jpg";
+import FlappyBirdImg from "../assets/FlappyBird.jpg";
+import fruitsImg from "../assets/fruits.png";
+import SpeedyVerseImg from "../assets/SpeedyVerse.png";
+import PacManImg from "../assets/PacMan.png";
 export const categories = [
     {
         id: 1,
@@ -109,20 +112,25 @@ export const categories = [
             },
             {
                 id: 14,
-                title: " Chess Game",
-                image: "https://play-lh.googleusercontent.com/askVKuYkgbtAOdVez7g1J3HDG2LuVZcNWWDZaB-OZwLhteR6pCW-ndfYb4e72pLZ7dQ=w526-h296-rw",
+                title: " Fruits Game",
+                image: fruitsImg,
+                gamePath: "/games/fruits/index.html",
                 isNew: false
             },
             {
                 id: 15,
-                title: "Card Games",
-                image: "https://imgs.crazygames.com/games/spider-frvr/cover_16x9-1746159133741.png?metadata=none&quality=60&width=412",
+                title: "SpeedyVerse Game",
+                image: SpeedyVerseImg,
+                gamePath: "/games/SpeedyVerse/index.html",
+                isNew: true
+            },
+            {
+                id: 16,
+                title: "PacMan Game",
+                image: PacManImg,
+                gamePath: "/games/Pacman/index.html",
                 isNew: true
             }
-
-
-
-
         ]
     }
 ]

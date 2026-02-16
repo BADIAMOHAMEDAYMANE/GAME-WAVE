@@ -1,8 +1,8 @@
-let board = [];
-let rows = 8;
-let columns = 8;
-let minesCount = 10;
-let minesLocation = [];
+const board = [];
+const rows = 8;
+const columns = 8;
+const minesCount = 10;
+const minesLocation = [];
 let tilesClicked = 0;
 let flagEnabled = false;
 let gameOver = false;
@@ -65,9 +65,9 @@ function initFullscreenToggle() {
 function setMines() {
     let minesLeft = minesCount;
     while (minesLeft > 0) {
-        let r = Math.floor(Math.random() * rows);
-        let c = Math.floor(Math.random() * columns);
-        let id = r + "-" + c;
+        const r = Math.floor(Math.random() * rows);
+        const c = Math.floor(Math.random() * columns);
+        const id = r + "-" + c;
         if (!minesLocation.includes(id)) {
             minesLocation.push(id);
             minesLeft -= 1;
@@ -81,9 +81,9 @@ function startGame() {
     setMines();
 
     for (let r = 0; r < rows; r++) {
-        let row = [];
+        const row = [];
         for (let c = 0; c < columns; c++) {
-            let tile = document.createElement("div");
+            const tile = document.createElement("div");
             tile.id = r + "-" + c;
             tile.addEventListener("click", clickTile);
             document.getElementById("board").append(tile);
@@ -165,7 +165,7 @@ function setFlag() {
 function clickTile() {
     if (gameOver || this.classList.contains("tile-clicked")) return;
 
-    let tile = this;
+    const tile = this;
     if (flagEnabled) {
         tile.innerText = tile.innerText == "" ? "🚩" : "";
         return;
@@ -177,14 +177,14 @@ function clickTile() {
         return;
     }
 
-    let coords = tile.id.split("-");
+    const coords = tile.id.split("-");
     checkMine(parseInt(coords[0]), parseInt(coords[1]));
 }
 
 function revealMines() {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns; c++) {
-            let tile = board[r][c];
+            const tile = board[r][c];
             if (minesLocation.includes(tile.id)) {
                 tile.innerText = "💣";
                 tile.style.background = "linear-gradient(145deg, rgba(255, 0, 0, 0.6), rgba(200, 0, 0, 0.8))";

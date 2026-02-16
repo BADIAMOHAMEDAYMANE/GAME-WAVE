@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <link href="style/main.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="favicon.ico">
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+        content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes, minimal-ui">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
         crossorigin="anonymous"></script>
@@ -169,7 +169,10 @@
     <div class="ad-slot">
         <ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px"
             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="2222222222"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <script>
+            var adsbygoogle = globalThis.adsbygoogle || [];
+            adsbygoogle.push({});
+        </script>
     </div>
 
     <script>
@@ -190,16 +193,12 @@
                 } else if (elem.msRequestFullscreen) {
                     elem.msRequestFullscreen();
                 }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
             }
         }
     </script>

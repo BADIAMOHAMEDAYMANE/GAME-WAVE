@@ -1,4 +1,4 @@
-var EXTERNAL_LEVELS = new Array();
+const EXTERNAL_LEVELS = new Array();
 
 EXTERNAL_LEVELS[0] = new Array();
 EXTERNAL_LEVELS[0][0] = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0);
