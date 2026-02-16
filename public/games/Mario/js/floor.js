@@ -1,8 +1,8 @@
 (function() {
-	if (typeof Mario === 'undefined')
-		window.Mario = {};
+	if (globalThis.Mario === undefined)
+		globalThis.Mario = {};
 
-	var Floor = Mario.Floor = function(pos, sprite) {
+	const Floor = Mario.Floor = function(pos, sprite) {
 
 		Mario.Entity.call(this, {
 			pos: pos,
@@ -15,17 +15,15 @@
 
 	Floor.prototype.isCollideWith = function (ent) {
 		//the first two elements of the hitbox array are an offset, so let's do this now.
-		var hpos1 = [Math.floor(this.pos[0] + this.hitbox[0]), Math.floor(this.pos[1] + this.hitbox[1])];
-		var hpos2 = [Math.floor(ent.pos[0] + ent.hitbox[0]), Math.floor(ent.pos[1] + ent.hitbox[1])];
+		const hpos1 = [Math.floor(this.pos[0] + this.hitbox[0]), Math.floor(this.pos[1] + this.hitbox[1])];
+		const hpos2 = [Math.floor(ent.pos[0] + ent.hitbox[0]), Math.floor(ent.pos[1] + ent.hitbox[1])];
 
 		//if the hitboxes actually overlap
 		if (!(hpos1[0] > hpos2[0]+ent.hitbox[2] || (hpos1[0]+this.hitbox[2] < hpos2[0]))) {
 			if (!(hpos1[1] > hpos2[1]+ent.hitbox[3] || (hpos1[1]+this.hitbox[3] < hpos2[1]))) {
-				if (!this.standing) {
-					ent.bump();
-				} else {
+				if (this.standing) {
 					//if the entity is over the block, it's basically floor
-					var center = hpos2[0] + ent.hitbox[2] / 2;
+					const center = hpos2[0] + ent.hitbox[2] / 2;
 					if (Math.abs(hpos2[1] + ent.hitbox[3] - hpos1[1]) <= ent.vel[1]) {
 						if (level.statics[(this.pos[1] / 16) - 1][this.pos[0] / 16]) {return};
 						ent.vel[1] = 0;
@@ -47,10 +45,12 @@
 						//entity is hitting it from the side, we're a wall
 						ent.collideWall(this);
 					}
+				} else {
+					ent.bump();
 				}
 			}
 		}
 	}
 
-	Floor.prototype.bonk = function() {;}
+	Floor.prototype.bonk = function() {};
 })();

@@ -32,8 +32,8 @@
         #main-layout {
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            width: 100vw;
+            height: 100dvh;
+            width: 100dvw;
         }
 
         /* --- BANNIÈRES ADS (JAUNE VIF) --- */
@@ -142,6 +142,13 @@
             object-fit: contain;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             image-rendering: pixelated;
+        }
+
+        /* Hide internal fullscreen button on mobile */
+        @media (max-width: 1024px) {
+            .btn-fullscreen {
+                display: none !important;
+            }
         }
     </style>
 </head>

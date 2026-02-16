@@ -1,0 +1,236 @@
+:root {
+    --bg: radial-gradient(circle, #fff, rgb(189, 182, 182));
+    --container-bg: url(https://raw.githubusercontent.com/Saumya-07/Fruit-Slicer/master/images/bg3%20-%20Copy.jpg);
+    --wood-bg: url(https://raw.githubusercontent.com/Saumya-07/Fruit-Slicer/master/images/wood-bg2.jpg);
+    --text: #d3901d;
+    --ui-bg: #8d8315;
+    --ui-shadow: #5c5619;
+}
+
+body.dark-mode {
+    --bg: radial-gradient(circle, #222, #000);
+    --container-bg: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://raw.githubusercontent.com/Saumya-07/Fruit-Slicer/master/images/bg3%20-%20Copy.jpg);
+    --wood-bg: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://raw.githubusercontent.com/Saumya-07/Fruit-Slicer/master/images/wood-bg2.jpg);
+    --text: #f39c12;
+    --ui-bg: #444;
+    --ui-shadow: #222;
+}
+
+html {
+    height: 100%;
+    background: var(--bg);
+    background-image: var(--container-bg);
+    background-size: cover;
+    font-family: cursive, sans-serif;
+    transition: background 0.3s ease;
+}
+
+#container {
+    width: 750px;
+    height: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+/* UI Controls */
+.ui-controls {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+}
+
+.control-btn {
+    background: var(--ui-bg);
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 2px 0px 0px var(--ui-shadow);
+    transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:active {
+    top: 2px;
+    box-shadow: 0px 0px var(--ui-shadow);
+}
+
+#front {
+    font-size: 40px;
+    color: var(--text);
+    width: 650px;
+    height: 450px;
+    padding: 10px;
+    margin: 30px auto 20px auto;
+    z-index: 2;
+    display: none;
+}
+
+#front img {
+    width: 280px;
+}
+
+#instructions {
+    width: 450px;
+    height: 50px;
+    margin: 10px auto;
+    font-size: 30px;
+
+    background-color: #d3901d;
+    color: #2e1d11;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px #775012;
+}
+
+#fruitcontainer {
+    background: var(--wood-bg);
+    background-size: cover;
+    width: 650px;
+    height: 450px;
+    padding: 10px;
+    margin: 30px auto 20px auto;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-family: cursive, sans-serif;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0px 4px 0px 0px #4b4b4e;
+    position: relative;
+}
+
+.fruit {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    transform-origin: center;
+    width: 100px;
+    height: 100px;
+    z-index: 10;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Fruit Halves */
+.fruit-half {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* Splash Effect */
+.splash {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 4;
+    animation: splash-fade 0.6s forwards;
+}
+
+@keyframes splash-fade {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Slice Trail */
+.slice-trail {
+    position: absolute;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 20;
+    box-shadow: 0 0 10px white;
+    transform-origin: left center;
+}
+
+#score {
+    display: none;
+}
+
+.scoreDisplay {
+    z-index: 10;
+    display: flex;
+    background-color: transparent;
+    color: #888e61;
+    position: absolute;
+    font-size: 30px;
+    justify-items: center;
+}
+
+#score img {
+    width: 40px;
+    align-items: center;
+    padding-right: 5px;
+}
+
+#trialsleft {
+    margin-top: 7px;
+    display: flex;
+    position: absolute;
+    left: 550px;
+    background-color: transparent;
+    z-index: 10;
+}
+
+.life {
+    width: 30px;
+    padding-right: 5px;
+}
+
+#startReset {
+    position: relative;
+    width: 120px;
+    padding: 10px;
+    margin: 0 auto;
+    cursor: pointer;
+    text-align: center;
+    background-color: var(--ui-bg);
+    box-shadow: 0px 4px 0px 0px var(--ui-shadow);
+    border-radius: 5px;
+    transition: all 0.2s;
+    color: white;
+}
+
+#startReset:active {
+    background-color: #69620c;
+    box-shadow: 0px 0px var(--ui-shadow);
+    top: 4px;
+}
+
+#gameOver {
+    box-sizing: border-box;
+    width: 500px;
+    height: 300px;
+    background: transparent;
+    color: var(--text);
+    text-transform: upperCase;
+    text-align: center;
+    font-size: 3em;
+    position: absolute;
+    top: 170px;
+    left: 150px;
+    z-index: 20;
+}

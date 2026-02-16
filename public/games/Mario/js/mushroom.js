@@ -1,8 +1,8 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (globalThis.Mario === undefined)
+  globalThis.Mario = {};
 
-  var Mushroom = Mario.Mushroom = function(pos) {
+  const Mushroom = Mario.Mushroom = function(pos) {
     this.spawning = false;
     this.waiting = 0;
 
@@ -23,7 +23,7 @@
   Mushroom.prototype.spawn = function() {
     if (player.power > 0) {
       //replace this with a fire flower
-      var ff = new Mario.Fireflower(this.pos)
+      const ff = new Mario.Fireflower(this.pos)
       ff.spawn();
       return;
     }
@@ -39,7 +39,7 @@
   Mushroom.prototype.update = function(dt) {
     if (this.spawning > 1) {
       this.spawning -= 1;
-      if (this.spawning == 1) this.vel[1] = -.5;
+      if (this.spawning === 1) this.vel[1] = -.5;
       return;
     }
     if (this.spawning) {
@@ -72,19 +72,19 @@
     if(this.spawning) {
       return;
     }
-    var h = this.pos[1] % 16 == 0 ? 1 : 2;
-    var w = this.pos[0] % 16 == 0 ? 1 : 2;
+    const h = this.pos[1] % 16 === 0 ? 1 : 2;
+    const w = this.pos[0] % 16 === 0 ? 1 : 2;
 
-    var baseX = Math.floor(this.pos[0] / 16);
-    var baseY = Math.floor(this.pos[1] / 16);
+    const baseX = Math.floor(this.pos[0] / 16);
+    const baseY = Math.floor(this.pos[1] / 16);
 
     if (baseY + h > 15) {
       delete level.items[this.idx];
       return;
     }
 
-    for (var i = 0; i < h; i++) {
-      for (var j = 0; j < w; j++) {
+    for (let i = 0; i < h; i++) {
+      for (let j = 0; j < w; j++) {
         if (level.statics[baseY + i][baseX + j]) {
           level.statics[baseY + i][baseX + j].isCollideWith(this);
         }
@@ -100,8 +100,8 @@
   //we have access to player everywhere, so let's just do this.
   Mushroom.prototype.isPlayerCollided = function() {
     //the first two elements of the hitbox array are an offset, so let's do this now.
-    var hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
-    var hpos2 = [player.pos[0] + player.hitbox[0], player.pos[1] + player.hitbox[1]];
+    const hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
+    const hpos2 = [player.pos[0] + player.hitbox[0], player.pos[1] + player.hitbox[1]];
 
     //if the hitboxes actually overlap
     if (!(hpos1[0] > hpos2[0]+player.hitbox[2] || (hpos1[0]+this.hitbox[2] < hpos2[0]))) {

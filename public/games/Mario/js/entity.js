@@ -1,8 +1,8 @@
 (function() {
-	if (typeof Mario === 'undefined')
-		window.Mario = {};
+	if (globalThis.Mario === undefined)
+		globalThis.Mario = {};
 
-	var Entity = Mario.Entity = function(options) {
+	const Entity = Mario.Entity = function(options) {
 	  this.vel = [0,0];
 	  this.acc = [0,0];
 		this.standing = true;
@@ -30,5 +30,5 @@
 		}
 	}
 
-	Entity.prototype.bump = function() {;}
+	Entity.prototype.bump = function() {};
 })();

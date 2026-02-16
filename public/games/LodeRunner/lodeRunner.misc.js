@@ -1,8 +1,8 @@
 //============
 // MISC
 //============
-var DEBUG = 0;
-var demoSoundOff = 1;
+const DEBUG = 0;
+const demoSoundOff = 1;
 function debug(string) {
 	if(DEBUG) console.log(string);
 }
@@ -14,13 +14,13 @@ function assert(expression, msg)
 
 function getScreenSize() 
 {
-	var x, y;
+	let x, y;
 	
 	//----------------------------------------------------------------------
 	// Window size and scrolling:
 	// URL: http://www.howtocreate.co.uk/tutorials/javascript/browserwindow
 	//----------------------------------------------------------------------
-	if (typeof (window.innerWidth) == 'number') {
+	if (typeof (window.innerWidth) === 'number') {
 		//Non-IE
 		x = window.innerWidth;
 		y = window.innerHeight;
@@ -40,10 +40,10 @@ function getScreenSize()
 //==============================
 // Too many user created Levels
 //==============================
-var editWarningText = null;
+let editWarningText = null;
 function editWarningMsg(hidden)
 {
-	var x, y, width, height;
+	let x, y, width, height;
 
 	if(editWarningText == null) 
 		editWarningText = new createjs.Text("Too many user created levels !", 
@@ -68,11 +68,11 @@ function editWarningMsg(hidden)
 //===============================
 function showTipsMsg(_tipsTxt, _stage, _scale)
 {
-	var TEXT_SIZE = 72* _scale;
-	var TEXT_COLOR = "#ff2020";
-	var tipsText = new createjs.Text(_tipsTxt, "bold " +  TEXT_SIZE + "px Helvetica", TEXT_COLOR);
-	var screenX1 = _stage.canvas.width;
-	var screenY1 = _stage.canvas.height;
+	const TEXT_SIZE = 72* _scale;
+	const TEXT_COLOR = "#ff2020";
+	const tipsText = new createjs.Text(_tipsTxt, "bold " +  TEXT_SIZE + "px Helvetica", TEXT_COLOR);
+	const screenX1 = _stage.canvas.width;
+	const screenY1 = _stage.canvas.height;
 
 	tipsText.x = (screenX1) / 2 | 0;
 	tipsText.y = screenY1/2 - tipsText.getBounds().height*5/4 | 0;
@@ -96,12 +96,12 @@ function moveChild2Top(stage, obj)
 //==========================
 // BEGIN for Sound function
 //==========================
-var soundOff = 0;
+const soundOff = 0;
 function soundPlay(name)
 {
 	if(soundOff || playMode == PLAY_AUTO || (playMode == PLAY_DEMO && demoSoundOff)) return;
 	
-	if(typeof name == "string") {
+	if(typeof name === "string") {
 		return createjs.Sound.play(name);
 	} else {
 		name.stop(); //12/21/2014 , for support soundJS 0.6.0
@@ -113,7 +113,7 @@ function soundStop(name)
 {
 	if(soundOff || playMode == PLAY_AUTO || (playMode == PLAY_DEMO && demoSoundOff)) return;
 	
-	if(typeof name == "string") {
+	if(typeof name === "string") {
 		return createjs.Sound.stop(name);
 	} else {
 		name.stop();
@@ -124,7 +124,7 @@ function soundPause(name)
 {
 	if(soundOff || playMode == PLAY_AUTO || (playMode == PLAY_DEMO && demoSoundOff)) return;
 	
-	if(typeof name == "string") {
+	if(typeof name === "string") {
 		return createjs.Sound.pause(name);
 	} else {
 		name.pause();
@@ -135,7 +135,7 @@ function soundResume(name)
 {
 	if(soundOff || playMode == PLAY_AUTO || (playMode == PLAY_DEMO && demoSoundOff)) return;
 	
-	if(typeof name == "string") {
+	if(typeof name === "string") {
 		return createjs.Sound.resume(name);
 	} else {
 		name.resume();
@@ -147,14 +147,14 @@ function soundResume(name)
 //===============
 function  rangeRandom(minValue, maxValue, seedValue)
 {
-	var rndList, idx, items;
-	var min, max;
-	var reset;
-	var seed = 0;
+	let rndList, idx, items;
+	let min, max;
+	let reset;
+	let seed = 0;
 	
 	function rndStart()
 	{
-		var swapId, tmp;
+		let swapId, tmp;
 	
 		rndList = [];
 		for(var i = 0; i < items; i++) rndList[i] = min + i;
@@ -175,7 +175,7 @@ function  rangeRandom(minValue, maxValue, seedValue)
 	
 	function seedRandom() 
 	{
-    	var x = Math.sin(seed++) * 10000;
+    	const x = Math.sin(seed++) * 10000;
     	return x - Math.floor(x);
 	}
 	
@@ -202,7 +202,7 @@ function  rangeRandom(minValue, maxValue, seedValue)
 	min = minValue;
 	max = maxValue;
 	if(min > max) { //swap
-		var tmp;
+		let tmp;
 		tmp = min;
 		min = max;
 		max = tmp;

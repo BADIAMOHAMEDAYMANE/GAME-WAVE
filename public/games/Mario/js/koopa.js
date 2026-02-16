@@ -1,8 +1,8 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (globalThis.Mario === undefined)
+  globalThis.Mario = {};
 
-  var Koopa = Mario.Koopa = function(pos, sprite, para) {
+  const Koopa = Mario.Koopa = function(pos, sprite, para) {
     this.dying = false;
     this.shell = false;
 
@@ -30,7 +30,7 @@
       if (this.shell) sounds.bump.play();
       this.turn = false;
     }
-    if (this.vel[0] != 0) {
+    if (this.vel[0] !== 0) {
       this.left = (this.vel[0] < 0);
     }
 
@@ -54,12 +54,12 @@
     }
 
     if (this.shell) {
-      if (this.vel[0] == 0) {
+      if (this.vel[0] === 0) {
         this.shell -= 1;
         if (this.shell < 120) {
           this.sprite.speed = 5;
         }
-        if (this.shell == 0) {
+        if (this.shell === 0) {
           this.sprite = level.koopaSprite();
           this.hitbox = [2,8,12,24]
           if (this.left) {
@@ -92,14 +92,14 @@
   };
 
   Koopa.prototype.checkCollisions = function() {
-    var h = this.shell ? 1 : 2;
+    let h = this.shell ? 1 : 2;
     if (this.pos[1] % 16 !== 0) {
       h += 1;
     }
-    var w = this.pos[0] % 16 === 0 ? 1 : 2;
+    const w = this.pos[0] % 16 === 0 ? 1 : 2;
 
-    var baseX = Math.floor(this.pos[0] / 16);
-    var baseY = Math.floor(this.pos[1] / 16);
+    const baseX = Math.floor(this.pos[0] / 16);
+    const baseY = Math.floor(this.pos[1] / 16);
 
     if (baseY + h > 15) {
       delete level.enemies[this.idx];
@@ -110,8 +110,8 @@
       return;
     }
 
-    for (var i = 0; i < h; i++) {
-      for (var j = 0; j < w; j++) {
+    for (let i = 0; i < h; i++) {
+      for (let j = 0; j < w; j++) {
         if (level.statics[baseY + i][baseX + j]) {
           level.statics[baseY + i][baseX + j].isCollideWith(this);
         }
@@ -120,7 +120,7 @@
         }
       }
     }
-    var that = this;
+    const that = this;
     level.enemies.forEach(function(enemy){
       if (enemy === that) { //don't check collisions with ourselves.
         return;
@@ -139,8 +139,8 @@
     }
 
     //the first two elements of the hitbox array are an offset, so let's do this now.
-    var hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
-    var hpos2 = [ent.pos[0] + ent.hitbox[0], ent.pos[1] + ent.hitbox[1]];
+    const hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
+    const hpos2 = [ent.pos[0] + ent.hitbox[0], ent.pos[1] + ent.hitbox[1]];
 
     //if the hitboxes actually overlap
     if (!(hpos1[0] > hpos2[0]+ent.hitbox[2] || (hpos1[0]+this.hitbox[2] < hpos2[0]))) {
@@ -157,21 +157,17 @@
               } else {
                 this.vel[0] = 4;
               }
-            } else {
-              if (ent.bounce) {
+            } else if (ent.bounce) {
                 this.vel[0] = 0;
               } else ent.damage();
-            }
           } else if (ent.vel[1] > 0) { //then we get BOPPED.
             this.stomp();
           } else { //or the player gets hit
             ent.damage();
           }
-        } else {
-          if (this.shell && (ent instanceof Mario.Goomba)) {
+        } else if (this.shell && (ent instanceof Mario.Goomba)) {
             ent.bump();
           } else this.collideWall();
-        }
       }
     }
   };

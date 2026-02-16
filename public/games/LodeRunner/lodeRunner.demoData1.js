@@ -1,4 +1,4 @@
-var demoData1 = [
+const demoData1 = [
 /*	
 	{ level: 1,
 	 	ai: 1,

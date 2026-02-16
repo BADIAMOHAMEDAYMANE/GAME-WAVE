@@ -1,8 +1,8 @@
 (function() {
-  if (typeof Mario === 'undefined')
-    window.Mario = {};
+  if (globalThis.Mario === undefined)
+    globalThis.Mario = {};
 
-  var Sprite = Mario.Sprite = function(img, pos, size, speed, frames, once) {
+  const Sprite = Mario.Sprite = function(img, pos, size, speed, frames, once) {
     this.pos = pos;
     this.size = size;
     this.speed = speed;
@@ -13,7 +13,7 @@
   }
 
   Sprite.prototype.update = function(dt, gameTime) {
-    if (gameTime && gameTime == this.lastUpdated) return;
+    if (gameTime && gameTime === this.lastUpdated) return;
     this._index += this.speed*dt;
     if (gameTime) this.lastUpdated = gameTime;
   }
@@ -23,11 +23,11 @@
   }
 
   Sprite.prototype.render = function(ctx, posx, posy, vX, vY) {
-    var frame;
+    let frame;
 
     if (this.speed > 0) {
-      var max = this.frames.length;
-      var idx = Math.floor(this._index);
+      const max = this.frames.length;
+      const idx = Math.floor(this._index);
       frame = this.frames[idx % max];
 
       if (this.once && idx >= max) {
@@ -38,8 +38,8 @@
       frame = 0;
     }
 
-    var x = this.pos[0];
-    var y = this.pos[1];
+    let x = this.pos[0];
+    const y = this.pos[1];
 
     x += frame*this.size[0];
     ctx.drawImage(resources.get(this.img), x + (1/3),y + (1/3), this.size[0] - (2/3), this.size[1] - (2/3), Math.round(posx - vX), Math.round(posy - vY), this.size[0],this.size[1]);

@@ -3,7 +3,7 @@
 // http://www.kingstone.com.tw/book/book_page.asp?kmcode=2014710650538
 //=============================================================================
 
-var movePolicy = [ [0, 0, 0], //* move_map is used to find *//
+const movePolicy = [ [0, 0, 0], //* move_map is used to find *//
                    [0, 1, 1], //* wheather to move a enm   *//
                    [1, 1, 1], //* by indexing into it with *//
                    [1, 2, 1], //* enm_byte + num_enm +     *//
@@ -17,8 +17,8 @@ var movePolicy = [ [0, 0, 0], //* move_map is used to find *//
                    [4, 4, 4]
 				 ];	
 
-var moveOffset = 0;
-var moveId = 0;    //current guard id
+let moveOffset = 0;
+let moveId = 0;    //current guard id
 
 //********************************
 //initial guard start move value 
@@ -30,9 +30,9 @@ function initGuardVariable()
 
 function moveGuard()
 {
-	var moves;
-	var curGuard;
-	var x, y, yOffset;
+	let moves;
+	let curGuard;
+	let x, y, yOffset;
 	
 	if(!guardCount) return; //no guard
 	
@@ -53,16 +53,16 @@ function moveGuard()
 
 function guardMoveStep( id, action)
 {
-	var curGuard = guard[id];
-	var x = curGuard.pos.x;
-	var xOffset = curGuard.pos.xOffset;
-	var y = curGuard.pos.y;
-	var yOffset = curGuard.pos.yOffset;
+	const curGuard = guard[id];
+	let x = curGuard.pos.x;
+	let xOffset = curGuard.pos.xOffset;
+	let y = curGuard.pos.y;
+	let yOffset = curGuard.pos.yOffset;
 
-	var curToken, nextToken;
-	var centerX, centerY;
-	var curShape, newShape;
-	var stayCurrPos;
+	let curToken, nextToken;
+	let centerX, centerY;
+	let curShape, newShape;
+	let stayCurrPos;
 	
 	centerX = centerY = ACT_STOP;
 	curShape = newShape = curGuard.shape;
@@ -175,7 +175,7 @@ function guardMoveStep( id, action)
 	}
 	
 	if ( action == ACT_DOWN || action == ACT_FALL || action == ACT_IN_HOLE) {
-		var holdOnBar = 0;
+		let holdOnBar = 0;
 		if(curToken == BAR_T) {
 			if( yOffset < 0) holdOnBar = 1;
 			else if(action == ACT_DOWN && y < maxTileY && map[x][y+1].act != LADDR_T) {
@@ -339,9 +339,9 @@ function guardMoveStep( id, action)
 
 function dropGold(id) 
 {
-	var curGuard = guard[id];
-	var nextToken;
-	var drop = 0;
+	const curGuard = guard[id];
+	let nextToken;
+	let drop = 0;
 	
 	switch (true) {
 	case (curGuard.hasGold > 1):
@@ -370,7 +370,7 @@ function dropGold(id)
 
 function climbOut(id)
 {
-	var curGuard = guard[id]
+	const curGuard = guard[id]
 	
 	curGuard.action = ACT_CLIMB_OUT;
 	curGuard.sprite.removeAllEventListeners ("animationend");
@@ -381,14 +381,14 @@ function climbOut(id)
 
 function bestMove(id)
 {
-	var guarder = guard[id];
-	var x = guarder.pos.x;
-	var xOffset = guarder.pos.xOffset;
-	var y = guarder.pos.y;
-	var yOffset = guarder.pos.yOffset;
+	const guarder = guard[id];
+	let x = guarder.pos.x;
+	const xOffset = guarder.pos.xOffset;
+	const y = guarder.pos.y;
+	const yOffset = guarder.pos.yOffset;
 	
-	var curToken, nextBelow, nextMove;
-	var checkSameLevelOnly = 0;
+	let curToken, nextBelow, nextMove;
+	let checkSameLevelOnly = 0;
 	
 	curToken = map[x][y].base;
 	
@@ -429,8 +429,8 @@ function bestMove(id)
 
 	/******* next check to see if palyer on same floor *********/
 	/******* and whether enm can get him. Ignore walls *********/
-	var runnerX = runner.pos.x;
-	var runnerY = runner.pos.y;	
+	const runnerX = runner.pos.x;
+	const runnerY = runner.pos.y;	
 	
 //	if ( y == runnerY ) { // same floor with runner
 	if ( y == runnerY && runner.action != ACT_FALL) { //case : guard on laddr and falling => don't catch it 
@@ -475,15 +475,15 @@ function bestMove(id)
 	return scanFloor(id);
 }
 
-var bestPath, bestRating, curRating;		
-var leftEnd, rightEnd;	
-var startX, startY;
+let bestPath, bestRating, curRating;		
+let leftEnd, rightEnd;	
+let startX, startY;
 
 function scanFloor(id)
 {
-	var x, y;
-	var curToken, nextBelow;
-	var curPath;
+	let x, y;
+	let curToken, nextBelow;
+	let curPath;
 	
 	x = startX = guard[id].pos.x;
 	y = startY = guard[id].pos.y;
@@ -569,10 +569,10 @@ function scanFloor(id)
 	
 function scanDown(x, curPath ) 
 {
-	var y;
-	var nextBelow; //curRating;
-	var runnerX = runner.pos.x;
-	var runnerY = runner.pos.y;
+	let y;
+	let nextBelow; //curRating;
+	const runnerX = runner.pos.x;
+	const runnerY = runner.pos.y;
 	
 	y = startY;
 	
@@ -626,10 +626,10 @@ function scanDown(x, curPath )
 
 function scanUp( x, curPath )
 {
-	var y;
-	var nextBelow; //curRating;
-	var runnerX = runner.pos.x;
-	var runnerY = runner.pos.y;
+	let y;
+	let nextBelow; //curRating;
+	const runnerX = runner.pos.x;
+	const runnerY = runner.pos.y;
 	
 	y = startY;
 	
@@ -673,7 +673,7 @@ function scanUp( x, curPath )
 	
 }                                                   // end scan Up
 
-var bornRndX; //range random 0..maxTileX
+let bornRndX; //range random 0..maxTileX
 
 function initRnd()
 {
@@ -683,7 +683,7 @@ function initRnd()
 
 function getGuardId(x, y)
 {
-	var id;
+	let id;
 	
 	for(id = 0; id < guardCount; id++) {
 		if ( guard[id].pos.x == x && guard[id].pos.y == y) break;
@@ -695,14 +695,14 @@ function getGuardId(x, y)
 
 function guardReborn(x, y)
 {
-	var id;
+	let id;
 	
 	//get guard id  by current in hole position
 	id = getGuardId(x, y);
 
-	var bornY = 1; //start on line 2
-	var bornX = bornRndX.get();
-	var rndStart = bornX;
+	let bornY = 1; //start on line 2
+	let bornX = bornRndX.get();
+	const rndStart = bornX;
 	
 	while(map[bornX][bornY].act != EMPTY_T) { //BUG FIXED for level 115 (can not reborn at bornX=27)
 		if( (bornX = bornRndX.get()) == rndStart) {
@@ -727,7 +727,7 @@ function guardReborn(x, y)
 	map[bornX][bornY].act = GUARD_T;
 	//debug("born (x,y) = (" + bornX + "," + bornY + ")");
 	
-	var curGuard = guard[id];
+	const curGuard = guard[id];
 	
 	curGuard.pos = { x:bornX, y:bornY, xOffset:0, yOffset: 0 };
 	curGuard.sprite.x = bornX * tileWScale | 0;
@@ -742,8 +742,8 @@ function guardReborn(x, y)
 
 function rebornComplete(id)
 {
-	var x = guard[id].pos.x;
-	var y = guard[id].pos.y;
+	const x = guard[id].pos.x;
+	const y = guard[id].pos.y;
 
 	if( map[x][y].act == RUNNER_T) setRunnerDead(); //collision
 	map[x][y].act  = GUARD_T; 

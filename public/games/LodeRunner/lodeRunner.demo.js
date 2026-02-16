@@ -2,9 +2,9 @@
 // Auto Demo 
 /////////////////
 
-var demoRecordIdx, demoGoldIdx, demoBornIdx;
-var	demoTickCount;
-var demoRnd, demoIdx;
+let demoRecordIdx, demoGoldIdx, demoBornIdx;
+let	demoTickCount;
+let demoRnd, demoIdx;
 
 function initAutoDemoRnd()
 {
@@ -15,8 +15,8 @@ function initAutoDemoRnd()
 */	
 }
 
-var demoRecord, demoGoldDrop, demoBornPos;
-var demoLevel, demoData, demoCount, demoMaxCount;
+let demoRecord, demoGoldDrop, demoBornPos;
+let demoLevel, demoData, demoCount, demoMaxCount;
 function getAutoDemoLevel(initValue)
 {
 	if(initValue) {
@@ -43,7 +43,7 @@ function getAutoDemoLevel(initValue)
 		demoLevel++;
 		demoCount++;
 	}
-	var idx = demoRnd[demoIdx].get();
+	const idx = demoRnd[demoIdx].get();
 		
 	demoRecord = demoData[idx].action;
 	demoGoldDrop = demoData[idx].goldDrop;
@@ -55,7 +55,7 @@ function getAutoDemoLevel(initValue)
 		godMode = demoData[idx].godMode; //07/09/2014
 }
 
-var demoCountTime = 0, demoCountEnable = 0;
+let demoCountTime = 0, demoCountEnable = 0;
 function enableAutoDemoTimer()
 {
 	demoCountEnable = 1;
@@ -122,11 +122,11 @@ function getDemoBornPos()
 // for demo mode (User select level)
 //====================================
 
-var playerDemoData1 = [], playerDemoData2 = [];
-var noDemoData1 = 1, noDemoData2 = 1;
+const playerDemoData1 = [], playerDemoData2 = [];
+let noDemoData1 = 1, noDemoData2 = 1;
 
-var wHighScores1 = [], wHighScores2 = [];
-var wDemoData1 = [], wDemoData2 = [];
+const wHighScores1 = [], wHighScores2 = [];
+const wDemoData1 = [], wDemoData2 = [];
 
 function initDemoModeVariable()
 {
@@ -144,7 +144,7 @@ function initDemoModeVariable()
 
 function initDemoInfo()
 {
-	var idx = curLevel - 1;
+	const idx = curLevel - 1;
 	
 	curScore = 0;	
 	runnerLife = 1;
@@ -161,7 +161,7 @@ function initDemoInfo()
 
 function getDemoInfo()
 {
-	var infoJSON;
+	let infoJSON;
 	
 	if(playData == 5) {
 		infoJSON = getStorage(STORAGE_DEMO_INFO2); 
@@ -176,7 +176,7 @@ function getDemoInfo()
 	if(infoJSON == null) {
 		curLevel = 1;
 	} else {
-		var infoObj = JSON.parse(infoJSON);
+		const infoObj = JSON.parse(infoJSON);
 		curLevel = infoObj.l;
 	}
 	getValidDemoLevel();
@@ -185,8 +185,8 @@ function getDemoInfo()
 
 function setDemoInfo()
 {
-	var infoObj = { l:curLevel};
-	var infoJSON = JSON.stringify(infoObj);
+	const infoObj = { l:curLevel};
+	const infoJSON = JSON.stringify(infoObj);
 	
 	switch(playData) {
 	default:
@@ -201,7 +201,7 @@ function setDemoInfo()
 
 function getValidDemoLevel()
 {
-	while(typeof demoData[curLevel-1] == "undefined") {
+	while(typeof demoData[curLevel-1] === "undefined") {
 		if(++curLevel > levelData.length) curLevel = 1;
 	}
 }
@@ -215,8 +215,8 @@ function getNextDemoLevel()
 
 function updatePlayerDemoData(playData, demoDataInfo)
 {
-	var playerDemoData = null;
-	var level = demoDataInfo.level;
+	let playerDemoData = null;
+	const level = demoDataInfo.level;
 	
 	switch(playData) {
 	case 1:
@@ -228,7 +228,7 @@ function updatePlayerDemoData(playData, demoDataInfo)
 	}
 	
 	if(playerDemoData != null) {
-		if(typeof playerDemoData[level-1] == "undefined") {
+		if(typeof playerDemoData[level-1] === "undefined") {
 			// new
 			playerDemoData[level-1] = { 
 				level: demoDataInfo.level, 
@@ -261,14 +261,14 @@ function updatePlayerDemoData(playData, demoDataInfo)
 // Record play action for demo
 //==============================
 
-var RECORD_NONE = 0, RECORD_KEY = 1, RECORD_PLAY = 2;
-var recordMode = RECORD_KEY; 
+const RECORD_NONE = 0, RECORD_KEY = 1, RECORD_PLAY = 2;
+let recordMode = RECORD_KEY; 
 //var recordMode = RECORD_NONE; 
 
-var recordCount, recordKeyCode = 0, lastKeyCode = -1;
-var playRecord, goldRecord, bornRecord;
-var goldRecordIdx, bornRecordIdx;
-var playRecordTime, recordState;
+let recordCount, recordKeyCode = 0, lastKeyCode = -1;
+let playRecord, goldRecord, bornRecord;
+let goldRecordIdx, bornRecordIdx;
+let playRecordTime, recordState;
 
 function initRecordVariable()
 {
@@ -292,7 +292,7 @@ function initRecordVariable()
 	}
 }
 
-var alwaysRecord = 0, keyPressed = 0;
+let alwaysRecord = 0, keyPressed = 0;
 function saveKeyCode(code, keyAction)
 {
 	//-----------------------------------------------------------------------------
@@ -345,7 +345,7 @@ function recordKeyAction()
 	keyPressed = 0;
 }
 
-var recordIdx;
+let recordIdx;
 
 function recordPlayDemo()
 {
@@ -399,8 +399,8 @@ function recordPlayTime(state)
 
 function convertBornPos()
 {
-	var len, offset = 1;
-	var tmpRecord = [];
+	let len, offset = 1;
+	const tmpRecord = [];
 	
 	if((len = bornRecord.length) <= 0) return;
 	
@@ -414,10 +414,10 @@ function convertBornPos()
 	bornRecord = tmpRecord;
 }
 
-var curDemoData;
+let curDemoData;
 function dumpRecord()
 {
-	var txtStr;	
+	let txtStr;	
 	
 	curDemoData = {};
 	curDemoData.level = curLevel;

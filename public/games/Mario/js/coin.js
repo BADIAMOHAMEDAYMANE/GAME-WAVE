@@ -1,8 +1,8 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (globalThis.Mario === undefined)
+  globalThis.Mario = {};
 
-  var Coin = Mario.Coin = function(pos, sprite) {
+  const Coin = Mario.Coin = function(pos, sprite) {
     Mario.Entity.call(this, {
       pos: pos,
       sprite: sprite,
@@ -15,8 +15,8 @@
 
   Coin.prototype.isPlayerCollided = function() {
     //the first two elements of the hitbox array are an offset, so let's do this now.
-    var hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
-    var hpos2 = [player.pos[0] + player.hitbox[0], player.pos[1] + player.hitbox[1]];
+    const hpos1 = [this.pos[0] + this.hitbox[0], this.pos[1] + this.hitbox[1]];
+    const hpos2 = [player.pos[0] + player.hitbox[0], player.pos[1] + player.hitbox[1]];
 
     //if the hitboxes actually overlap
     if (!(hpos1[0] > hpos2[0]+player.hitbox[2] || (hpos1[0]+this.hitbox[2] < hpos2[0]))) {

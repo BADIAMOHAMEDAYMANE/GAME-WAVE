@@ -116,7 +116,7 @@ function getBestMove() {
     for (let i = 0; i < 9; i++) {
         if (options[i] === "") {
             options[i] = "O";
-            let score = minimax(options, 0, false);
+            const score = minimax(options, 0, false);
             options[i] = "";
             if (score > bestScore) {
                 bestScore = score;
@@ -129,7 +129,7 @@ function getBestMove() {
 
 function minimax(board, depth, isMaximizing) {
     const scores = { "O": 10, "X": -10, "tie": 0 };
-    let result = evaluateBoard(board);
+    const result = evaluateBoard(board);
     if (result !== null) return scores[result];
 
     if (isMaximizing) {
@@ -156,7 +156,7 @@ function minimax(board, depth, isMaximizing) {
 }
 
 function evaluateBoard(board) {
-    for (let cond of winPossibilities) {
+    for (const cond of winPossibilities) {
         if (board[cond[0]] && board[cond[0]] === board[cond[1]] && board[cond[0]] === board[cond[2]]) return board[cond[0]];
     }
     return board.includes("") ? null : "tie";

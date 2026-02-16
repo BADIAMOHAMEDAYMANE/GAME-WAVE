@@ -3,20 +3,20 @@
  * Gestion du scroll, collisions et thème Cyberpunk
  */
 
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-var startBtn = document.getElementById("start-btn");
-var pauseBtn = document.getElementById("pause-btn");
-var restartBtn = document.getElementById("restart-btn");
+const startBtn = document.getElementById("start-btn");
+const pauseBtn = document.getElementById("pause-btn");
+const restartBtn = document.getElementById("restart-btn");
 
 // Variables pour le plein écran
-var expandBtn = document.getElementById("expand-btn");
-var fullscreenTarget = document.getElementById("fullscreen-target");
+const expandBtn = document.getElementById("expand-btn");
+const fullscreenTarget = document.getElementById("fullscreen-target");
 
-var animationId;
-var gameRunning = false;
-var isPausedForAd = false;
+let animationId;
+let gameRunning = false;
+let isPausedForAd = false;
 
 // Couleurs (doivent matcher le CSS)
 const COLOR_PRIMARY = "#22d3ee";
@@ -44,35 +44,35 @@ function triggerAd() {
 }
 
 // --- LOGIQUE JEU ---
-var ballRadius = 8;
-var ballX = canvas.width / 2;
-var ballY = canvas.height / 2;
-var ballSpeedX = 5;
-var ballSpeedY = 5;
+const ballRadius = 8;
+let ballX = canvas.width / 2;
+let ballY = canvas.height / 2;
+let ballSpeedX = 5;
+let ballSpeedY = 5;
 
-var paddleHeight = 80;
-var paddleWidth = 10;
-var leftPaddleY = (canvas.height - paddleHeight) / 2;
-var rightPaddleY = (canvas.height - paddleHeight) / 2;
-var paddleSpeed = 8;
+const paddleHeight = 80;
+const paddleWidth = 10;
+let leftPaddleY = (canvas.height - paddleHeight) / 2;
+let rightPaddleY = (canvas.height - paddleHeight) / 2;
+const paddleSpeed = 8;
 
-var leftScore = 0;
-var rightScore = 0;
-var maxScore = 5;
+let leftScore = 0;
+let rightScore = 0;
+const maxScore = 5;
 
 // --- CLAVIER & ANTI-SCROLL ---
-var keys = {};
+const keys = {};
 
-window.addEventListener("keydown", function(e) {
+globalThis.addEventListener("keydown", function(e) {
     // BLOQUER LE SCROLL DU NAVIGATEUR
-    if(["Space", "ArrowUp", "ArrowDown"].indexOf(e.code) > -1) {
+    if(["Space", "ArrowUp", "ArrowDown"].includes(e.code)) {
         e.preventDefault();
     }
     keys[e.key.toLowerCase()] = true;
     keys[e.key] = true;
 }, false);
 
-window.addEventListener("keyup", function(e) {
+globalThis.addEventListener("keyup", function(e) {
     keys[e.key.toLowerCase()] = false;
     keys[e.key] = false;
 }, false);
@@ -171,14 +171,14 @@ function loop() {
 
 // --- GESTION PLEIN ÉCRAN ---
 expandBtn.addEventListener("click", function() {
-    if (!document.fullscreenElement) {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+        expandBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
+    } else {
         fullscreenTarget.requestFullscreen().catch(err => {
             console.error(`Erreur: ${err.message}`);
         });
         expandBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
-    } else {
-        document.exitFullscreen();
-        expandBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
     }
 });
 

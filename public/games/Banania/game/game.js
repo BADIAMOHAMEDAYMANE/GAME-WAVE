@@ -7,7 +7,7 @@ const AUTHOR = "Benjamin";
 
 // GLOBAL CONSTANTS
 const JOYSTICK_SIZE = 0.4;// In terms of the smaller of the two screen dimensions
-const IS_TOUCH_DEVICE = true == ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch);
+const IS_TOUCH_DEVICE = "ontouchstart" in globalThis || globalThis.DocumentTouch && document instanceof DocumentTouch
 
 const UPS = 60;// Keep 60 FPS on all devices for responsiveness
 const NUM_RESOURCES = 197;
@@ -60,11 +60,11 @@ const ERR_NOTFOUND = 4;
 const ERR_EMPTYNAME = 5;
 
 // Check storage
-const HAS_STORAGE = (function () { try { return 'localStorage' in window && window['localStorage'] !== null && window['localStorage'] !== undefined; } catch (e) { return false; } })();
+const HAS_STORAGE = (function () { try { return 'localStorage' in globalThis && globalThis['localStorage'] !== null && globalThis['localStorage'] !== undefined; } catch { return false; } })();
 
 // Canvas creation
-let CANVAS = document.createElement("canvas");
-let CTX = CANVAS.getContext("2d");
+const CANVAS = document.createElement("canvas");
+const CTX = CANVAS.getContext("2d");
 CANVAS.width = SCREEN_WIDTH;
 CANVAS.height = SCREEN_HEIGHT;
 CANVAS.true_width = SCREEN_WIDTH;
@@ -78,15 +78,14 @@ if (IS_TOUCH_DEVICE) {
     // Joystick creation
     JOYSTICK = document.createElement("canvas");
     JOYCTX = JOYSTICK.getContext("2d");
-    let mindim = Math.min(window.innerWidth, window.innerHeight);
-    JOYSTICK.width = mindim * JOYSTICK_SIZE;
-    JOYSTICK.height = mindim * JOYSTICK_SIZE;
+    JOYSTICK.width = Math.min(globalThis.innerWidth, globalThis.innerHeight) * JOYSTICK_SIZE;
+    JOYSTICK.height = Math.min(globalThis.innerWidth, globalThis.innerHeight) * JOYSTICK_SIZE;
     JOYSTICK.className = "joystick";
     document.body.appendChild(JOYSTICK);
 
-    window.onresize = function (event) {// On mobile, make game fullscreen
-        let ratio_1 = window.innerWidth / CANVAS.true_width;
-        let ratio_2 = window.innerHeight / CANVAS.true_height;
+    globalThis.onresize = function (event) {// On mobile, make game fullscreen
+        const ratio_1 = globalThis.innerWidth / CANVAS.true_width;
+        const ratio_2 = globalThis.innerHeight / CANVAS.true_height;
         if (ratio_1 < ratio_2) {
             CANVAS.style.height = "";
             CANVAS.style.width = "100%";
@@ -95,20 +94,20 @@ if (IS_TOUCH_DEVICE) {
             CANVAS.style.width = "";
         }
 
-        let rect = CANVAS.getBoundingClientRect();
-        let style = window.getComputedStyle(CANVAS);
-        CANVAS.true_width = rect.width + parseInt(style.getPropertyValue('border-left-width')) + parseInt(style.getPropertyValue('border-right-width'));
-        CANVAS.true_height = rect.height + parseInt(style.getPropertyValue('border-top-width')) + parseInt(style.getPropertyValue('border-bottom-width'));
+        const rect = CANVAS.getBoundingClientRect();
+        const style = globalThis.getComputedStyle(CANVAS);
+        CANVAS.true_width = rect.width + Number.parseInt(style.getPropertyValue('border-left-width')) + Number.parseInt(style.getPropertyValue('border-right-width'));
+        CANVAS.true_height = rect.height + Number.parseInt(style.getPropertyValue('border-top-width')) + Number.parseInt(style.getPropertyValue('border-bottom-width'));
 
 
-        let mindim = Math.min(window.innerWidth, window.innerHeight);
-        // JOYSTICK.width = mindim * JOYSTICK_SIZE;
-        // JOYSTICK.height = mindim * JOYSTICK_SIZE;
 
+        // If you want to resize the joystick on window resize, uncomment below:
+        // JOYSTICK.width = Math.min(globalThis.innerWidth, globalThis.innerHeight) * JOYSTICK_SIZE;
+        // JOYSTICK.height = Math.min(globalThis.innerWidth, globalThis.innerHeight) * JOYSTICK_SIZE;
         // render_joystick();
 
     };
-    window.onresize(null);
+    globalThis.onresize(null);
 }
 
 // Initialize nipplejs - Global (CSS handles visibility)
@@ -152,20 +151,20 @@ if (document.getElementById('joystick-container')) {
 // GLOBAL VARIABLES
 
 // MD5 digest for passwords
-let md5 = new CLASS_md5();
+const md5 = new CLASS_md5();
 
 // Game
-let game = new CLASS_game();
+const game = new CLASS_game();
 
 // Resources
-let res = new CLASS_resources();
+const res = new CLASS_resources();
 res.load();
 
 // Input mechanics
-let input = new CLASS_input();
+const input = new CLASS_input();
 
 // Visual
-let vis = new CLASS_visual();
+const vis = new CLASS_visual();
 vis.init_menus();
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -374,7 +373,7 @@ const IMG_DIGIT_LOOKUP = [
 
 function CLASS_resources() {
     // Private:
-    let that = this;
+    const that = this;
     let resources_loaded = 0;
     let already_loading = false;
 
@@ -399,37 +398,37 @@ function CLASS_resources() {
         ////////////////////////////////////////////////////////
         // Background image
         that.images[0] = new Image();
-        that.images[0].onload = on_loaded();
+        that.images[0].onload = on_loaded;
         that.images[0].src = IMAGE_DIR + "background.png";
 
         // Entry Image
         that.images[1] = new Image();
-        that.images[1].onload = on_loaded();
+        that.images[1].onload = on_loaded;
         that.images[1].src = IMAGE_DIR + "entry.png";
 
         for (let i = 0; i < 9; i++) {// From 2 to 10 garbage
             that.images[2 + i] = new Image();
-            that.images[2 + i].onload = on_loaded();
+            that.images[2 + i].onload = on_loaded;
             that.images[2 + i].src = IMAGE_DIR + "garbage_" + i + ".png";
         }
 
         for (let i = 0; i < 11; i++) {// From 11 to 21 digits
             that.images[11 + i] = new Image();
-            that.images[11 + i].onload = on_loaded();
+            that.images[11 + i].onload = on_loaded;
             that.images[11 + i].src = IMAGE_DIR + "digits_" + i + ".png";
         }
 
         for (let i = 0; i < 3; i++) {// From 22 to 30 buttons
             for (let j = 0; j < 3; j++) {
                 that.images[22 + 3 * i + j] = new Image();
-                that.images[22 + 3 * i + j].onload = on_loaded();
+                that.images[22 + 3 * i + j].onload = on_loaded;
                 that.images[22 + 3 * i + j].src = IMAGE_DIR + "userbutton_" + i + "-" + j + ".png";
             }
         }
 
         for (let i = 0; i < 9; i++) {// From 31 to 39 stones
             that.images[31 + i] = new Image();
-            that.images[31 + i].onload = on_loaded();
+            that.images[31 + i].onload = on_loaded;
             that.images[31 + i].src = IMAGE_DIR + "stone_" + i + ".png";
         }
 
@@ -438,7 +437,7 @@ function CLASS_resources() {
         for (let i = 0; i < 6; i++) {// From 41 to 58 doors
             for (let j = 0; j < 3; j++) {// Reversed order for ease of access
                 that.images[41 + 3 * i + j] = new Image();
-                that.images[41 + 3 * i + j].onload = on_loaded();
+                that.images[41 + 3 * i + j].onload = on_loaded;
                 that.images[41 + 3 * i + j].src = IMAGE_DIR + "doors_" + j + "-" + i + ".png";
             }
         }
@@ -446,7 +445,7 @@ function CLASS_resources() {
         for (let i = 0; i < 13; i++) {// From 59 to 110 player (berti)
             for (let j = 0; j < 4; j++) {// Reversed order for ease of access
                 that.images[59 + 4 * i + j] = new Image();
-                that.images[59 + 4 * i + j].onload = on_loaded();
+                that.images[59 + 4 * i + j].onload = on_loaded;
                 that.images[59 + 4 * i + j].src = IMAGE_DIR + "player_" + j + "-" + i + ".png";
             }
         }
@@ -454,7 +453,7 @@ function CLASS_resources() {
         for (let i = 0; i < 9; i++) {// From 111 to 146 monster 1 (purple)
             for (let j = 0; j < 4; j++) {// Reversed order for ease of access
                 that.images[111 + 4 * i + j] = new Image();
-                that.images[111 + 4 * i + j].onload = on_loaded();
+                that.images[111 + 4 * i + j].onload = on_loaded;
                 that.images[111 + 4 * i + j].src = IMAGE_DIR + "monster1_" + j + "-" + i + ".png";
             }
         }
@@ -462,88 +461,88 @@ function CLASS_resources() {
         for (let i = 0; i < 5; i++) {// From 147 to 166 monster 2 (green)
             for (let j = 0; j < 4; j++) {// Reversed order for ease of access
                 that.images[147 + 4 * i + j] = new Image();
-                that.images[147 + 4 * i + j].onload = on_loaded();
+                that.images[147 + 4 * i + j].onload = on_loaded;
                 that.images[147 + 4 * i + j].src = IMAGE_DIR + "monster2_" + j + "-" + i + ".png";
             }
         }
 
         that.images[167] = new Image();
-        that.images[167].onload = on_loaded();
+        that.images[167].onload = on_loaded;
         that.images[167].src = IMAGE_DIR + "argl.png";
 
         that.images[168] = new Image();
-        that.images[168].onload = on_loaded();
+        that.images[168].onload = on_loaded;
         that.images[168].src = IMAGE_DIR + "wow.png";
 
         that.images[169] = new Image();
-        that.images[169].onload = on_loaded();
+        that.images[169].onload = on_loaded;
         that.images[169].src = IMAGE_DIR + "yeah.png";
 
         that.images[170] = new Image();
-        that.images[170].onload = on_loaded();
+        that.images[170].onload = on_loaded;
         that.images[170].src = IMAGE_DIR + "exit.png";
 
         that.images[171] = new Image();
-        that.images[171].onload = on_loaded();
+        that.images[171].onload = on_loaded;
         that.images[171].src = IMAGE_DIR + "check_b.png";
 
         that.images[172] = new Image();
-        that.images[172].onload = on_loaded();
+        that.images[172].onload = on_loaded;
         that.images[172].src = IMAGE_DIR + "check_w.png";
 
         that.images[173] = new Image();
-        that.images[173].onload = on_loaded();
+        that.images[173].onload = on_loaded;
         that.images[173].src = IMAGE_DIR + "dbx_confirm.png";
 
         that.images[174] = new Image();
-        that.images[174].onload = on_loaded();
+        that.images[174].onload = on_loaded;
         that.images[174].src = IMAGE_DIR + "dbx_saveload.png";
 
         that.images[175] = new Image();
-        that.images[175].onload = on_loaded();
+        that.images[175].onload = on_loaded;
         that.images[175].src = IMAGE_DIR + "dbx_loadlvl.png";
 
         that.images[176] = new Image();
-        that.images[176].onload = on_loaded();
+        that.images[176].onload = on_loaded;
         that.images[176].src = IMAGE_DIR + "dbx_charts.png";
 
         that.images[177] = new Image();
-        that.images[177].onload = on_loaded();
+        that.images[177].onload = on_loaded;
         that.images[177].src = IMAGE_DIR + "btn_c-up.png";
 
         that.images[178] = new Image();
-        that.images[178].onload = on_loaded();
+        that.images[178].onload = on_loaded;
         that.images[178].src = IMAGE_DIR + "btn_c-down.png";
 
         that.images[179] = new Image();
-        that.images[179].onload = on_loaded();
+        that.images[179].onload = on_loaded;
         that.images[179].src = IMAGE_DIR + "btn_n-up.png";
 
         that.images[180] = new Image();
-        that.images[180].onload = on_loaded();
+        that.images[180].onload = on_loaded;
         that.images[180].src = IMAGE_DIR + "btn_n-down.png";
 
         that.images[181] = new Image();
-        that.images[181].onload = on_loaded();
+        that.images[181].onload = on_loaded;
         that.images[181].src = IMAGE_DIR + "btn_o-up.png";
 
         that.images[182] = new Image();
-        that.images[182].onload = on_loaded();
+        that.images[182].onload = on_loaded;
         that.images[182].src = IMAGE_DIR + "btn_o-down.png";
 
         that.images[183] = new Image();
-        that.images[183].onload = on_loaded();
+        that.images[183].onload = on_loaded;
         that.images[183].src = IMAGE_DIR + "btn_y-up.png";
 
         that.images[184] = new Image();
-        that.images[184].onload = on_loaded();
+        that.images[184].onload = on_loaded;
         that.images[184].src = IMAGE_DIR + "btn_y-down.png";
 
         ////////////////////////////////////////////////////////
         // Sounds: /////////////////////////////////////////////
         ////////////////////////////////////////////////////////
 
-        let soundarray = [
+        const soundarray = [
             "about.mp3",
             "argl.mp3",
             "attack1.mp3",
@@ -559,7 +558,7 @@ function CLASS_resources() {
 
         for (let i = 0; i < soundarray.length; i++) {
             that.sounds[i] = new Audio();
-            that.sounds[i].oncanplaythrough = on_loaded();
+            that.sounds[i].oncanplaythrough = on_loaded;
             that.sounds[i].src = SOUND_DIR + soundarray[i];
         }
 
@@ -581,7 +580,7 @@ function CLASS_resources() {
 
 function CLASS_input() {
     // Private:
-    let that = this;
+    const that = this;
 
     function handle_keydown_global(evt) {
         game.remove_soundrestriction();
@@ -632,8 +631,8 @@ function CLASS_input() {
         game.remove_soundrestriction();
         that.mouse_down = true;
         if (vis !== null && vis.dbx !== null && vis.dbx.style.display != "none") {
-            let rel_pos = { x: that.mouse_pos_global.x - parseInt(vis.dbx.style.left), y: that.mouse_pos_global.y - parseInt(vis.dbx.style.top) };
-            if (rel_pos.x > 0 && rel_pos.x < parseInt(vis.dbx.style.width) && rel_pos.y > 0 && rel_pos.y < 20) {
+            const rel_pos = { x: that.mouse_pos_global.x - Number.parseInt(vis.dbx.style.left), y: that.mouse_pos_global.y - Number.parseInt(vis.dbx.style.top) };
+            if (rel_pos.x > 0 && rel_pos.x < Number.parseInt(vis.dbx.style.width) && rel_pos.y > 0 && rel_pos.y < 20) {
                 evt.preventDefault();// Prevents from selecting the canvas
                 vis.dbx.drag = true;
                 vis.dbx.drag_pos = rel_pos;
@@ -649,11 +648,11 @@ function CLASS_input() {
     };
 
     function handle_mousemove(evt) {
-        let rect = CANVAS.getBoundingClientRect();
-        let style = window.getComputedStyle(CANVAS);
+        const rect = CANVAS.getBoundingClientRect();
+        const style = globalThis.getComputedStyle(CANVAS);
         that.mouse_pos = {
-            x: Math.round((evt.clientX - rect.left - parseInt(style.getPropertyValue('border-left-width'))) / CANVAS.true_width * CANVAS.width),
-            y: Math.round((evt.clientY - rect.top - parseInt(style.getPropertyValue('border-top-width'))) / CANVAS.true_height * CANVAS.height)
+            x: Math.round((evt.clientX - rect.left - Number.parseInt(style.getPropertyValue('border-left-width'))) / CANVAS.true_width * CANVAS.width),
+            y: Math.round((evt.clientY - rect.top - Number.parseInt(style.getPropertyValue('border-top-width'))) / CANVAS.true_height * CANVAS.height)
         };
 
         if (that.lastclick_button == 3) {
@@ -714,19 +713,16 @@ function CLASS_input() {
     function handle_mouseup(evt) {
         if (that.mouse_pos.y >= 35 && that.mouse_pos.y <= 65) {
             if (that.mouse_pos.x >= 219 && that.mouse_pos.x <= 249 && that.lastclick_button == 0 && game.buttons_activated[0]) {
-                //alert("<<");
                 game.prev_level();
             } else if (that.mouse_pos.x >= 253 && that.mouse_pos.x <= 283 && that.lastclick_button == 1 && game.buttons_activated[1]) {
-                //alert("Berti");
                 game.reset_level();
             } else if (that.mouse_pos.x >= 287 && that.mouse_pos.x <= 317 && that.lastclick_button == 2 && game.buttons_activated[2]) {
-                //alert(">>");
                 game.next_level();
             }
         }
 
         if (that.menu_pressed == 0 && that.lastklick_option !== null && !that.lastklick_option.line) {
-            let up_option = calc_option(vis.menu1, that.mouse_pos.x, that.mouse_pos.y);
+            const up_option = calc_option(vis.menu1, that.mouse_pos.x, that.mouse_pos.y);
             if (up_option === that.lastklick_option && that.lastklick_option.on()) {
                 switch (that.lastklick_option.effect_id) {
                     case 0:
@@ -744,10 +740,10 @@ function CLASS_input() {
                         }
                         break;
                     case 2:
-                        if (game.savegame.username !== null) {
-                            game.store_savegame();
-                        } else {
+                        if (game.savegame.username === null) {
                             vis.open_dbx(DBX_SAVE);
+                        } else {
+                            game.store_savegame();
                         }
                         break;
                     case 3:
@@ -780,9 +776,6 @@ function CLASS_input() {
         that.lastklick_option = null;
     };
 
-    function handle_mouseout(evt) {
-        //handle_mouseup(evt);
-    };
 
 
     function calc_opened(a_menu, mouse_x, mouse_y) {
@@ -806,13 +799,12 @@ function CLASS_input() {
     function calc_option(a_menu, mouse_x, mouse_y) {
         if (a_menu.submenu_open != -1) {
             let submenu_offset = 0;
-            for (let i = 0; i < a_menu.submenu_list.length; i++) {
-                let sm = a_menu.submenu_list[i];
+            for (const [i, sm] of a_menu.submenu_list.entries()) {
                 if (i == a_menu.submenu_open) {
                     let option_offset = a_menu.offset_y + a_menu.height + 4;
-                    for (let j = 0; j < sm.options.length; j++) {
+                    for (const option of sm.options) {
                         let next_offset;
-                        if (sm.options[j].line) {
+                        if (option.line) {
                             next_offset = option_offset + sm.offset_line;
                         } else {
                             next_offset = option_offset + sm.offset_text;
@@ -820,7 +812,7 @@ function CLASS_input() {
 
                         if (mouse_x > a_menu.offset_x + submenu_offset && mouse_x < a_menu.offset_x + submenu_offset + sm.dd_width &&
                             mouse_y > option_offset && mouse_y < next_offset) {
-                            return sm.options[j];
+                            return option;
                         }
 
                         option_offset = next_offset;
@@ -830,61 +822,6 @@ function CLASS_input() {
             }
         }
         return null;
-    }
-
-    function handle_touch_global(evt) {
-        game.remove_soundrestriction();
-        //evt.preventDefault();
-        let touches = evt.changedTouches;
-        let rect = JOYSTICK.getBoundingClientRect();
-        let style = window.getComputedStyle(JOYSTICK);
-
-        let changed = false;
-
-        let mid_x = JOYSTICK.width / 2;
-        let mid_y = JOYSTICK.height / 2;
-
-        for (let i = 0; i < touches.length; i++) {
-            let x = Math.round(touches[i].clientX - rect.left - parseInt(style.getPropertyValue('border-left-width')));
-            let y = Math.round(touches[i].clientY - rect.top - parseInt(style.getPropertyValue('border-top-width')));
-
-            if (x >= 0 && x <= JOYSTICK.width && y >= 0 && y <= JOYSTICK.height) {
-                if (x >= y) {
-                    if (-x + JOYSTICK.height >= y) {
-                        that.joystick_dir = DIR_UP;
-                        changed = true;
-                    } else {
-                        that.joystick_dir = DIR_RIGHT;
-                        changed = true;
-                    }
-                } else {
-                    if (-x + JOYSTICK.width >= y) {
-                        that.joystick_dir = DIR_LEFT;
-                        changed = true;
-                    } else {
-                        that.joystick_dir = DIR_DOWN;
-                        changed = true;
-                    }
-                }
-
-                let now = Date.now();
-                if (now - that.last_joystick_render > 15) {
-                    render_joystick(x, y);
-                    that.last_joystick_render = now;
-                }
-            }
-        }
-
-        if (!changed) {
-            render_joystick();
-            that.joystick_dir = DIR_NONE;
-        }
-    }
-
-    function handle_touchend_global(evt) {
-        //evt.preventDefault();
-        render_joystick();
-        that.joystick_dir = DIR_NONE;
     }
 
     // Public:
@@ -919,9 +856,6 @@ function CLASS_input() {
 
         // Handle touch events
         // Disabled to prevent conflict with nipplejs
-        // document.addEventListener("touchstart", handle_touch_global, false);
-        // document.addEventListener("touchmove", handle_touch_global, false);
-        // document.addEventListener("touchend", handle_touchend_global, false);
 
         // Handle mouse controls (CANVAS)
         CANVAS.addEventListener('mousemove', handle_mousemove, false);
@@ -968,7 +902,7 @@ const ENT_DOOR_6 = 24; // Door which is opened by corresponding key
 
 function CLASS_game() {
     // Private:
-    let that = this;
+    const that = this;
 
 
     //////////////////////////////////////////////////////////////////////////////
@@ -1013,11 +947,11 @@ function CLASS_game() {
             localStorage.setItem("user_count", 1);
             that.savegame.usernumber = 0;
         } else if (that.savegame.usernumber == -1) {
-            that.savegame.usernumber = parseInt(localStorage.getItem("user_count"));
+            that.savegame.usernumber = Number.parseInt(localStorage.getItem("user_count"));
             localStorage.setItem("user_count", that.savegame.usernumber + 1);
         }
 
-        let prefix = "player" + that.savegame.usernumber + "_";
+        const prefix = "player" + that.savegame.usernumber + "_";
 
         localStorage.setItem(prefix + "username", that.savegame.username);
         localStorage.setItem(prefix + "password", that.savegame.password);
@@ -1037,20 +971,20 @@ function CLASS_game() {
         if (user_count === null) {
             return ERR_NOSAVE;// There are no save games
         }
-        user_count = parseInt(user_count);
+        user_count = Number.parseInt(user_count);
         pass = md5.digest(pass);
 
-        for (let i = 0; i < user_count; i++) {
-            let prefix = "player" + i + "_";
+        for (const i of Array.from({length: user_count}, (_, idx) => idx)) {
+            const prefix = "player" + i + "_";
             if (localStorage.getItem(prefix + "username") == uname) {
                 if (localStorage.getItem(prefix + "password") == pass) {
                     that.savegame = new CLASS_savegame();
                     that.savegame.usernumber = i;
                     that.savegame.username = uname;
                     that.savegame.password = pass;
-                    that.savegame.reached_level = parseInt(localStorage.getItem(prefix + "reached_level"));
+                    that.savegame.reached_level = Number.parseInt(localStorage.getItem(prefix + "reached_level"));
                     for (let i = 1; i <= 50; i++) {
-                        that.savegame.arr_steps[i] = parseInt(localStorage.getItem(prefix + "steps_lv" + i));
+                        that.savegame.arr_steps[i] = Number.parseInt(localStorage.getItem(prefix + "steps_lv" + i));
                     }
                     that.savegame.progressed = false;
 
@@ -1073,9 +1007,9 @@ function CLASS_game() {
     this.name_savegame = function (uname, pass) {
         let user_count = localStorage.getItem("user_count");
         if (user_count !== null) {
-            user_count = parseInt(user_count);
+            user_count = Number.parseInt(user_count);
             for (let i = 0; i < user_count; i++) {
-                let prefix = "player" + i + "_";
+                const prefix = "player" + i + "_";
                 if (localStorage.getItem(prefix + "username") == uname) {
                     return ERR_EXISTS;// Failed already exists
                 }
@@ -1127,7 +1061,7 @@ function CLASS_game() {
             return false;
         }
 
-        let result = that.retrieve_savegame(uname, pass);
+        const result = that.retrieve_savegame(uname, pass);
         if (result != ERR_SUCCESS) {
             vis.error_dbx(result);
             return false;
@@ -1137,7 +1071,7 @@ function CLASS_game() {
     }
 
     this.dbxcall_chpass = function (pass, newpass) {
-        let result = that.change_password(pass, newpass);
+        const result = that.change_password(pass, newpass);
         if (result != ERR_SUCCESS) {
             vis.error_dbx(result);
             return false;
@@ -1204,8 +1138,8 @@ function CLASS_game() {
     CLASS_entity.prototype.move_randomly = function (curr_x, curr_y) {
         if (!this.moving) {
             let tried_forward = false;
-            let back_dir = game.opposite_dir(this.face_dir);
-            let possibilities = new Array(DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT);
+            const back_dir = game.opposite_dir(this.face_dir);
+            const possibilities = new Array(DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT);
             for (let i = 0; i < possibilities.length; i++) {
                 if (possibilities[i] == this.face_dir || possibilities[i] == back_dir) {
                     possibilities.splice(i, 1);
@@ -1213,7 +1147,7 @@ function CLASS_game() {
                 }
             }
 
-            if (Math.random() < 0.80) {
+            if (Math.random() < 0.8) {
                 if (game.walkable(curr_x, curr_y, this.face_dir)) {
                     game.start_move(curr_x, curr_y, this.face_dir);
                     return;
@@ -1222,7 +1156,7 @@ function CLASS_game() {
             }
 
             while (possibilities.length > 0) {
-                let selection = Math.floor(Math.random() * possibilities.length);
+                const selection = Math.floor(Math.random() * possibilities.length);
                 if (game.walkable(curr_x, curr_y, possibilities[selection])) {
                     game.start_move(curr_x, curr_y, possibilities[selection]);
                     return;
@@ -1253,15 +1187,15 @@ function CLASS_game() {
             let closest_berti = -1;
 
             for (let i = 0; i < game.berti_positions.length; i++) {
-                let face_right_direction =
+                const face_right_direction =
                     (this.face_dir == DIR_DOWN && game.berti_positions[i].y >= curr_y) ||
                     (this.face_dir == DIR_UP && game.berti_positions[i].y <= curr_y) ||
                     (this.face_dir == DIR_LEFT && game.berti_positions[i].x <= curr_x) ||
                     (this.face_dir == DIR_RIGHT && game.berti_positions[i].x >= curr_x);
 
                 if (face_right_direction && game.can_see_tile(curr_x, curr_y, game.berti_positions[i].x, game.berti_positions[i].y)) {
-                    let distance = Math.abs(game.berti_positions[i].x - curr_x) + Math.abs(game.berti_positions[i].y - curr_y);// Manhattan distance
-                    if (distance < closest_dist || (distance == closest_dist && Math.random() < 0.50)) {
+                    const distance = Math.abs(game.berti_positions[i].x - curr_x) + Math.abs(game.berti_positions[i].y - curr_y);// Manhattan distance
+                    if (distance < closest_dist || (distance == closest_dist && Math.random() < 0.5)) {
                         closest_dist = distance;
                         closest_berti = i;
                     }
@@ -1285,19 +1219,18 @@ function CLASS_game() {
                     }
                 }
 
-                let diff_x = game.berti_positions[closest_berti].x - curr_x;
-                let diff_y = game.berti_positions[closest_berti].y - curr_y;
+                const diff_x = game.berti_positions[closest_berti].x - curr_x;
+                const diff_y = game.berti_positions[closest_berti].y - curr_y;
 
                 // THIS IS AN OPTIONAL FIX THAT MAKES THE GAME MUCH HARDER!
-                /*let closest_berti_obj = game.level_array[game.berti_positions[closest_berti].x][game.berti_positions[closest_berti].y];
-
-                if(closest_berti_obj.moving){
-                    let next_pos = game.dir_to_coords(game.berti_positions[closest_berti].x, game.berti_positions[closest_berti].y, closest_berti_obj.face_dir);
-                    if(Math.abs(curr_x - next_pos.x) + Math.abs(curr_y - next_pos.y) == 1){
-                        if(Math.abs(closest_berti_obj.moving_offset.x) + Math.abs(closest_berti_obj.moving_offset.x) >= 15)
-                        return;
-                    }
-                }*/// END OF OPTIONAL FIX
+                // let closest_berti_obj = game.level_array[game.berti_positions[closest_berti].x][game.berti_positions[closest_berti].y];
+                // if(closest_berti_obj.moving){
+                //     let next_pos = game.dir_to_coords(game.berti_positions[closest_berti].x, game.berti_positions[closest_berti].y, closest_berti_obj.face_dir);
+                //     if(Math.abs(curr_x - next_pos.x) + Math.abs(curr_y - next_pos.y) == 1){
+                //         if(Math.abs(closest_berti_obj.moving_offset.x) + Math.abs(closest_berti_obj.moving_offset.x) >= 15)
+                //         return;
+                //     }
+                // }
 
                 let dir1;
                 let dir2;
@@ -1335,11 +1268,11 @@ function CLASS_game() {
                 }
 
                 if (dir1 != dir2) {
-                    let total_distance = Math.abs(diff_x) + Math.abs(diff_y);
-                    let percentage_x = Math.abs(diff_x / total_distance);
+                    const total_distance = Math.abs(diff_x) + Math.abs(diff_y);
+                    const percentage_x = Math.abs(diff_x / total_distance);
 
                     if (Math.random() >= percentage_x) {
-                        let swapper = dir1;
+                        const swapper = dir1;
                         dir1 = dir2;
                         dir2 = swapper;
                     }
@@ -1350,13 +1283,11 @@ function CLASS_game() {
                     } else {
                         this.move_randomly(curr_x, curr_y);
                     }
-                } else {
-                    if (game.walkable(curr_x, curr_y, dir1)) {
+                } else if (game.walkable(curr_x, curr_y, dir1)) {
                         game.start_move(curr_x, curr_y, dir1);
                     } else {
                         this.move_randomly(curr_x, curr_y);
                     }
-                }
 
             }
         }
@@ -1391,7 +1322,7 @@ function CLASS_game() {
 
         if (this.gets_removed_in == 0) {
             if (this.moving) {
-                let dst = game.dir_to_coords(curr_x, curr_y, this.face_dir);
+                const dst = game.dir_to_coords(curr_x, curr_y, this.face_dir);
                 game.level_array[dst.x][dst.y].init(ENT_EMPTY);
             }
             game.level_array[curr_x][curr_y].init(ENT_EMPTY);
@@ -1422,7 +1353,7 @@ function CLASS_game() {
 
                     if (game.last_dir_pressed == DIR_UP || game.last_dir_pressed == DIR_DOWN) {
                         // Make sure that the preferred direction is what we last pressed
-                        let swap_helper = dir_1;
+                        const swap_helper = dir_1;
                         dir_1 = dir_2;
                         dir_2 = swap_helper;
                     }
@@ -1459,17 +1390,17 @@ function CLASS_game() {
 
         if (this.moving_offset.x != 0 || this.moving_offset.y != 0) return;
 
-        let adj_array = game.get_adjacent_tiles(curr_x, curr_y);
-        for (let i = 0; i < adj_array.length; i++) {
-            if (game.level_array[adj_array[i].x][adj_array[i].y].id == ENT_PURPLE_MONSTER || game.level_array[adj_array[i].x][adj_array[i].y].id == ENT_GREEN_MONSTER) {// If there's an opponent on this adjacent tile
-                let enemy_moving_offset_x = game.level_array[adj_array[i].x][adj_array[i].y].moving_offset.x;
-                let enemy_moving_offset_y = game.level_array[adj_array[i].x][adj_array[i].y].moving_offset.y;
+        const adj_array = game.get_adjacent_tiles(curr_x, curr_y);
+        for (const element of adj_array) {
+            if (game.level_array[element.x][element.y].id == ENT_PURPLE_MONSTER || game.level_array[element.x][element.y].id == ENT_GREEN_MONSTER) {// If there's an opponent on this adjacent tile
+                const enemy_moving_offset_x = game.level_array[element.x][element.y].moving_offset.x;
+                const enemy_moving_offset_y = game.level_array[element.x][element.y].moving_offset.y;
                 if (enemy_moving_offset_x != 0 || enemy_moving_offset_y != 0) continue;
 
-                if (Math.abs(curr_x - adj_array[i].x) == 1 && Math.abs(curr_y - adj_array[i].y) == 1) {// If the opponent is diagonally AND
+                if (Math.abs(curr_x - element.x) == 1 && Math.abs(curr_y - element.y) == 1) {// If the opponent is diagonally AND
                     // there's an obstacle in the way
-                    if ((game.level_array[adj_array[i].x][curr_y].id != ENT_DUMMY && game.level_array[adj_array[i].x][curr_y].id != ENT_EMPTY) ||
-                        (game.level_array[curr_x][adj_array[i].y].id != ENT_DUMMY && game.level_array[curr_x][adj_array[i].y].id != ENT_EMPTY)) {
+                    if ((game.level_array[element.x][curr_y].id != ENT_DUMMY && game.level_array[element.x][curr_y].id != ENT_EMPTY) ||
+                        (game.level_array[curr_x][element.y].id != ENT_DUMMY && game.level_array[curr_x][element.y].id != ENT_EMPTY)) {
                         continue;// Don't perform a proximity check for this particular foe.
                     }
                 }
@@ -1493,7 +1424,7 @@ function CLASS_game() {
     this.door_removal_delay = Math.round(8 * UPS / 60);
 
     this.fpsInterval = 1000 / UPS;
-    this.then = Date.now();
+    this.lastFrameTime = Date.now();
 
     this.initialized = false;
     this.wait_timer = INTRO_DURATION * UPS;
@@ -1507,7 +1438,7 @@ function CLASS_game() {
     this.level_ended = 0;// 0 is not ended. 1 is won. 2 is died.
     this.wow = true;// true is WOW!, false is Yeah!
 
-    this.berti_positions;
+    this.berti_positions = [];
 
     this.single_steps = true;
     this.last_dir_pressed = DIR_NONE;
@@ -1597,7 +1528,7 @@ function CLASS_game() {
     // Whether you can walk from a tile in a certain direction, boolean
     this.walkable = function (curr_x, curr_y, dir) {
 
-        let dst = that.dir_to_coords(curr_x, curr_y, dir);
+        const dst = that.dir_to_coords(curr_x, curr_y, dir);
 
         if (!this.is_in_bounds(dst.x, dst.y)) {// Can't go out of boundaries
             return false;
@@ -1621,10 +1552,10 @@ function CLASS_game() {
             that.level_array[dst.x][dst.y].face_dir == dir || // If the entity is already moving away in the right direction or...
             that.level_array[curr_x][curr_y].is_small && that.level_array[dst.x][dst.y].is_small) { // ...the tile is about to be freed by a small entity
 
-            let adj_array = that.get_adjacent_tiles_primary(dst.x, dst.y);
+            const adj_array = that.get_adjacent_tiles_primary(dst.x, dst.y);
             for (let i = 0; i < adj_array.length; i++) {
                 if (that.level_array[adj_array[i].x][adj_array[i].y].moving) {
-                    let dst2 = that.dir_to_coords(adj_array[i].x, adj_array[i].y, that.level_array[adj_array[i].x][adj_array[i].y].face_dir)
+                    const dst2 = that.dir_to_coords(adj_array[i].x, adj_array[i].y, that.level_array[adj_array[i].x][adj_array[i].y].face_dir)
                     if (dst.x == dst2.x && dst.y == dst2.y) { // Someone is already moving into the tile we want to move to
                         return false;
                     }
@@ -1638,7 +1569,7 @@ function CLASS_game() {
 
     this.start_move = function (src_x, src_y, dir) {
 
-        let dst = that.dir_to_coords(src_x, src_y, dir);
+        const dst = that.dir_to_coords(src_x, src_y, dir);
         that.level_array[src_x][src_y].moving = true;
         that.level_array[src_x][src_y].face_dir = dir;
 
@@ -1664,7 +1595,7 @@ function CLASS_game() {
 
     this.move = function (src_x, src_y, dir) {
 
-        let dst = that.dir_to_coords(src_x, src_y, dir);
+        const dst = that.dir_to_coords(src_x, src_y, dir);
         that.level_array[src_x][src_y].moving = false;
         that.level_array[src_x][src_y].moving_offset = { x: 0, y: 0 };
         that.level_array[src_x][src_y].pushing = false;
@@ -1676,7 +1607,7 @@ function CLASS_game() {
                     if (that.num_bananas <= 0) {
                         that.wait_timer = LEV_STOP_DELAY * UPS;
                         that.level_ended = 1;
-                        if (Math.random() < 0.50) {
+                        if (Math.random() < 0.5) {
                             game.wow = true;
                             that.play_sound(10);// wow
                         } else {
@@ -1713,28 +1644,28 @@ function CLASS_game() {
         } else if (that.level_array[dst.x][dst.y].id != ENT_DUMMY && that.level_array[dst.x][dst.y].id != ENT_EMPTY) {
             that.move(dst.x, dst.y, dir);
         } else if (that.sound) {// we need another logic to determine this correctly...DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            let dst2 = that.dir_to_coords(dst.x, dst.y, dir);
+            const dst2 = that.dir_to_coords(dst.x, dst.y, dir);
             if ((that.level_array[src_x][src_y].id == ENT_LIGHT_BLOCK || that.level_array[src_x][src_y].id == ENT_HEAVY_BLOCK) &&
                 (!that.is_in_bounds(dst2.x, dst2.y) || that.level_array[dst2.x][dst2.y].id == ENT_PINNED_BLOCK)) {
                 that.play_sound(5);
             }
         }
-        let swapper = that.level_array[dst.x][dst.y];
+        const swapper = that.level_array[dst.x][dst.y];
         that.level_array[dst.x][dst.y] = that.level_array[src_x][src_y];
         that.level_array[src_x][src_y] = swapper;
 
-        let back_dir = that.opposite_dir(dir);
-        let before_src = that.dir_to_coords(src_x, src_y, back_dir);
+        const back_dir = that.opposite_dir(dir);
+        const before_src = that.dir_to_coords(src_x, src_y, back_dir);
 
-        let possibilities = new Array(DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT);
+        const possibilities = new Array(DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT);
         for (let i = 0; i < possibilities.length; i++) {
             if (possibilities[i] == dir || possibilities[i] == back_dir) {
                 possibilities.splice(i, 1);
                 i--;
             }
         }
-        let before_src2 = that.dir_to_coords(src_x, src_y, possibilities[0]);
-        let before_src3 = that.dir_to_coords(src_x, src_y, possibilities[1]);
+        const before_src2 = that.dir_to_coords(src_x, src_y, possibilities[0]);
+        const before_src3 = that.dir_to_coords(src_x, src_y, possibilities[1]);
 
         if (
             (that.is_in_bounds(before_src.x, before_src.y) && (that.level_array[before_src.x][before_src.y].moving && that.level_array[before_src.x][before_src.y].face_dir == dir)) ||
@@ -1778,19 +1709,14 @@ function CLASS_game() {
         switch (dir) {
             case DIR_UP:
                 return DIR_DOWN;
-                break;
             case DIR_DOWN:
                 return DIR_UP;
-                break;
             case DIR_LEFT:
                 return DIR_RIGHT;
-                break;
             case DIR_RIGHT:
                 return DIR_LEFT;
-                break;
             default:
-                return DIR_NONE
-                break;
+                return DIR_NONE;
         }
     }
 
@@ -1800,11 +1726,6 @@ function CLASS_game() {
         //if(tile_x-1 >= 0 && tile_y-1 >= 0 && tile_x+1 < LEV_DIMENSION_X && tile_y+1 < LEV_DIMENSION_Y){
         //	return new Array({x:tile_x-1, y:tile_y-1}, {x:tile_x-1, y:tile_y}, {x:tile_x-1, y:tile_y+1}, {x:tile_x, y:tile_y-1}, {x:tile_x, y:tile_y+1}, {x:tile_x+1, y:tile_y-1}, {x:tile_x+1, y:tile_y}, {x:tile_x+1, y:tile_y+1});
         //}else{
-        let result = new Array();
-        for (let i = -1; i <= 1; i++) {
-            for (let j = -1; j <= 1; j++) {
-                if (i != 0 || j != 0) {
-                    if (that.is_in_bounds(tile_x + i, tile_y + j)) {
                         result.push({ x: (tile_x + i), y: (tile_y + j) });
                     }
                 }
@@ -1816,7 +1737,7 @@ function CLASS_game() {
     }
 
     this.get_adjacent_tiles_primary = function (tile_x, tile_y) { // Primary neighborhood (up, down, left, right but no diagonals)
-        let result = new Array();
+        const result = new Array();
         if (that.is_in_bounds(tile_x, tile_y - 1)) {
             result.push({ x: (tile_x), y: (tile_y - 1) });
         }
@@ -1837,8 +1758,8 @@ function CLASS_game() {
     }
 
     this.can_see_tile = function (eye_x, eye_y, tile_x, tile_y) {
-        let diff_x = tile_x - eye_x;
-        let diff_y = tile_y - eye_y;
+        const diff_x = tile_x - eye_x;
+        const diff_y = tile_y - eye_y;
 
         let walk1_x;
         let walk1_y;
@@ -2026,7 +1947,7 @@ function CLASS_game() {
     this.play_sound = function (id) {
         if (!that.sound) return;
         if (res.sounds[id].currentTime != 0) res.sounds[id].currentTime = 0;
-        let playPromise = res.sounds[id].play();
+        const playPromise = res.sounds[id].play();
         if (playPromise !== undefined) {
             playPromise.catch(error => {
                 // Auto-play was prevented
@@ -2105,7 +2026,7 @@ function CLASS_game() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 function CLASS_visual() {
-    let that = this;
+    const that = this;
 
     this.berti_blink_time = 0;
     this.last_rendered = 0;
@@ -2134,7 +2055,7 @@ function CLASS_visual() {
     this.init_animation = function () {
         for (let y = 0; y < LEV_DIMENSION_Y; y++) {
             for (let x = 0; x < LEV_DIMENSION_X; x++) {
-                let block = game.level_array[x][y];
+                const block = game.level_array[x][y];
                 switch (block.id) {
                     case ENT_DUMMY:
                         break;
@@ -2220,7 +2141,7 @@ function CLASS_visual() {
     }
 
     this.update_animation = function (x, y) {
-        let block = game.level_array[x][y];
+        const block = game.level_array[x][y];
         switch (block.id) {
             case ENT_PLAYER_BERTI:
             case ENT_AUTO_BERTI:
@@ -2495,19 +2416,19 @@ function CLASS_visual() {
         this.options = a_arr_options;
     }
 
-    this.menu1;
+    this.menu1 = null;
 
     this.init_menus = function () {
-        let tautology = function () { return true; };
+        const tautology = function () { return true; };
 
-        let arr_options1 = [
+        const arr_options1 = [
             { line: false, check: 0, name: "New", hotkey: "F2", effect_id: 0, on: tautology },
             { line: false, check: 0, name: "Load Game...", hotkey: "", effect_id: 1, on: function () { return HAS_STORAGE; } },
             { line: false, check: 0, name: "Save", hotkey: "", effect_id: 2, on: function () { return (game.savegame.progressed && HAS_STORAGE); } },
             { line: false, check: 1, name: "Pause", hotkey: "", effect_id: 3, on: tautology }
         ];
 
-        let arr_options2 = [
+        const arr_options2 = [
             { line: false, check: 1, name: "Single steps", hotkey: "F5", effect_id: 4, on: tautology },
             { line: false, check: 1, name: "Sound", hotkey: "", effect_id: 5, on: tautology },
             { line: true, check: 0, name: "", hotkey: "", effect_id: -1, on: tautology },
@@ -2517,8 +2438,8 @@ function CLASS_visual() {
             { line: false, check: 0, name: "Charts", hotkey: "", effect_id: 8, on: function () { return HAS_STORAGE; } }
         ];
 
-        let sub_m1 = new CLASS_submenu(43, 100, "Game", arr_options1);
-        let sub_m2 = new CLASS_submenu(55, 150, "Options", arr_options2);
+        const sub_m1 = new CLASS_submenu(43, 100, "Game", arr_options1);
+        const sub_m2 = new CLASS_submenu(55, 150, "Options", arr_options2);
 
         that.menu1 = new CLASS_menu(1, 2, 17, [sub_m1, sub_m2]);
     }
@@ -2526,7 +2447,7 @@ function CLASS_visual() {
     // Dialog box stuff:
 
     function add_button(img_up, img_down, pos_x, pos_y, click_effect) {
-        let btn = document.createElement("img");
+        const btn = document.createElement("img");
         btn.src = res.images[img_up].src;
         btn.style.position = "absolute";
         btn.style.width = res.images[img_up].width + "px";
@@ -2546,7 +2467,7 @@ function CLASS_visual() {
     }
 
     function add_text(text, pos_x, pos_y) {
-        let txt = document.createElement("p");
+        const txt = document.createElement("p");
         txt.innerHTML = text;
         txt.style.position = "absolute";
         txt.style.left = pos_x + "px";
@@ -2557,7 +2478,7 @@ function CLASS_visual() {
     }
 
     function add_number(a_num, pos_x, pos_y, width, height) {
-        let num = document.createElement("p");
+        const num = document.createElement("p");
         num.innerHTML = a_num;
         num.style.position = "absolute";
         num.style.left = pos_x + "px";
@@ -2571,7 +2492,7 @@ function CLASS_visual() {
     }
 
     function add_title(text) {
-        let txt = document.createElement("p");
+        const txt = document.createElement("p");
         txt.innerHTML = text;
         txt.style.position = "absolute";
         txt.style.left = "5px";
@@ -2584,7 +2505,7 @@ function CLASS_visual() {
     }
 
     function add_input(pos_x, pos_y, width, height, type) {
-        let txt = document.createElement("input");
+        const txt = document.createElement("input");
         //txt.innerHTML = text;
         txt.type = type;
         txt.style.position = "absolute";
@@ -2595,15 +2516,12 @@ function CLASS_visual() {
         txt.style.height = height + "px";
         txt.style.fontFamily = "Tahoma";
         txt.style.fontSize = "12px";
-
-        that.dbx.appendChild(txt);
+that.dbx.appendChild(txt);
         that.dbx.arr_input[that.dbx.arr_input.length] = txt;
-
-        //window.setTimeout( function() {txt.focus();}, 10);
     }
 
     function add_lvlselect(pos_x, pos_y, width, height) {
-        let select = document.createElement("select");
+        const select = document.createElement("select");
         select.size = 2;
 
         select.innerHTML = "";
@@ -2628,7 +2546,7 @@ function CLASS_visual() {
     }
 
     function add_errfield(pos_x, pos_y) {
-        let ef = document.createElement("p");
+        const ef = document.createElement("p");
         ef.innerHTML = "";
         ef.style.position = "absolute";
         ef.style.left = pos_x + "px";
@@ -2691,16 +2609,16 @@ function CLASS_visual() {
             case DBX_CONFIRM:
                 {
                     add_title("Confirm");
-
+opt !== undefined
                     that.dbx.style.width = "256px";
                     that.dbx.style.height = "154px";
-                    that.dbx.style.left = Math.max(Math.floor(window.innerWidth - 256) / 2, 0) + "px";
-                    that.dbx.style.top = Math.max(Math.floor(window.innerHeight - 154) / 2, 0) + "px";
+                    that.dbx.style.left = Math.max(Math.floor(globalThis.innerWidth - 256) / 2, 0) + "px";
+                    that.dbx.style.top = Math.max(Math.floor(globalThis.innerHeight - 154) / 2, 0) + "px";
                     that.dbx.style.background = 'url(' + res.images[IMG_DIALOGBOX_CONFIRM].src + ')';
 
                     let f_y;
                     let f_n;
-                    let f_c = function () { that.close_dbx(); };
+                    const f_c = function () { that.close_dbx(); };
 
                     if (opt == 0) {// "New Game"
                         f_y = function () { that.open_dbx(DBX_SAVE, 1); };
@@ -2773,8 +2691,8 @@ function CLASS_visual() {
                     add_text("Password:", 20, 60);
                     add_input(100, 60, 120, 15, "password");
 
-                    let f_o = function () { if (game.dbxcall_load(that.dbx.arr_input[0].value, that.dbx.arr_input[1].value)) { that.close_dbx(); } };
-                    let f_c = function () { that.close_dbx(); };
+                    const f_o = function () { if (game.dbxcall_load(that.dbx.arr_input[0].value, that.dbx.arr_input[1].value)) { that.close_dbx(); } };
+                    const f_c = function () { that.close_dbx(); };
 
                     that.dbx.enterfun = f_o;
                     that.dbx.cancelfun = f_c;
@@ -2800,8 +2718,8 @@ function CLASS_visual() {
                     add_text("New password:", 20, 60);
                     add_input(100, 60, 120, 15, "password");
 
-                    let f_o = function () { if (game.dbxcall_chpass(that.dbx.arr_input[0].value, that.dbx.arr_input[1].value)) { that.close_dbx(); } };
-                    let f_c = function () { that.close_dbx(); };
+                    const f_o = function () { if (game.dbxcall_chpass(that.dbx.arr_input[0].value, that.dbx.arr_input[1].value)) { that.close_dbx(); } };
+                    const f_c = function () { that.close_dbx(); };
 
                     that.dbx.enterfun = f_o;
                     that.dbx.cancelfun = f_c;
@@ -2818,14 +2736,14 @@ function CLASS_visual() {
 
                     that.dbx.style.width = "197px";
                     that.dbx.style.height = "273px";
-                    that.dbx.style.left = Math.max(Math.floor(window.innerWidth - 197) / 2, 0) + "px";
-                    that.dbx.style.top = Math.max(Math.floor(window.innerHeight - 273) / 2, 0) + "px";
+                    that.dbx.style.left = Math.max(Math.floor(globalThis.innerWidth - 197) / 2, 0) + "px";
+                    that.dbx.style.top = Math.max(Math.floor(globalThis.innerHeight - 273) / 2, 0) + "px";
                     that.dbx.style.background = 'url(' + res.images[IMG_DIALOGBOX_LOADLVL].src + ')';
 
                     add_lvlselect(20, 80, 158, 109);
 
-                    let f_o = function () { if (parseInt(that.dbx.lvlselect.value) > 0) { game.load_level(parseInt(that.dbx.lvlselect.value)); that.close_dbx(); } };
-                    let f_c = function () { that.close_dbx(); };
+                    const f_o = function () { if (Number.parseInt(that.dbx.lvlselect.value) > 0) { game.load_level(Number.parseInt(that.dbx.lvlselect.value)); that.close_dbx(); } };
+                    const f_c = function () { that.close_dbx(); };
 
                     that.dbx.enterfun = f_o;
                     that.dbx.cancelfun = f_c;
@@ -2852,19 +2770,19 @@ function CLASS_visual() {
 
                     that.dbx.style.width = "322px";
                     that.dbx.style.height = "346px";
-                    that.dbx.style.left = Math.max(Math.floor(window.innerWidth - 322) / 2, 0) + "px";
-                    that.dbx.style.top = Math.max(Math.floor(window.innerHeight - 346) / 2, 0) + "px";
+                    that.dbx.style.left = Math.max(Math.floor(globalThis.innerWidth - 322) / 2, 0) + "px";
+                    that.dbx.style.top = Math.max(Math.floor(globalThis.innerHeight - 346) / 2, 0) + "px";
                     that.dbx.style.background = 'url(' + res.images[IMG_DIALOGBOX_CHARTS].src + ')';
 
-                    let uc = localStorage.getItem("user_count");
-                    let user_arr = new Array();
+                    const uc = localStorage.getItem("user_count");
+                    const user_arr = new Array();
 
                     for (let i = 0; i < uc; i++) {
-                        let prefix = "player" + i + "_";
-                        let rl = parseInt(localStorage.getItem(prefix + "reached_level"));
+                        const prefix = "player" + i + "_";
+                        const rl = Number.parseInt(localStorage.getItem(prefix + "reached_level"));
                         let st = 0;
                         for (let j = 1; j < rl; j++) {
-                            st += parseInt(localStorage.getItem(prefix + "steps_lv" + j));
+                            st += Number.parseInt(localStorage.getItem(prefix + "steps_lv" + j));
                         }
                         user_arr[i] = { name: localStorage.getItem(prefix + "username"), reached: rl, steps: st }
                     }
@@ -2883,7 +2801,7 @@ function CLASS_visual() {
                         add_text(user_arr[i].name, 155, 65 + 18 * i);
                     }
 
-                    let f_o = function () { that.close_dbx(); };
+                    const f_o = function () { that.close_dbx(); };
 
                     that.dbx.enterfun = f_o;
                     that.dbx.cancelfun = f_o;
@@ -2934,11 +2852,11 @@ function CLASS_visual() {
 
 }
 
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////
+/*///////////////////firstChild.remove(////////////////////////////////////////////////////
 // UPDATING PROCESS
 // Here, the behaviour of the game is calculated, once per UPS (update per second)
 //////////////////////////////////////////////////////////////////////////////////////////////////////*/
-let update = function () {
+const update = function () {
     if (res.ready()) {// All resources loaded
         if (!game.initialized) {
             game.set_volume(DEFAULT_VOLUME);
@@ -2970,16 +2888,16 @@ let update = function () {
         }
     }
 
-    let now = Date.now();
+    const now = Date.now();
     game.delta_updated = now - game.last_updated;
     game.last_updated = now;
 
     game.update_drawn = false;
 };
 
-let update_entities = function () {
-    let tick = (game.update_tick * 60 / UPS);
-    let synced_move = tick % (12 / game.move_speed) == 0;
+const update_entities = function () {
+    const tick = (game.update_tick * 60 / UPS);
+    const synced_move = tick % (12 / game.move_speed) == 0;
 
     // The player moves first at all times to ensure the best response time and remove directional quirks.
     for (let i = 0; i < game.berti_positions.length; i++) {
@@ -3024,24 +2942,24 @@ let update_entities = function () {
 //////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 // Render scene
-let render = function () {
-    let now = Date.now();
-    let elapsed = now - game.then;
+const render = function () {
+    const now = Date.now();
+    const elapsed = now - game.lastFrameTime;
 
     // Fudge factor: Tolerate timing inaccuracies without skipping update step
     // Reason: Deliberate reduction in timing accuracy due to browser security
     const fudge_factor = 2;
     if (elapsed + fudge_factor > game.fpsInterval) {
         if (elapsed > game.fpsInterval) {
-            game.then = now - (elapsed % game.fpsInterval);
+            game.lastFrameTime = now - (elapsed % game.fpsInterval);
         } else {
-            game.then = now;
+            game.lastFrameTime = now;
         }
         update();
     }
 
     if (game.update_drawn) {// This prevents the game from rendering the same thing twice
-        window.requestAnimationFrame(render);
+        globalThis.requestAnimationFrame(render);
         return;
     }
     game.update_drawn = true;
@@ -3082,14 +3000,14 @@ let render = function () {
 };
 
 function render_fps() {
-    let now = Date.now();
+    const now = Date.now();
 
     if (now - vis.last_fps_update >= 250) {
-        let delta_rendered = now - vis.last_rendered;
+        const delta_rendered = now - vis.last_rendered;
         vis.static_ups = ((1000 / game.delta_updated).toFixed(2));
         vis.static_fps = ((1000 / delta_rendered).toFixed(2));
 
-        vis.last_fps_update = now;
+    globalThiss.last_fps_update = now;
     }
 
     CTX.fillStyle = "rgb(255, 0, 0)";
@@ -3109,7 +3027,7 @@ function render_menu() {
     CTX.textBaseline = "top";
 
     for (let i = 0; i < vis.menu1.submenu_list.length; i++) {
-        let sm = vis.menu1.submenu_list[i];
+        const sm = vis.menu1.submenu_list[i];
         if (i == vis.menu1.submenu_open) {
             CTX.fillStyle = "rgb(" + vis.light_grey.r + ", " + vis.light_grey.g + ", " + vis.light_grey.b + ")";
             CTX.fillRect(vis.menu1.offset_x + submenu_offset, vis.menu1.offset_y + vis.menu1.height + 1, sm.dd_width, sm.dd_height);// Options box
@@ -3188,7 +3106,7 @@ function render_menu() {
 }
 
 function render_vol_bar() {
-    let vb = vis.vol_bar;
+    const vb = vis.vol_bar;
     let switcher = false;
     let line_height = 0;
 
@@ -3198,12 +3116,12 @@ function render_vol_bar() {
             CTX.fillStyle = "rgb(" + vb.colour_4.r + ", " + vb.colour_4.g + ", " + vb.colour_4.b + ")";
         } else {
             switcher = true;
-            let ratio2 = i / vb.width;
+            const ratio2 = i / vb.width;
             line_height = Math.round(vb.height * ratio2);
 
             if (i < Math.ceil(vb.volume * vb.width)) {
                 if (game.sound) {
-                    let ratio1 = 1 - ratio2;
+                    const ratio1 = 1 - ratio2;
                     CTX.fillStyle = "rgb(" + Math.round(vb.colour_1.r * ratio1 + vb.colour_2.r * ratio2) + ", " + Math.round(vb.colour_1.g * ratio1 + vb.colour_2.g * ratio2) + ", " + Math.round(vb.colour_1.b * ratio1 + vb.colour_2.b * ratio2) + ")";
                 } else {
                     CTX.fillStyle = "rgb(" + vb.colour_5.r + ", " + vb.colour_5.g + ", " + vb.colour_5.b + ")";
@@ -3247,7 +3165,7 @@ function render_field() {
 function render_field_subset(consumable) {
     for (let y = 0; y < LEV_DIMENSION_Y; y++) {
         for (let x = 0; x < LEV_DIMENSION_X; x++) {
-            let block = game.level_array[x][y];
+            const block = game.level_array[x][y];
             if (y > 0 && game.level_array[x][y - 1].moving && game.level_array[x][y - 1].face_dir == DIR_DOWN && game.level_array[x][y - 1].consumable == consumable) {
                 render_block(x, y - 1, RENDER_BOTTOM);
             }
@@ -3275,10 +3193,10 @@ function render_field_subset(consumable) {
     }
 }
 function render_block(x, y, render_option) {
-    let block = game.level_array[x][y];
+    const block = game.level_array[x][y];
 
-    let offset_x = block.moving_offset.x;
-    let offset_y = block.moving_offset.y;
+    const offset_x = block.moving_offset.x;
+    const offset_y = block.moving_offset.y;
 
     let needs_update = false;
     while (block.animation_delay >= ANIMATION_DURATION && !block.just_moved) {
@@ -3406,7 +3324,7 @@ function render_block(x, y, render_option) {
                 CTX.drawImage(res.images[block.animation_frame], 0, 0, res.images[block.animation_frame].width, res.images[block.animation_frame].height - offset_y - 24, LEV_OFFSET_X + 24 * x + offset_x + block.fine_offset_x, LEV_OFFSET_Y + 24 * y + offset_y + block.fine_offset_y, res.images[block.animation_frame].width, res.images[block.animation_frame].height - offset_y - 24);
             }
         } else if (render_option == RENDER_BOTTOM) {// Render bottom
-            let imgsize_offset = res.images[block.animation_frame].height - 24;
+            const imgsize_offset = res.images[block.animation_frame].height - 24;
 
             if (block.face_dir == DIR_DOWN) {
                 CTX.drawImage(res.images[block.animation_frame], 0, res.images[block.animation_frame].height - offset_y - imgsize_offset, res.images[block.animation_frame].width, offset_y + imgsize_offset, LEV_OFFSET_X + 24 * x + offset_x + block.fine_offset_x, LEV_OFFSET_Y + 24 * y + 24 + block.fine_offset_y, res.images[block.animation_frame].width, offset_y + imgsize_offset);
@@ -3455,7 +3373,7 @@ function render_buttons() {
         if (vis.berti_blink_time < 100) {
             CTX.drawImage(res.images[IMG_BTN_BERTI_UP], 253, 35);// Berti up
             if (vis.berti_blink_time == 0) {
-                vis.berti_blink_time = 103;//Math.floor(100+(Math.random()*100)+1);
+                vis.berti_blink_time = 103;
             } else {
                 vis.berti_blink_time--;
             }
@@ -3482,22 +3400,22 @@ function render_buttons() {
 }
 
 function render_displays() {
-    let steps_string = game.steps_taken.toString();
-    let steps_length = Math.min(steps_string.length - 1, 4);
+    const steps_string = game.steps_taken.toString();
+    const steps_length = Math.min(steps_string.length - 1, 4);
 
     for (let i = steps_length; i >= 0; i--) {
-        var img = IMG_DIGIT_LOOKUP[parseInt(steps_string.charAt(i))];
+        let img = IMG_DIGIT_LOOKUP[Number.parseInt(steps_string.charAt(i))];
         CTX.drawImage(res.images[img], 101 - (steps_length - i) * 13, 41);
     }
     for (let i = steps_length + 1; i < 5; i++) {
         CTX.drawImage(res.images[IMG_DIGIT_EMPTY], 101 - i * 13, 41);
     }
 
-    let level_string = game.level_number.toString();
-    let level_length = Math.min(level_string.length - 1, 4);
+    const level_string = game.level_number.toString();
+    const level_length = Math.min(level_string.length - 1, 4);
 
     for (let i = level_length; i >= 0; i--) {
-        var img = IMG_DIGIT_LOOKUP[parseInt(level_string.charAt(i))];
+        let img = IMG_DIGIT_LOOKUP[Number.parseInt(level_string.charAt(i))];
         CTX.drawImage(res.images[img], 506 - (level_length - i) * 13, 41);
     }
     for (let i = level_length + 1; i < 5; i++) {
@@ -3506,8 +3424,8 @@ function render_displays() {
 }
 
 function render_joystick(x, y) {
-    let mid_x = JOYSTICK.width / 2;
-    let mid_y = JOYSTICK.height / 2;
+    const mid_x = JOYSTICK.width / 2;
+    const mid_y = JOYSTICK.height / 2;
 
     JOYCTX.clearRect(0, 0, JOYSTICK.width, JOYSTICK.height);
     JOYCTX.globalAlpha = 0.5;// Set joystick half-opaque (1 = opaque, 0 = fully transparent)
@@ -3515,8 +3433,8 @@ function render_joystick(x, y) {
     JOYCTX.arc(mid_x, mid_y, JOYSTICK.width / 4 + 10, 0, 2 * Math.PI);
     JOYCTX.stroke();
 
-    if (typeof x !== 'undefined' && typeof y !== 'undefined') {
-        let dist = Math.sqrt(Math.pow(x - mid_x, 2) + Math.pow(y - mid_y, 2));
+    if (x !== undefined && y !== undefined) {
+        const dist = Math.sqrt(Math.pow(x - mid_x, 2) + Math.pow(y - mid_y, 2));
         if (dist > JOYSTICK.width / 4) {
             x = mid_x + (x - mid_x) / dist * JOYSTICK.width / 4;
             y = mid_y + (y - mid_y) / dist * JOYSTICK.width / 4;
@@ -3528,28 +3446,28 @@ function render_joystick(x, y) {
     }
 }
 
-// Use window.requestAnimationFrame, get rid of browser differences.
+// Use globalThis.requestAnimationFrame, get rid of browser differences.
 (function () {
     let lastTime = 0;
-    let vendors = ['ms', 'moz', 'webkit', 'o'];
-    for (let x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
-            || window[vendors[x] + 'CancelRequestAnimationFrame'];
+    const vendors = ['ms', 'moz', 'webkit', 'o'];
+    for (let x = 0; x < vendors.length && !globalThis.requestAnimationFrame; ++x) {
+        globalThis.requestAnimationFrame = globalThis[vendors[x] + 'RequestAnimationFrame'];
+        globalThis.cancelAnimationFrame = globalThis[vendors[x] + 'CancelAnimationFrame']
+            || globalThis[vendors[x] + 'CancelRequestAnimationFrame'];
     }
 
-    if (!window.requestAnimationFrame)
-        window.requestAnimationFrame = function (callback, element) {
-            let currTime = new Date().getTime();
-            let timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            let id = window.setTimeout(function () { callback(currTime + timeToCall); },
+    if (!globalThis.requestAnimationFrame)
+        globalThis.requestAnimationFrame = function (callback, element) {
+            const currTime = Date.now();
+            const timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            const id = globalThis.setTimeout(function () { callback(currTime + timeToCall); },
                 timeToCall);
             lastTime = currTime + timeToCall;
             return id;
         };
 
-    if (!window.cancelAnimationFrame)
-        window.cancelAnimationFrame = function (id) {
+    if (!globalThis.cancelAnimationFrame)
+        globalThis.cancelAnimationFrame = function (id) {
             clearTimeout(id);
         };
 }());

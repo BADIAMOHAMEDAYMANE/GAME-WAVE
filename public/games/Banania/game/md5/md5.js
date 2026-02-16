@@ -51,7 +51,7 @@ function shr(a,b) {
 
 function shl1(a) {
   a=a%0x80000000;
-  if (a&0x40000000==0x40000000)
+  if (a&0x40000000===0x40000000)
   {
     a-=0x40000000;
     a*=2;
@@ -64,15 +64,15 @@ function shl1(a) {
 function shl(a,b) {
   a=integer(a);
   b=integer(b);
-  for (var i=0;i<b;i++) a=shl1(a);
+  for (let i=0;i<b;i++) a=shl1(a);
   return a;
 }
 
 function and(a,b) {
   a=integer(a);
   b=integer(b);
-  var t1=(a-0x80000000);
-  var t2=(b-0x80000000);
+  const t1=(a-0x80000000);
+  const t2=(b-0x80000000);
   if (t1>=0)
     if (t2>=0)
       return ((t1&t2)+0x80000000);
@@ -88,8 +88,8 @@ function and(a,b) {
 function or(a,b) {
   a=integer(a);
   b=integer(b);
-  var t1=(a-0x80000000);
-  var t2=(b-0x80000000);
+  const t1=(a-0x80000000);
+  const t2=(b-0x80000000);
   if (t1>=0)
     if (t2>=0)
       return ((t1|t2)+0x80000000);
@@ -105,8 +105,8 @@ function or(a,b) {
 function xor(a,b) {
   a=integer(a);
   b=integer(b);
-  var t1=(a-0x80000000);
-  var t2=(b-0x80000000);
+  const t1=(a-0x80000000);
+  const t2=(b-0x80000000);
   if (t1>=0)
     if (t2>=0)
       return (t1^t2);
@@ -126,30 +126,30 @@ function not(a) {
 
 /* Beginn des Algorithmus */
 
-    var state = new array(4);
-    var count = new array(2);
+    const state = new array(4);
+    const count = new array(2);
         count[0] = 0;
         count[1] = 0;
-    var buffer = new array(64);
-    var transformBuffer = new array(16);
-    var digestBits = new array(16);
+    const buffer = new array(64);
+    const transformBuffer = new array(16);
+    const digestBits = new array(16);
 
-    var S11 = 7;
-    var S12 = 12;
-    var S13 = 17;
-    var S14 = 22;
-    var S21 = 5;
-    var S22 = 9;
-    var S23 = 14;
-    var S24 = 20;
-    var S31 = 4;
-    var S32 = 11;
-    var S33 = 16;
-    var S34 = 23;
-    var S41 = 6;
-    var S42 = 10;
-    var S43 = 15;
-    var S44 = 21;
+    const S11 = 7;
+    const S12 = 12;
+    const S13 = 17;
+    const S14 = 22;
+    const S21 = 5;
+    const S22 = 9;
+    const S23 = 14;
+    const S24 = 20;
+    const S31 = 4;
+    const S32 = 11;
+    const S33 = 16;
+    const S34 = 23;
+    const S41 = 6;
+    const S42 = 10;
+    const S43 = 15;
+    const S44 = 21;
 
     function F(x,y,z) {
         return or(and(x,y),and(not(x),z));
@@ -200,8 +200,8 @@ function not(a) {
     }
 
     function transform(buf,offset) {
-        var a=0, b=0, c=0, d=0;
-        var x = transformBuffer;
+        let a=0, b=0, c=0, d=0;
+        const x = transformBuffer;
 
         a = state[0];
         b = state[1];
@@ -323,7 +323,7 @@ function not(a) {
     }
 
     function update(b) {
-        var index,i;
+        let index,i;
 
         index = and(shr(count[0],3) , 0x3f);
         if (count[0]<0xffffffff-7)
@@ -340,9 +340,9 @@ function not(a) {
     }
 
     function finish() {
-        var bits = new array(8);
-        var        padding;
-        var        i=0, index=0, padLen=0;
+        const bits = new array(8);
+        let        padding;
+        let        i=0, index=0, padLen=0;
 
         for (i = 0; i < 4; i++) {
             bits[i] = and(shr(count[0],(i * 8)), 0xff);
@@ -369,9 +369,9 @@ function not(a) {
 /* Ende des MD5 Algorithmus */
 
 function hexa(n) {
- var hexa_h = "0123456789abcdef";
- var hexa_c="";
- var hexa_m=n;
+ const hexa_h = "0123456789abcdef";
+ let hexa_c="";
+ let hexa_m=n;
  for (hexa_i=0;hexa_i<8;hexa_i++) {
    hexa_c=hexa_h.charAt(Math.abs(hexa_m)%16)+hexa_c;
    hexa_m=Math.floor(hexa_m/16);
@@ -380,13 +380,13 @@ function hexa(n) {
 }
 
 
-var ascii="01234567890123456789012345678901" +
+const ascii="01234567890123456789012345678901" +
           " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ"+
           "[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 this.digest = function(nachricht)
 {
- var l,s,k,ka,kb,kc,kd;
+ let l,s,k,ka,kb,kc,kd;
 
  init();
  for (k=0;k<nachricht.length;k++) {

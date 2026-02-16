@@ -11,8 +11,8 @@
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXX" crossorigin="anonymous"></script>
     <script>
-        window.adsbygoogle = window.adsbygoogle || [];
-        const adBreak = adConfig = function(o) {adsbygoogle.push(o);}
+        var adsbygoogle = globalThis.adsbygoogle || [];
+        const adConfig = function(o) {adsbygoogle.push(o);}
     </script>
 </head>
 <body>
@@ -53,11 +53,11 @@
     </aside>
 </div>
 
-<div class="modal fade" id="message-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="message-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content custom-modal">
             <div class="modal-body text-center">
-                <h2 id="message"></h2>
+                <h2 id="message">Game Message</h2>
                 <button type="button" id="message-modal-close" class="btn-game btn-start mt-4">Rejouer</button>
             </div>
         </div>

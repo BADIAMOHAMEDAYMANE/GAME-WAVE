@@ -1,9 +1,9 @@
 (function() {
-  if (typeof Mario === 'undefined')
-  window.Mario = {};
+  if (globalThis.Mario === undefined)
+  globalThis.Mario = {};
 
-  //TODO: make each rubble an entity, use that render and write in Entity.update
-  var Rubble = Mario.Rubble = function() {
+
+  const Rubble = Mario.Rubble = function() {
     this.sprites = [];
     this.poss = [];
     this.vels = [];
@@ -27,7 +27,7 @@
   }
 
   Rubble.prototype.update = function(dt) {
-    for(var i = 0; i < 4; i++) {
+    for(let i = 0; i < 4; i++) {
       if (this.sprites[i]===undefined) continue;
       this.vels[i][1] += .3;
       this.poss[i][0] += this.vels[i][0];
@@ -44,10 +44,10 @@
 
   //You might argue that things that can't collide are more like scenery
   //but these move and need to be deleted, and i'd rather deal with the 1d array.
-  Rubble.prototype.checkCollisions = function() {;}
+  Rubble.prototype.checkCollisions = function() {};
 
   Rubble.prototype.render = function() {
-    for(var i = 0; i < 4; i++) {
+    for(let i = 0; i < 4; i++) {
       if (this.sprites[i] === undefined) continue;
       this.sprites[i].render(ctx, this.poss[i][0], this.poss[i][1], vX, vY);
     }

@@ -6,7 +6,7 @@ export default function CategorySection({ category }) {
         <section className="category">
             <div className="category-header">
                 <h2>{category.title}</h2>
-                <span>{category.games.length} jeux</span>
+                <span>{category.games.length} games</span>
             </div>
 
             <div className="grid">

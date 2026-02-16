@@ -1,11 +1,10 @@
 (function() {
-  if (typeof Mario === 'undefined')
-    window.Mario = {};
+  if (globalThis.Mario === undefined)
+    globalThis.Mario = {};
 
-  //TODO: clean up the logic for sprite switching.
-  //TODO: There's a weird bug with the collision logic. Look into it.
 
-  var Block = Mario.Block = function(options) {
+
+  const Block = Mario.Block = function(options) {
     this.item = options.item;
     this.usedSprite = options.usedSprite;
     this.bounceSprite = options.bounceSprite;
@@ -25,7 +24,7 @@
   Block.prototype.break = function() {
     sounds.breakBlock.play();
     (new Mario.Rubble()).spawn(this.pos);
-    var x = this.pos[0] / 16, y = this.pos[1] / 16;
+    const x = this.pos[0] / 16, y = this.pos[1] / 16;
     delete level.blocks[y][x];
   }
 
@@ -66,13 +65,11 @@
         }
         this.standing = true;
       }
-    } else {
-      if (this.sprite === this.usedSprite) {
-        var x = this.pos[0] / 16, y = this.pos[1] / 16;
+    } else if (this.sprite === this.usedSprite) {
+        const x = this.pos[0] / 16, y = this.pos[1] / 16;
         level.statics[y][x] = new Mario.Floor(this.pos, this.usedSprite);
         delete level.blocks[y][x];
       }
-    }
 
     this.pos[1] += this.vel[1];
     this.sprite.update(dt, gameTime);

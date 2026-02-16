@@ -1,33 +1,27 @@
-var requestAnimFrame = (function () {
-  return window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
+const requestAnimFrame = (function () {
+  return globalThis.requestAnimationFrame ||
+    globalThis.webkitRequestAnimationFrame ||
+    globalThis.mozRequestAnimationFrame ||
+    globalThis.oRequestAnimationFrame ||
+   globalThis.msRequestAnimationFrame ||
     function (callback) {
-      window.setTimeout(callback, 1000 / 60);
+      globalThis.setTimeout(callback, 1000 / 60);
     };
 })();
 
 //create the canvas
-var canvas = document.createElement("canvas");
-var ctx = canvas.getContext('2d');
-var updateables = [];
-var fireballs = [];
-var player = new Mario.Player([0, 0]);
-
-//we might have to get the size and calculate the scaling
-//but this method should let us make it however big.
-//Cool!
-//TODO: Automatically scale the game to work and look good on widescreen.
-//TODO: fiddling with scaled sprites looks BETTER, but not perfect. Hmm.
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext('2d');
+let updateables = [];
+const fireballs = [];
+const player = new Mario.Player([0, 0]);
 canvas.width = 762;
 canvas.height = 720;
 ctx.scale(3, 3);
-document.body.appendChild(canvas);
+document.getElementById("game-wrapper").appendChild(canvas);
 
 //viewport
-var vX = 0,
+let vX = 0,
   vY = 0,
   vWidth = 256,
   vHeight = 240;
@@ -43,12 +37,12 @@ resources.load([
 ]);
 
 resources.onReady(init);
-var level;
-var sounds;
-var music;
+let level;
+let sounds;
+let music;
 
 //initialize
-var lastTime;
+let lastTime;
 function init() {
   music = {
     overworld: new Audio('sounds/aboveground_bgm.ogg'),
@@ -75,12 +69,12 @@ function init() {
   main();
 }
 
-var gameTime = 0;
+let gameTime = 0;
 
-//set up the game loop
+
 function main() {
-  var now = Date.now();
-  var dt = (now - lastTime) / 1000.0;
+  const now = Date.now();
+  const dt = (now - lastTime) / 1000;
 
   update(dt);
   render();
@@ -189,8 +183,8 @@ function render() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   //scenery gets drawn first to get layering right.
-  for (var i = 0; i < 15; i++) {
-    for (var j = Math.floor(vX / 16) - 1; j < Math.floor(vX / 16) + 20; j++) {
+  for (let i = 0; i < 15; i++) {
+    for (let j = Math.floor(vX / 16) - 1; j < Math.floor(vX / 16) + 20; j++) {
       if (level.scenery[i][j]) {
         renderEntity(level.scenery[i][j]);
       }
@@ -213,8 +207,8 @@ function render() {
   })
 
   //then we draw every static object.
-  for (var i = 0; i < 15; i++) {
-    for (var j = Math.floor(vX / 16) - 1; j < Math.floor(vX / 16) + 20; j++) {
+  for (let i = 0; i < 15; i++) {
+    for (let j = Math.floor(vX / 16) - 1; j < Math.floor(vX / 16) + 20; j++) {
       if (level.statics[i][j]) {
         renderEntity(level.statics[i][j]);
       }
