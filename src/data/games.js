@@ -1,11 +1,11 @@
 import hangmanImg from "../assets/Hangman.png";
 import SnakeImg from "../assets/Snakegame.png";
 import TicTacToeImg from "../assets/TicTacToe.png";
-import TetrisImg from "../assets/Tetris.png";
-import PingPongImg from "../assets/PingPong.png";
-import ArcheryImg from "../assets/Archery.png";
+import TiltMazeImg from "../assets/Tilt-Maze.png";
+import PongImg from "../assets/pong-game.png";
+import Minesweeper from "../assets/Minesweeper.png";
 import CandycrashImg from "../assets/Candy-crash.png";
-import CubeImg from "../assets/Cube.jpg";
+import GeometryDashImg from "../assets/geometry-dash.png";
 import MarioImg from "../assets/SuperMario.png";
 import BananiaImg from "../assets/Banania.jpg";
 import Img2048 from "../assets/2048.jpg";
@@ -29,42 +29,42 @@ export const categories = [
             },
             {
                 id: 2,
-                title: "Snake Game",
+                title: "Snake",
                 image: SnakeImg,
                 gamePath: "/games/Snake/index.html",
                 isNew: false
             },
             {
                 id: 3,
-                title: "TicTacToe Game",
+                title: "TicTacToe",
                 image: TicTacToeImg,
                 gamePath: "/games/TicTacToe/index.html",
                 isNew: false
             },
             {
                 id: 4,
-                title: "Tetris Game",
-                image: TetrisImg,
+                title: "Tilt Maze",
+                image: TiltMazeImg,
                 gamePath: "/games/Tetris/index.html",
                 isNew: false
             },
             {
                 id: 5,
-                title: "PingPong Game",
-                image: PingPongImg,
-                gamePath: "/games/PingPong/index.html",
+                title: "Pong",
+                image: PongImg,
+                gamePath: "/games/Pong/index.html",
                 isNew: true
             },
             {
                 id: 6,
-                title: " Archery Game",
-                image: ArcheryImg,
-                gamePath: "/games/ArcheryGame/index.html",
+                title: "Minesweeper",
+                image: Minesweeper,
+                gamePath: "/games/Minesweeper/index.html",
                 isNew: false
             },
             {
                 id: 7,
-                title: "Candy-crash Games",
+                title: "Candy-Crash",
                 image: CandycrashImg,
                 gamePath: "/games/Candycrash/index.html",
                 isNew: true
@@ -78,9 +78,9 @@ export const categories = [
             },
             {
                 id: 9,
-                title: "Jump",
-                image: CubeImg,
-                gamePath: "/games/Jump/index.html",
+                title: "Geometry Dash",
+                image: GeometryDashImg,
+                gamePath: "/games/GeometryDash/index.html",
                 isNew: true
             },
             {
@@ -106,28 +106,28 @@ export const categories = [
             },
             {
                 id: 13,
-                title: "Mario Game",
+                title: "Mario",
                 image: MarioImg,
                 gamePath: "/games/Mario/index.html",
                 isNew: true
             },
             {
                 id: 14,
-                title: " Fruits Game",
+                title: " Fruits",
                 image: fruitsImg,
                 gamePath: "/games/fruits/index.html",
                 isNew: false
             },
             {
                 id: 15,
-                title: "SpeedyVerse Game",
+                title: "SpeedyVerse",
                 image: SpeedyVerseImg,
                 gamePath: "/games/SpeedyVerse/index.html",
                 isNew: true
             },
             {
                 id: 16,
-                title: "PacMan Game",
+                title: "PacMan",
                 image: PacManImg,
                 gamePath: "/games/Pacman/index.html",
                 isNew: true
