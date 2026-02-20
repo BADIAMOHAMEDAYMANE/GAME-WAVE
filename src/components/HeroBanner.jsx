@@ -5,9 +5,9 @@ import './HeroBanner.css';
 import hangmanImg from "/src/assets/Hangman.png";
 import SnakeImg from "/src/assets/Snakegame.png";
 import TicTacToeImg from "/src/assets/TicTacToe.png";
-import TetrisImg from "/src/assets/Tetris.png";
-import PingPongImg from "/src/assets/PingPong.png";
-import ArcheryImg from "/src/assets/Archery.png";
+import TiltMazeImg from "/src/assets/Tilt-Maze.png";
+import PongImg from "/src/assets/pong-game.png";
+import MinesweeperImg from "/src/assets/Minesweeper.png";
 import CandycrashImg from "/src/assets/Candy-crash.png";
 
 export default function HeroBanner() {
@@ -16,9 +16,9 @@ export default function HeroBanner() {
         { id: 1, title: "Hangman", desc: "Guess the word before it's too late !", img: hangmanImg },
         { id: 2, title: "Snake Game", desc: "The timeless classic, eat to grow.", img: SnakeImg },
         { id: 3, title: "Tic Tac Toe", desc: "Challenge your friends to this strategic duel.", img: TicTacToeImg },
-        { id: 4, title: "Tetris", desc: "Fit the blocks together and beat the record.", img: TetrisImg },
-        { id: 5, title: "Ping Pong", desc: "Speed ​​and reflexes on the table.", img: PingPongImg },
-        { id: 6, title: "Archery", desc: "Aim for the center to become the master archer.", img: ArcheryImg },
+        { id: 4, title: "TiltMaze", desc: "Fit the blocks together and beat the record.", img: TiltMazeImg },
+        { id: 5, title: "Pong Game", desc: "Speed ​​and reflexes on the table.", img: PongImg },
+        { id: 6, title: "Minesweeper", desc: "Aim for the center to become the master archer.", img: MinesweeperImg },
         { id: 7, title: "Candy Crash", desc: "Blast the candies in this addictive puzzle!.", img: CandycrashImg },
     ];
 
