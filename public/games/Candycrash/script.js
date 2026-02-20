@@ -22,7 +22,6 @@ function candyCrushGame() {
     const width = 8;
     const squares = [];
     let score = 0;
-    let currentMode = null;
     let timeLeft = 0;
     let gameInterval = null;
     let timerInterval = null;
@@ -43,14 +42,6 @@ function candyCrushGame() {
         clearInterval(timerInterval);
     }
 
-    function resumeGame() {
-        if (!isPaused) return;
-        isPaused = false;
-        gameInterval = setInterval(gameLoop, 1000 / 60);
-        if (currentMode === "timed") {
-            timerInterval = setInterval(countdown, 1000);
-        }
-    }
 
     function createBoard() {
         grid.innerHTML = "";
@@ -216,7 +207,6 @@ function candyCrushGame() {
     }
 
     function startGame(mode) {
-        currentMode = mode;
         modeSelection.style.display = "none";
         grid.style.display = "flex";
         compactControls.style.display = "flex";
@@ -269,14 +259,14 @@ function candyCrushGame() {
 
     function toggleFullscreen() {
         const gameArea = document.querySelector(".game-area");
-        if (!document.fullscreenElement) {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+            fullscreenBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
+        } else {
             gameArea.requestFullscreen().catch(err => {
                 console.error(`Erreur: ${err.message}`);
             });
             fullscreenBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
-        } else {
-            document.exitFullscreen();
-            fullscreenBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
         }
     }
 

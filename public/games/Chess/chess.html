@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chess — JS version (2‑player)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="chess.css">
+</head>
+
+<body class="chess-page">
+  <div id="game-container" class="game-wrap">
+    <div class="top-bar">
+      <div class="logo-mini">CHESS</div>
+      <div class="top-actions">
+        <button id="btn-theme-toggle" class="icon-btn" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button id="btn-fullscreen" class="icon-btn" title="Plein écran">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mode-selection" class="overlay">
+      <div class="modal">
+        <h2>Choose Game Mode</h2>
+        <div class="mode-buttons">
+          <button id="btn-pvp" class="mode-btn">Two Players</button>
+          <button id="btn-ai" class="mode-btn">Vs AI (Stockfish-like)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="board-area">
+      <div class="status-bar">
+        <span id="game-status">Choose a mode to start</span>
+        <span id="ai-thinking" class="thinking-spinner" style="display: none;">AI is thinking...</span>
+      </div>
+      <canvas id="chess-canvas" width="504" height="504" aria-label="Chess board"></canvas>
+      <div class="controls">
+        <button id="btn-reset" class="primary-btn">
+          <i class="fa-solid fa-plus"></i> New Game / Reset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="chess.js"></script>
+</body>
+
+</html>

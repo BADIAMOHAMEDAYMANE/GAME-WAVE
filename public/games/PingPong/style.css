@@ -155,3 +155,35 @@ canvas {
     align-items: center;
     background-color: var(--bg);
 }
+
+/* Mode selection overlay (1v1 / vs AI) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2,6,23,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overlay.hidden { opacity: 0; visibility: hidden; transform: scale(0.98); }
+
+.menu-card { text-align: center; width: 320px; padding: 22px; border-radius: 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.03); }
+.menu-card h2 { font-size: 1.4rem; margin-bottom: 6px; }
+.menu-card p { color: #9aa4b2; margin-bottom: 18px; }
+
+.mode-buttons { display: flex; flex-direction: column; gap: 12px; }
+.mode-buttons button { display: flex; align-items: center; gap: 16px; justify-content: flex-start; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); background: rgba(255,255,255,0.02); color: #e6eef6; font-weight: 700; cursor: pointer; transition: 0.18s; }
+.mode-buttons i { font-size: 1.2rem; }
+
+.btn-pvp:hover { transform: translateX(6px); border-color: rgba(34,211,238,0.4); }
+.btn-pva:hover { transform: translateX(6px); border-color: rgba(168,85,247,0.35); }
+
+@media (max-height: 520px) { .menu-card { width: 92%; padding: 16px; } }
