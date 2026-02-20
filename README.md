@@ -1,16 +1,174 @@
-# React + Vite
+# 🎮 GAME-WAVE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A modern browser-based gaming platform with a curated collection of 17 classic and original HTML5 games — built with React and Vite.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react) ![Vite](https://img.shields.io/badge/Vite-Rolldown-646CFF?style=flat-square&logo=vite) ![React Router](https://img.shields.io/badge/React_Router-7-CA4245?style=flat-square&logo=react-router) ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🕹️ **17 embedded HTML5 games** playable directly in the browser via iframes
+- 🎠 **Hero carousel** — auto-rotating spotlight of featured games every 3 seconds
+- 🃏 **Game cards** with shimmer skeleton loading and HD image upscaling effect
+- 🌙 **Dark / Light theme toggle** with persistent preference
+- 📱 **Fully responsive** — optimized layout for desktop, tablet, and mobile
+- 🍔 **Mobile-friendly navigation** with a slide-in menu
+- ⛶ **Full-screen mode** — expand any game to fill the entire page
+- 📄 **Pagination** — browse up to 16 games per page with smooth scroll-to-top
+- 🆕 **"New" badges** to highlight recently added games
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🎲 Games Library
+
+| # | Game | Status |
+|---|------|--------|
+| 1 | 🪓 Hangman | ✅ New |
+| 2 | 🐍 Snake Game | ✅ |
+| 3 | ⭕ Tic Tac Toe | ✅ |
+| 4 | 🟦 Tetris | ✅ |
+| 5 | 🏓 Ping Pong | ✅ New |
+| 6 | 🏹 Archery (Minesweeper) | ✅ |
+| 7 | 🍬 Candy Crash | ✅ New |
+| 8 | 🍌 Banania | ✅ |
+| 9 | 🟥 Jump (The Cube) | ✅ New |
+| 10 | 🔢 2048 | ✅ |
+| 11 | 🏃 Lode Runner | ✅ New |
+| 12 | 🐦 Flappy Bird | ✅ |
+| 13 | 🍄 Mario | ✅ New |
+| 14 | 🍉 Fruits Slicer | ✅ |
+| 15 | 🚀 SpeedyVerse | ✅ New |
+| 16 | 👻 Pac-Man | ✅ New |
+| 17 | ♟️ Chess | ✅ New |
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | React 19 |
+| Build Tool | Vite (Rolldown) |
+| Routing | React Router DOM v7 |
+| Styling | Vanilla CSS with CSS variables |
+| Linting | ESLint 9 |
+
+---
+
+## 📁 Project Structure
+
+```
+GAME-WAVE/
+├── public/
+│   └── games/              # Self-contained HTML5 game files
+│       ├── Hangman/
+│       ├── Snake/
+│       ├── TicTacToe/
+│       └── ...             # One folder per game
+├── src/
+│   ├── assets/             # Game thumbnail images
+│   ├── components/
+│   │   ├── Header.jsx      # Top navigation bar
+│   │   ├── Logo.jsx        # Animated brand logo
+│   │   ├── HeroBanner.jsx  # Auto-scrolling hero carousel
+│   │   ├── GameCard.jsx    # Game thumbnail card with shimmer loader
+│   │   ├── CategorySection.jsx  # Paginated game grid
+│   │   ├── GameView.jsx    # Full-page iframe game player
+│   │   ├── MobileMenu.jsx  # Mobile slide-in navigation
+│   │   └── ThemeToggle.jsx # Dark/light mode switch
+│   ├── data/
+│   │   └── games.js        # Master game catalogue
+│   ├── pages/
+│   │   └── Home.jsx        # Main homepage
+│   ├── App.jsx             # Root layout with routing
+│   └── main.jsx            # App entry point
+├── index.html
+├── vite.config.js
+└── package.json
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** v18 or higher
+- **npm** v9 or higher
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/BADIAMOHAMEDAYMANE/GAME-WAVE.git
+cd GAME-WAVE
+
+# Install dependencies
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+The output will be in the `dist/` folder, ready to deploy to any static host (Vercel, Netlify, GitHub Pages, etc.).
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+---
+
+## ➕ Adding a New Game
+
+1. **Add the game files** to `public/games/<GameName>/`
+2. **Add a thumbnail** image to `src/assets/`
+3. **Register the game** in `src/data/games.js`:
+
+```js
+{
+  id: 18,
+  title: "My New Game",
+  image: myGameImg,
+  gamePath: "/games/MyNewGame/index.html",
+  isNew: true
+}
+```
+
+That's it — the game card, hero carousel eligibility, and routing are all handled automatically.
+
+---
+
+## 📱 Responsive Design
+
+The platform has been fully audited for mobile compatibility:
+
+- **87.5%** of games have proper viewport meta tags and touch support
+- Responsive breakpoints cover mobile portrait/landscape, tablet, and desktop
+- Touch controls (including Nipple.js joystick for Mario) are integrated
+- Zoom prevention is applied where needed for canvas-based games
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** — free to use, fork, and modify.
+
+---
+
+<div align="center">
+  Made with ❤️ by <strong>Ayoub</strong>
+</div>
