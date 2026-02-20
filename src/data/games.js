@@ -14,6 +14,7 @@ import FlappyBirdImg from "../assets/FlappyBird.jpg";
 import fruitsImg from "../assets/fruits.png";
 import SpeedyVerseImg from "../assets/SpeedyVerse.png";
 import PacManImg from "../assets/PacMan.png";
+import ChessImg from "../assets/Chess.jpg";
 export const categories = [
     {
         id: 1,
@@ -129,6 +130,13 @@ export const categories = [
                 title: "PacMan Game",
                 image: PacManImg,
                 gamePath: "/games/Pacman/index.html",
+                isNew: true
+            },
+            {
+                id: 17,
+                title: "Chess",
+                image: ChessImg,
+                gamePath: "/games/Chess/chess.html",
                 isNew: true
             }
         ]

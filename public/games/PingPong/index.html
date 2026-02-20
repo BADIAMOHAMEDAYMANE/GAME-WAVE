@@ -29,6 +29,23 @@
                     </button>
                 </div>
 
+                <div id="mode-selection" class="overlay">
+                    <div class="menu-card">
+                        <h2>Game Mode</h2>
+                        <p>Choose opponent</p>
+                        <div class="mode-buttons">
+                            <button class="btn-pvp" onclick="setMode('pvp')">
+                                <i class="fa-solid fa-users"></i>
+                                <span>1 VS 1</span>
+                            </button>
+                            <button class="btn-pva" onclick="setMode('pva')">
+                                <i class="fa-solid fa-robot"></i>
+                                <span>Play vs AI</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="canvas-wrapper">
                     <canvas id="canvas" width="600" height="400"></canvas>
                 </div>
@@ -36,10 +53,11 @@
                 <div class="button-group">
                     <button id="start-btn" class="btn-game btn-start">Démarrer</button>
                     <button id="pause-btn" class="btn-game btn-pause">Pause</button>
+                    <button id="mode-btn" class="btn-game btn-pause">Mode</button>
                     <button id="restart-btn" class="btn-game btn-restart">Restart</button>
                 </div>
 
-                <div class="controls-hint">
+                <div class="controls-hint" id="controls-hint">
                     <span><strong>Gaucher:</strong> W / S</span>
                     <span class="separator">|</span>
                     <span><strong>Droitier:</strong> ↑ / ↓</span>
