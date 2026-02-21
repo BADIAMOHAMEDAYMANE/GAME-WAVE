@@ -137,7 +137,7 @@
     margin-bottom: 0 !important;
 }
 
-.display-mode-toggle {
+   /*.display-mode-toggle {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -155,7 +155,7 @@
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
-}
+} */
 
 .display-mode-toggle:hover {
     background: var(--primary);

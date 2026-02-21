@@ -22,9 +22,9 @@ export const categories = [
         games: [
             {
                 id: 1,
-                title: "Hangman",
+                title: "Whack-a-mole",
                 image: hangmanImg,
-                gamePath: "/games/Hangman/index.html",
+                gamePath: "/games/Whack-a-mole/index.html",
                 isNew: true
             },
             {
@@ -68,13 +68,6 @@ export const categories = [
                 image: CandycrashImg,
                 gamePath: "/games/Candycrash/index.html",
                 isNew: true
-            },
-            {
-                id: 8,
-                title: "Banania",
-                image: BananiaImg,
-                gamePath: "/games/Banania/game/banania.html",
-                isNew: false
             },
             {
                 id: 9,
