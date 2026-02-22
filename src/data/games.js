@@ -23,6 +23,7 @@ export const categories = [
             {
                 id: 1,
                 title: "Whack-a-mole",
+                description: "Test your reflexes and whack the moles as they appear!",
                 image: hangmanImg,
                 gamePath: "/games/Whack-a-mole/index.html",
                 isNew: true
@@ -30,6 +31,7 @@ export const categories = [
             {
                 id: 2,
                 title: "Snake",
+                description: "The timeless classic, eat to grow and avoid the walls.",
                 image: SnakeImg,
                 gamePath: "/games/Snake/index.html",
                 isNew: false
@@ -37,6 +39,7 @@ export const categories = [
             {
                 id: 3,
                 title: "TicTacToe",
+                description: "Challenge your friends to this strategic duel.",
                 image: TicTacToeImg,
                 gamePath: "/games/TicTacToe/index.html",
                 isNew: false
@@ -44,6 +47,7 @@ export const categories = [
             {
                 id: 4,
                 title: "Tilt Maze",
+                description: "Navigate the maze and reach the goal.",
                 image: TiltMazeImg,
                 gamePath: "/games/Tetris/index.html",
                 isNew: false
@@ -51,6 +55,7 @@ export const categories = [
             {
                 id: 5,
                 title: "Pong",
+                description: "Speed and reflexes on the table.",
                 image: PongImg,
                 gamePath: "/games/Pong/index.html",
                 isNew: true
@@ -58,6 +63,7 @@ export const categories = [
             {
                 id: 6,
                 title: "Minesweeper",
+                description: "Clear the board without detonating any hidden mines.",
                 image: Minesweeper,
                 gamePath: "/games/Minesweeper/index.html",
                 isNew: false
@@ -65,6 +71,7 @@ export const categories = [
             {
                 id: 7,
                 title: "Candy-Crash",
+                description: "Blast the candies in this addictive puzzle!",
                 image: CandycrashImg,
                 gamePath: "/games/Candycrash/index.html",
                 isNew: true
@@ -72,6 +79,7 @@ export const categories = [
             {
                 id: 9,
                 title: "Geometry Dash",
+                description: "Jump and fly your way through danger in this rhythm-based platformer!",
                 image: GeometryDashImg,
                 gamePath: "/games/GeometryDash/index.html",
                 isNew: true
@@ -79,6 +87,7 @@ export const categories = [
             {
                 id: 10,
                 title: "2048",
+                description: "Slide tiles and merge them together to reach the 2048 tile.",
                 image: Img2048,
                 gamePath: "/games/2048/index.html",
                 isNew: false
@@ -86,6 +95,7 @@ export const categories = [
             {
                 id: 11,
                 title: "Load Runner",
+                description: "Collect gold and avoid enemies in this classic puzzle platformer.",
                 image: ImgLoadRunner,
                 gamePath: "/games/LodeRunner/lodeRunner.html",
                 isNew: true
@@ -93,6 +103,7 @@ export const categories = [
             {
                 id: 12,
                 title: "Flappy Bird",
+                description: "Navigate the bird through the pipes without hitting them.",
                 image: FlappyBirdImg,
                 gamePath: "/games/floppybird/index.html",
                 isNew: false
@@ -100,6 +111,7 @@ export const categories = [
             {
                 id: 13,
                 title: "Mario",
+                description: "Join Mario on an epic adventure to rescue the princess.",
                 image: MarioImg,
                 gamePath: "/games/Mario/index.html",
                 isNew: true
@@ -107,6 +119,7 @@ export const categories = [
             {
                 id: 14,
                 title: " Fruits",
+                description: "Slice and dice juicy fruits like a true ninja!",
                 image: fruitsImg,
                 gamePath: "/games/fruits/index.html",
                 isNew: false
@@ -114,6 +127,7 @@ export const categories = [
             {
                 id: 15,
                 title: "SpeedyVerse",
+                description: "Race through the galaxy at top speeds!",
                 image: SpeedyVerseImg,
                 gamePath: "/games/SpeedyVerse/index.html",
                 isNew: true
@@ -121,6 +135,7 @@ export const categories = [
             {
                 id: 16,
                 title: "PacMan",
+                description: "Chomp dots and avoid ghosts in this arcade classic.",
                 image: PacManImg,
                 gamePath: "/games/Pacman/index.html",
                 isNew: true
@@ -128,6 +143,7 @@ export const categories = [
             {
                 id: 17,
                 title: "Chess",
+                description: "Outsmart your opponent in the ultimate game of strategy.",
                 image: ChessImg,
                 gamePath: "/games/Chess/chess.html",
                 isNew: true

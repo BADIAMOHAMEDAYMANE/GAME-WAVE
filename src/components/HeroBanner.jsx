@@ -1,49 +1,43 @@
 import { useState, useEffect } from 'react';
 import './HeroBanner.css';
-
-// Importation de vos images
-import hangmanImg from "/src/assets/Hangman.png";
-import SnakeImg from "/src/assets/Snakegame.png";
-import TicTacToeImg from "/src/assets/TicTacToe.png";
-import TiltMazeImg from "/src/assets/Tilt-Maze.png";
-import PongImg from "/src/assets/pong-game.png";
-import MinesweeperImg from "/src/assets/Minesweeper.png";
-import CandycrashImg from "/src/assets/Candy-crash.png";
+import { categories } from '../data/games';
 
 export default function HeroBanner() {
-    // Liste des jeux pour le carrousel
-    const slides = [
-        { id: 1, title: "Hangman", desc: "Guess the word before it's too late !", img: hangmanImg },
-        { id: 2, title: "Snake Game", desc: "The timeless classic, eat to grow.", img: SnakeImg },
-        { id: 3, title: "Tic Tac Toe", desc: "Challenge your friends to this strategic duel.", img: TicTacToeImg },
-        { id: 4, title: "TiltMaze", desc: "Fit the blocks together and beat the record.", img: TiltMazeImg },
-        { id: 5, title: "Pong Game", desc: "Speed ​​and reflexes on the table.", img: PongImg },
-        { id: 6, title: "Minesweeper", desc: "Aim for the center to become the master archer.", img: MinesweeperImg },
-        { id: 7, title: "Candy Crash", desc: "Blast the candies in this addictive puzzle!.", img: CandycrashImg },
-    ];
-
+    const [slides, setSlides] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Logique du carrousel automatique (3 secondes)
     useEffect(() => {
+        const allGames = categories[0].games;
+        const shuffled = [...allGames].sort(() => 0.5 - Math.random());
+        setSlides(shuffled.slice(0, 7));
+    }, []);
+
+    useEffect(() => {
+        if (slides.length === 0) return;
+
         const timer = setInterval(() => {
             setCurrentIndex((prevIndex) =>
                 prevIndex === slides.length - 1 ? 0 : prevIndex + 1
             );
         }, 3000);
 
-        return () => clearInterval(timer); // Nettoyage du timer
+        return () => clearInterval(timer);
     }, [slides.length]);
+
+    if (slides.length === 0) return null;
+
+    const handlePlayGame = () => {
+        window.open(`/play/${slides[currentIndex].id}`);
+    };
 
     return (
         <section className="hero-section">
             <div className="hero-content">
                 <span className="hero-badge">À LA UNE</span>
                 <h1>{slides[currentIndex].title}</h1>
-                <p>{slides[currentIndex].desc}</p>
-                <button className="hero-btn">JOUER MAINTENANT</button>
+                <p>{slides[currentIndex].description}</p>
+                <button className="hero-btn" onClick={handlePlayGame}>JOUER MAINTENANT</button>
 
-                {/* Indicateurs (petits points) */}
                 <div className="carousel-indicators">
                     {slides.map((_, index) => (
                         <div
@@ -58,9 +52,9 @@ export default function HeroBanner() {
             <div className="hero-image-overlay"></div>
 
             <img
-                src={slides[currentIndex].img}
-                alt={slides[currentIndex].title}
                 className="hero-img"
+                src={slides[currentIndex].image}
+                alt={slides[currentIndex].title}
                 key={slides[currentIndex].id}
             />
         </section>
