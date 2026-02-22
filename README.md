@@ -1,6 +1,6 @@
 # 🎮 GAME-WAVE
 
-> A modern browser-based gaming platform with a curated collection of 17 classic and original HTML5 games — built with React and Vite.
+> A modern browser-based gaming platform with a curated collection of 16 classic and original HTML5 games — built with React and Vite.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react) ![Vite](https://img.shields.io/badge/Vite-Rolldown-646CFF?style=flat-square&logo=vite) ![React Router](https://img.shields.io/badge/React_Router-7-CA4245?style=flat-square&logo=react-router) ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
@@ -8,7 +8,7 @@
 
 ## ✨ Features
 
-- 🕹️ **17 embedded HTML5 games** playable directly in the browser via iframes
+- 🕹️ **16 embedded HTML5 games** playable directly in the browser via iframes
 - 🎠 **Hero carousel** — auto-rotating spotlight of featured games every 3 seconds
 - 🃏 **Game cards** with shimmer skeleton loading and HD image upscaling effect
 - 🌙 **Dark / Light theme toggle** with persistent preference
@@ -24,23 +24,22 @@
 
 | # | Game | Status |
 |---|------|--------|
-| 1 | 🪓 Hangman | ✅ New |
-| 2 | 🐍 Snake Game | ✅ |
-| 3 | ⭕ Tic Tac Toe | ✅ |
-| 4 | 🟦 Tetris | ✅ |
-| 5 | 🏓 Ping Pong | ✅ New |
-| 6 | 🏹 Archery (Minesweeper) | ✅ |
-| 7 | 🍬 Candy Crash | ✅ New |
-| 8 | 🍌 Banania | ✅ |
-| 9 | 🟥 Jump (The Cube) | ✅ New |
-| 10 | 🔢 2048 | ✅ |
-| 11 | 🏃 Lode Runner | ✅ New |
-| 12 | 🐦 Flappy Bird | ✅ adjust the game rules on the mobile display |
-| 13 | 🍄 Mario | ✅ New  |
-| 14 | 🍉 Fruits Slicer | ✅ |
-| 15 | 🚀 SpeedyVerse | ✅ New |
-| 16 | 👻 Pac-Man | ✅ New |
-| 17 | ♟️ Chess | ✅ New |
+| 1 | 🔨 Whack-a-mole | ✅ New |
+| 2 | 🐍 Snake | ✅ |
+| 3 | ⭕ TicTacToe | ✅ |
+| 4 | 🧩 Tilt Maze | ✅ |
+| 5 | 🏓 Pong | ✅ New |
+| 6 | 💣 Minesweeper | ✅ |
+| 7 | 🍬 Candy-Crash | ✅ New |
+| 8 | 🔺 Geometry Dash | ✅ New |
+| 9 | 🔢 2048 | ✅ |
+| 10 | 🏃 Load Runner | ✅ New |
+| 11 | 🐦 Flappy Bird | ✅ adjust the game rules on the mobile display |
+| 12 | 🍄 Mario | ✅ New |
+| 13 | 🍉 Fruits | ✅ |
+| 14 | 🏎️ OutRun | ✅ New |
+| 15 | 👻 PacMan | ✅ New |
+| 16 | ♟️ Chess | ✅ New |
 
 ---
 

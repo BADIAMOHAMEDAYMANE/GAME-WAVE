@@ -1,4 +1,4 @@
-import WhackImg from "../assets/Whack-a-mole.jpg";
+import whackamoleImg from "../assets/whack-a-mole.png";
 import SnakeImg from "../assets/Snakegame.png";
 import TicTacToeImg from "../assets/TicTacToe.png";
 import TiltMazeImg from "../assets/Tilt-Maze.png";
@@ -7,12 +7,11 @@ import Minesweeper from "../assets/Minesweeper.png";
 import CandycrashImg from "../assets/Candy-crash.png";
 import GeometryDashImg from "../assets/geometry-dash.png";
 import MarioImg from "../assets/SuperMario.png";
-
-import Img2048 from "../assets/2048.jpg";
-import ImgLoadRunner from "../assets/LoadRunner.jpg";
-import FlappyBirdImg from "../assets/FlappyBird.jpg";
+import Img2048 from "../assets/2048.png";
+import ImgLoadRunner from "../assets/LoadRunner.png";
+import FlappyBirdImg from "../assets/FlappyBird.png";
 import fruitsImg from "../assets/fruits.png";
-import SpeedyVerseImg from "../assets/SpeedyVerse.png";
+import OutRunImg from "../assets/outrun.png";
 import PacManImg from "../assets/PacMan.png";
 import ChessImg from "../assets/Chess.jpg";
 export const categories = [
@@ -23,7 +22,8 @@ export const categories = [
             {
                 id: 1,
                 title: "Whack-a-mole",
-                image: WhackImg,
+                description: "Test your reflexes and whack the moles as they appear!",
+                image: whackamoleImg,
                 gamePath: "/games/Whack-a-mole/index.html",
                 isNew: true
             },
@@ -125,10 +125,10 @@ export const categories = [
             },
             {
                 id: 15,
-                title: "SpeedyVerse",
+                title: "OutRun",
                 description: "Race through the galaxy at top speeds!",
-                image: SpeedyVerseImg,
-                gamePath: "/games/SpeedyVerse/index.html",
+                image: OutRunImg,
+                gamePath: "/games/OutRun/index.html",
                 isNew: true
             },
             {

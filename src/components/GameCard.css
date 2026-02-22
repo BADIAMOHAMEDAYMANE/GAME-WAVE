@@ -171,14 +171,14 @@
 }
 
 /* Light mode specific hover effects */
-[data-theme='light'] .game-card:hover::before {
+.game-card:hover::before {
     content: '';
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
 }
 
-[data-theme='light'] .game-card:hover .image-wrapper {
+.game-card:hover .image-wrapper {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -188,11 +188,11 @@
     border-radius: var(--radius);
 }
 
-[data-theme='light'] .game-card:hover .image-wrapper img {
+.game-card:hover .image-wrapper img {
     height: 100%;
 }
 
-[data-theme='light'] .game-card:hover .image-wrapper::after {
+.game-card:hover .image-wrapper::after {
     top: 0;
     left: 0;
     width: 100%;
@@ -201,11 +201,11 @@
     z-index: 2;
 }
 
-[data-theme='light'] .game-card:hover .image-wrapper::before {
+.game-card:hover .image-wrapper::before {
     z-index: 10;
 }
 
-[data-theme='light'] .game-card:hover .game-title {
+.game-card:hover .game-title {
     position: relative;
     z-index: 10;
     color: #ffffff;
