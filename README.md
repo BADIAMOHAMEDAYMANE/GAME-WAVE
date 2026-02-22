@@ -35,8 +35,8 @@
 | 9 | 🟥 Jump (The Cube) | ✅ New |
 | 10 | 🔢 2048 | ✅ |
 | 11 | 🏃 Lode Runner | ✅ New |
-| 12 | 🐦 Flappy Bird | ✅ |
-| 13 | 🍄 Mario | ✅ New |
+| 12 | 🐦 Flappy Bird | ✅ adjust the game rules on the mobile display |
+| 13 | 🍄 Mario | ✅ New  |
 | 14 | 🍉 Fruits Slicer | ✅ |
 | 15 | 🚀 SpeedyVerse | ✅ New |
 | 16 | 👻 Pac-Man | ✅ New |
