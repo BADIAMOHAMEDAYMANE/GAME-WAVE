@@ -20,9 +20,52 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
-    padding: 20px;
+    min-height: 0;
+    /* Allow shrinking */
+    height: auto;
+    padding: clamp(10px, 2vh, 20px);
     transition: all 0.3s ease;
+}
+
+@media (max-height: 700px) {
+    .game-container {
+        padding: 5px;
+    }
+
+    .game-area {
+        padding: 10px !important;
+    }
+
+    h1 {
+        margin-bottom: 5px !important;
+        font-size: clamp(1.2rem, 5vw, 1.8rem) !important;
+    }
+
+    .button-group {
+        margin-top: 10px !important;
+    }
+
+    .controls-hint {
+        margin-top: 5px !important;
+    }
+
+    canvas {
+        max-height: 50vh;
+        /* Scale canvas down to fit */
+        width: auto !important;
+        /* Allow width to scale proportionally */
+    }
+}
+
+@media (max-height: 500px) {
+    h1 {
+        display: none;
+    }
+
+    /* Hide title on extremely short screens to save space */
+    .game-area {
+        padding: 5px !important;
+    }
 }
 
 .game-area {
@@ -32,13 +75,14 @@ body {
     border: 1px solid var(--border);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     text-align: center;
-    position: relative; /* Pour positionner des éléments internes si besoin */
+    position: relative;
+    /* Pour positionner des éléments internes si besoin */
 }
 
 h1 {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
     color: #ffffff;
     margin-bottom: 25px;
 }
@@ -53,8 +97,10 @@ canvas {
     border: 2px solid var(--primary);
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
-    touch-action: none; /* Important pour mobile */
-    max-width: 100%; /* Assure la fluidité */
+    touch-action: none;
+    /* Important pour mobile */
+    max-width: 100%;
+    /* Assure la fluidité */
     height: auto;
 }
 
@@ -68,17 +114,31 @@ canvas {
 
 .btn-game {
     border: none;
-    padding: 12px 28px;
+    padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 28px);
     border-radius: 10px;
     font-weight: 700;
     text-transform: uppercase;
     transition: all 0.3s ease;
     cursor: pointer;
+    font-size: clamp(0.8rem, 3vw, 1rem);
 }
 
-.btn-start { background: var(--primary); color: #020617; }
-.btn-pause { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
-.btn-restart { background: var(--secondary); color: #fff; }
+.btn-start {
+    background: var(--primary);
+    color: #020617;
+}
+
+.btn-pause {
+    background: rgba(255, 255, 255, 0.2);
+    /* Increased for contrast detection */
+    color: #fff;
+    border: 1px solid var(--border);
+}
+
+.btn-restart {
+    background: var(--secondary);
+    color: #fff;
+}
 
 .btn-game:hover {
     transform: translateY(-2px);
@@ -91,7 +151,10 @@ canvas {
     color: #64748b;
 }
 
-.separator { margin: 0 10px; opacity: 0.3; }
+.separator {
+    margin: 0 10px;
+    opacity: 0.3;
+}
 
 /* Modal Custom */
 .custom-modal {
@@ -133,7 +196,8 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg); /* Fond noir/bleu très foncé */
+    background-color: var(--bg);
+    /* Fond noir/bleu très foncé */
     padding: 0;
 }
 
@@ -143,7 +207,8 @@ canvas {
     box-shadow: none;
     background: transparent;
     width: 100%;
-    max-width: 800px; /* Optionnel : limite la largeur pour garder un aspect propre */
+    max-width: 800px;
+    /* Optionnel : limite la largeur pour garder un aspect propre */
 }
 
 /* Gestion spécifique pour Safari/iOS qui utilisent des préfixes différents */
@@ -163,7 +228,7 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(2,6,23,0.92);
+    background: rgba(2, 6, 23, 0.92);
     backdrop-filter: blur(8px);
     z-index: 2000;
     display: flex;
@@ -173,17 +238,88 @@ canvas {
     transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.overlay.hidden { opacity: 0; visibility: hidden; transform: scale(0.98); }
+.overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.98);
+}
 
-.menu-card { text-align: center; width: 320px; padding: 22px; border-radius: 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.03); }
-.menu-card h2 { font-size: 1.4rem; margin-bottom: 6px; }
-.menu-card p { color: #9aa4b2; margin-bottom: 18px; }
+.menu-card {
+    text-align: center;
+    width: 320px;
+    padding: 22px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
 
-.mode-buttons { display: flex; flex-direction: column; gap: 12px; }
-.mode-buttons button { display: flex; align-items: center; gap: 16px; justify-content: flex-start; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); background: rgba(255,255,255,0.02); color: #e6eef6; font-weight: 700; cursor: pointer; transition: 0.18s; }
-.mode-buttons i { font-size: 1.2rem; }
+.menu-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+}
 
-.btn-pvp:hover { transform: translateX(6px); border-color: rgba(34,211,238,0.4); }
-.btn-pva:hover { transform: translateX(6px); border-color: rgba(168,85,247,0.35); }
+.menu-card p {
+    color: #9aa4b2;
+    margin-bottom: 18px;
+}
 
-@media (max-height: 520px) { .menu-card { width: 92%; padding: 16px; } }
+.mode-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mode-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: flex-start;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.2);
+    /* Increased for contrast detection */
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.18s;
+}
+
+.mode-buttons i {
+    font-size: 1.2rem;
+}
+
+.btn-pvp:hover {
+    transform: translateX(6px);
+    border-color: rgba(34, 211, 238, 0.4);
+}
+
+.btn-pva:hover {
+    transform: translateX(6px);
+    border-color: rgba(168, 85, 247, 0.35);
+}
+
+@media (max-height: 520px) {
+    .menu-card {
+        width: 92%;
+        padding: 16px;
+    }
+}
+
+/* Responsivité Mobile */
+@media (max-width: 768px) {
+    .game-area {
+        padding: 20px 15px;
+    }
+
+    .button-group {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .btn-game {
+        flex: 1 1 40%;
+        /* Permet aux boutons de prendre de la place et de passer à la ligne par paires */
+        min-width: 120px;
+    }
+}

@@ -1,4 +1,4 @@
-import hangmanImg from "../assets/Hangman.png";
+import WhackImg from "../assets/Whack-a-mole.jpg";
 import SnakeImg from "../assets/Snakegame.png";
 import TicTacToeImg from "../assets/TicTacToe.png";
 import TiltMazeImg from "../assets/Tilt-Maze.png";
@@ -7,7 +7,7 @@ import Minesweeper from "../assets/Minesweeper.png";
 import CandycrashImg from "../assets/Candy-crash.png";
 import GeometryDashImg from "../assets/geometry-dash.png";
 import MarioImg from "../assets/SuperMario.png";
-import BananiaImg from "../assets/Banania.jpg";
+
 import Img2048 from "../assets/2048.jpg";
 import ImgLoadRunner from "../assets/LoadRunner.jpg";
 import FlappyBirdImg from "../assets/FlappyBird.jpg";
@@ -23,8 +23,7 @@ export const categories = [
             {
                 id: 1,
                 title: "Whack-a-mole",
-                description: "Test your reflexes and whack the moles as they appear!",
-                image: hangmanImg,
+                image: WhackImg,
                 gamePath: "/games/Whack-a-mole/index.html",
                 isNew: true
             },

@@ -38,13 +38,16 @@ body {
 .main-layout {
     display: flex;
     width: 100%;
+    max-width: 100%;
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .content-center {
     flex: 1;
     min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -73,7 +76,7 @@ body {
    4. SIDEBARS & PUBLICITÉS (ADS)
    ========================================================================== */
 .ads-sidebar {
-    width: 180px;
+    width: clamp(150px, 14vw, 200px);
     flex-shrink: 0;
     padding: 20px;
     display: flex;
@@ -96,22 +99,16 @@ body {
 }
 
 .ad-unit {
-    background: var(--card);
-    border: 1px dashed var(--border);
+    background: linear-gradient(135deg, var(--card) 0%, rgba(15, 23, 42, 0.3) 100%);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    height: 450px;
+    height: clamp(280px, 36vh, 500px);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #64748b;
+    color: #94a3b8;
     font-size: 13px;
     font-weight: 500;
-}
-
-/* Optimisation visuelle des Sidebars */
-.ad-unit {
-    border: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--card) 0%, rgba(15, 23, 42, 0.3) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -138,10 +135,44 @@ body {
 /* ==========================================================================
    9. ANIMATIONS (KEYFRAMES)
    ========================================================================== */
-@keyframes scanline { 0% { top: -100%; } 100% { top: 100%; } }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes scanline {
+    0% {
+        top: -100%;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
 
 /* ==========================================================================
    10. MÉDIA QUERIES (RESPONSIVE)
@@ -149,25 +180,38 @@ body {
 
 /* Écrans moyens (Tablettes et petits Laptops) */
 @media (max-width: 1024px) and (min-width: 769px) {
-    .ads-sidebar { display: none; }
+    .ads-sidebar {
+        display: none;
+    }
 }
 
 @media (max-width: 1150px) {
-    .ads-sidebar { display: none; }
+    .ads-sidebar {
+        display: none;
+    }
 }
 
 /* Mobile Standard (768px) */
 @media (max-width: 768px) {
-    .ads-sidebar { display: none; }
+    .ads-sidebar {
+        display: none;
+    }
 }
 
 /* Mobiles (480px) */
 @media (max-width: 480px) {
-    body.menu-open { overflow: hidden; }
+    body.menu-open {
+        overflow: hidden;
+    }
 }
 
 /* Très petits Mobiles (380px) */
 @media (max-width: 380px) {
-    .ads-sidebar { display: none; }
-    body.menu-open { overflow: hidden; }
+    .ads-sidebar {
+        display: none;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+    }
 }

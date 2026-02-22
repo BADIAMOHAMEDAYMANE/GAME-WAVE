@@ -151,18 +151,33 @@ function candyCrushGame() {
     }
 
     function moveIntoSquareBelow() {
+        let hasMoved = false;
         for (let i = 0; i < width * (width - 1); i++) {
             if (squares[i + width].style.backgroundImage === "") {
-                squares[i + width].style.backgroundImage = squares[i].style.backgroundImage;
-                squares[i].style.backgroundImage = "";
+                const fallingColor = squares[i].style.backgroundImage;
+                if (fallingColor) {
+                    squares[i + width].style.backgroundImage = fallingColor;
+                    squares[i].style.backgroundImage = "";
+                    squares[i + width].classList.add("falling");
+                    squares[i + width].addEventListener("animationend", () => {
+                        squares[i + width].classList.remove("falling");
+                    }, { once: true });
+                    hasMoved = true;
+                }
             }
         }
         for (let i = 0; i < width; i++) {
             if (squares[i].style.backgroundImage === "") {
                 const randomColor = Math.floor(Math.random() * candyColors.length);
                 squares[i].style.backgroundImage = candyColors[randomColor];
+                squares[i].classList.add("falling");
+                squares[i].addEventListener("animationend", () => {
+                    squares[i].classList.remove("falling");
+                }, { once: true });
+                hasMoved = true;
             }
         }
+        return hasMoved;
     }
 
     function checkMatches() {
@@ -178,11 +193,16 @@ function candyCrushGame() {
             const row = [];
             for (let j = 0; j < size; j++) row.push(i + j);
             const decidedColor = squares[i].style.backgroundImage;
-            // [S7735] Inversion de la condition pour plus de clarté
             if (decidedColor && row.every(index => squares[index].style.backgroundImage === decidedColor)) {
                 score += points;
                 scoreDisplay.innerHTML = score;
-                row.forEach(index => squares[index].style.backgroundImage = "");
+                row.forEach(index => {
+                    squares[index].classList.add("matching");
+                    squares[index].addEventListener("animationend", () => {
+                        squares[index].style.backgroundImage = "";
+                        squares[index].classList.remove("matching");
+                    }, { once: true });
+                });
             }
         }
     }
@@ -195,15 +215,29 @@ function candyCrushGame() {
             if (decidedColor && column.every(index => squares[index].style.backgroundImage === decidedColor)) {
                 score += points;
                 scoreDisplay.innerHTML = score;
-                column.forEach(index => squares[index].style.backgroundImage = "");
+                column.forEach(index => {
+                    squares[index].classList.add("matching");
+                    squares[index].addEventListener("animationend", () => {
+                        squares[index].style.backgroundImage = "";
+                        squares[index].classList.remove("matching");
+                    }, { once: true });
+                });
             }
         }
     }
 
+    let lastGlobalCheck = 0;
+    const LOOP_SPEED = 100; // ms between logic cycles to see falling
+
     function gameLoop() {
         if (isPaused) return;
-        checkMatches();
-        moveIntoSquareBelow();
+
+        const now = Date.now();
+        if (now - lastGlobalCheck > LOOP_SPEED) {
+            checkMatches();
+            moveIntoSquareBelow();
+            lastGlobalCheck = now;
+        }
     }
 
     function startGame(mode) {

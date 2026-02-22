@@ -49,19 +49,12 @@
     box-shadow: 0 0 10px var(--primary);
 }
 
-/* Support Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) var(--bg);
-}
-
-/* ==========================================================================
-   BASE STYLES
-   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--bg);
 }
 
 html,
@@ -91,13 +84,33 @@ body {
 .game-container {
     width: 100%;
     max-width: 1200px;
-    padding: 20px;
+    padding: clamp(10px, 2vh, 20px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    flex: 1 0 auto;
-    /* Force le container à prendre l'espace nécessaire et pousse le footer vers le bas */
+    gap: clamp(10px, 2vh, 20px);
+    flex: 1;
+    min-height: 0;
+}
+
+@media (max-height: 650px) {
+    .game-container {
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .game-info {
+        gap: 5px !important;
+    }
+
+    .info-card {
+        padding: 10px !important;
+        min-width: 140px !important;
+    }
+
+    .info-value {
+        font-size: 1.5rem !important;
+    }
 }
 
 /* ==========================================================================
@@ -139,21 +152,30 @@ body {
     align-items: center;
     background: var(--card);
     border-radius: var(--radius);
-    padding: 20px;
+    padding: clamp(10px, 2vw, 20px);
     border: 1px solid var(--border);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     position: relative;
     width: 100%;
+    min-height: 0;
 }
 
 #game_console {
     width: 100%;
     max-width: 1000px;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 40 / 22;
+    /* Matches the map dimensions exactly */
     position: relative;
     background: linear-gradient(to bottom, rgba(0, 0, 0, .65), rgba(0, 0, 0, 1)), var(--root-clr);
     border-radius: 12px;
     overflow: hidden;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    #game_console {
+        aspect-ratio: 16 / 9;
+    }
 }
 
 /* ==========================================================================
