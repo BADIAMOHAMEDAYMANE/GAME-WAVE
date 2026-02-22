@@ -33,19 +33,19 @@ $(function () {
 
     // Fullscreen Toggle
     $("#fullscreenToggle").click(function () {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-            $(this).find("i").attr("class", "fas fa-compress");
-        } else {
+        if (document.fullscreenElement) {
             if (document.exitFullscreen) {
                 document.exitFullscreen();
                 $(this).find("i").attr("class", "fas fa-expand");
             }
+        } else {
+            document.documentElement.requestFullscreen();
+            $(this).find("i").attr("class", "fas fa-compress");
         }
     });
 
     $("#startReset").click(function () {
-        if (playing == true) {
+        if (playing) {
             location.reload();
         } else {
             playing = true;
@@ -86,9 +86,9 @@ $(function () {
         if (!fruitSrc) return;
 
         let fruitId = "1";
-        for (let i = 0; i < fruits.length; i++) {
-            if (fruitSrc.indexOf(fruits[i] + ".png") !== -1) {
-                fruitId = fruits[i];
+        for (const fruit of fruits) {
+            if (fruitSrc.includes(fruit + ".png")) {
+                fruitId = fruit;
                 break;
             }
         }
@@ -214,7 +214,7 @@ $(function () {
     function createTrail(p1, p2) {
         const dx = p2.x - p1.x;
         const dy = p2.y - p1.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const dist = Math.hypot(dx, dy);
         if (dist < 10) return;
 
         const angle = Math.atan2(dy, dx) * 180 / Math.PI;
@@ -242,7 +242,10 @@ $(function () {
     }
 
     function addhearts() {
+        const containerWidth = $("#fruitcontainer").width();
         $("#trialsleft").empty();
+        // Adjust trialsleft position for small screens
+        $("#trialsleft").css("left", (containerWidth - 100) + "px");
         for (let i = 0; i < trialsleft; i++) {
             $("#trialsleft").append('<img src="https://raw.githubusercontent.com/Saumya-07/Fruit-Slicer/master/images/wrong.png" class="life">');
         }
@@ -254,8 +257,8 @@ $(function () {
         chooseRandom();
         $("#fruit1").show();
 
-        // Initial horizontal position
-        fruitX = Math.round(550 * Math.random());
+        const containerWidth = $("#fruitcontainer").width();
+        fruitX = Math.round((containerWidth - 100) * Math.random());
         fruitY = -120; // Start higher off-screen
         fruitRotation = 0;
         fruitRotationSpeed = (Math.random() - 0.5) * 8;
@@ -284,13 +287,14 @@ $(function () {
             });
 
             // Check boundaries
-            if (fruitY > 480) { // Screen height plus buffer
+            const containerHeight = $("#fruitcontainer").height();
+            if (fruitY > containerHeight + 30) { // Screen height plus buffer
                 if (trialsleft > 1) {
                     trialsleft--;
                     addhearts();
 
                     // Don't lose life for missing a bomb
-                    if ($("#fruit1").attr("src").indexOf("10.png") !== -1) {
+                    if ($("#fruit1").attr("src").includes("10.png")) {
                         trialsleft++;
                         addhearts();
                     }

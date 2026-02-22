@@ -4,8 +4,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    color: #000;
-    background: #1a1a1a;
+    color: #fff;
+    background: #000;
 }
 
 body,
@@ -126,6 +126,7 @@ legend {
     display: flex;
     flex-direction: column;
     position: relative;
+    min-height: 0;
 }
 
 .top-controls {
@@ -138,9 +139,11 @@ legend {
 }
 
 .control-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.2);
+    /* Increased opacity for contrast */
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    color: #cbd5e1;
+    /* Lighter color for contrast */
     cursor: pointer;
     font-size: 1.1rem;
     padding: 8px;

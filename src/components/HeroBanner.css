@@ -1,7 +1,7 @@
 .hero-section {
     position: relative;
-    height: 450px;
-    margin: 20px 40px;
+    height: clamp(220px, 35vw, 480px);
+    margin: 2% 4%;
     border-radius: var(--radius);
     overflow: hidden;
     display: flex;
@@ -36,14 +36,14 @@
 .hero-content {
     position: relative;
     z-index: 3;
-    padding: 60px;
-    max-width: 500px;
+    padding: clamp(20px, 5vw, 70px);
+    max-width: clamp(280px, 45%, 520px);
 }
 
 .hero-content h1 {
     font-family: 'Poppins', sans-serif;
-    font-size: 42px;
-    margin: 15px 0;
+    font-size: clamp(20px, 4vw, 46px);
+    margin: clamp(8px, 1.2vw, 18px) 0;
     color: var(--text);
     text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
     transition: color 0.3s ease;
@@ -52,7 +52,8 @@
 .hero-content p {
     color: var(--text);
     opacity: 0.9;
-    margin-bottom: 25px;
+    font-size: clamp(13px, 1.4vw, 16px);
+    margin-bottom: clamp(12px, 2vw, 28px);
     line-height: 1.6;
 }
 
@@ -69,8 +70,9 @@
     background: linear-gradient(45deg, var(--primary), var(--secondary));
     border: none;
     color: white;
-    padding: 15px 30px;
+    padding: clamp(10px, 1.5vw, 16px) clamp(18px, 2.5vw, 32px);
     border-radius: 12px;
+    font-size: clamp(13px, 1.2vw, 15px);
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -109,41 +111,19 @@
 
 @media (max-width: 768px) {
     .hero-section {
-        height: 300px;
-        margin: 15px;
+        /* clamp() handles this range — no override needed */
+        margin: 2% 2%;
     }
 
-    .hero-content {
-        padding: 30px;
-    }
-
-    .hero-content h1 {
-        font-size: 28px;
+    .hero-image-overlay {
+        background: linear-gradient(to right, var(--bg) 0%, var(--bg) 35%, color-mix(in srgb, var(--bg) 70%, transparent) 60%, transparent 100%);
     }
 }
 
 @media (max-width: 480px) {
     .hero-section {
-        height: 250px;
-        margin: 10px;
+        margin: 1.5% 1.5%;
     }
 
-    .hero-content {
-        padding: 20px;
-    }
-
-    .hero-content h1 {
-        font-size: 22px;
-        margin: 10px 0;
-    }
-
-    .hero-content p {
-        font-size: 13px;
-        margin-bottom: 15px;
-    }
-
-    .hero-btn {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
+    /* Font sizes / paddings are handled by clamp() — no fixed overrides needed */
 }

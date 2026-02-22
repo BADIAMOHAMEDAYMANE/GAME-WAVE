@@ -26,12 +26,25 @@ html {
 }
 
 #container {
-    width: 750px;
-    height: 600px;
+    width: 95vw;
+    max-width: 750px;
+    height: 80vh;
+    /* Flexible height on mobile */
+    max-height: 600px;
     margin: 10px auto;
-    padding: 20px;
+    padding: 2%;
     border-radius: 10px;
     position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    #container {
+        height: auto;
+        aspect-ratio: 750/600;
+    }
 }
 
 /* UI Controls */
@@ -66,12 +79,12 @@ html {
 }
 
 #front {
-    font-size: 40px;
+    font-size: clamp(24px, 5vw, 40px);
     color: var(--text);
-    width: 650px;
-    height: 450px;
-    padding: 10px;
-    margin: 30px auto 20px auto;
+    width: 90%;
+    height: 80%;
+    padding: 2%;
+    margin: 5% auto;
     z-index: 2;
     display: none;
 }
@@ -81,10 +94,11 @@ html {
 }
 
 #instructions {
-    width: 450px;
-    height: 50px;
-    margin: 10px auto;
-    font-size: 30px;
+    width: 80%;
+    max-width: 450px;
+    height: clamp(40px, 8vh, 50px);
+    margin: 5px auto;
+    font-size: clamp(18px, 4vw, 30px);
 
     background-color: #d3901d;
     color: #2e1d11;
@@ -97,10 +111,10 @@ html {
 #fruitcontainer {
     background: var(--wood-bg);
     background-size: cover;
-    width: 650px;
-    height: 450px;
-    padding: 10px;
-    margin: 30px auto 20px auto;
+    width: 90%;
+    flex: 1;
+    padding: 2%;
+    margin: 2% auto;
     background-color: white;
     color: black;
     text-align: center;
@@ -190,7 +204,7 @@ html {
     margin-top: 7px;
     display: flex;
     position: absolute;
-    left: 550px;
+    right: 20px;
     background-color: transparent;
     z-index: 10;
 }
@@ -222,15 +236,17 @@ html {
 
 #gameOver {
     box-sizing: border-box;
-    width: 500px;
-    height: 300px;
+    width: 90%;
+    max-width: 500px;
+    height: auto;
     background: transparent;
     color: var(--text);
     text-transform: upperCase;
     text-align: center;
-    font-size: 3em;
+    font-size: clamp(1.5rem, 6vw, 3em);
     position: absolute;
-    top: 170px;
-    left: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 20;
 }

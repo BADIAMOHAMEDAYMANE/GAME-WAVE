@@ -5,17 +5,73 @@
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100vh; /* Fixe la hauteur à 100% de l'écran */
+:root {
+    --primary: #ff7660;
+    --primary-dark: #d35400;
+    --bg: #222;
+    --container-bg: #5d4037;
+    --text: #ffffff;
+    --card-bg: rgba(0, 0, 0, 0.5);
+    --border-clr: #ff7660;
+    --btn-shadow: #d35400;
+}
+
+#game-container.light-mode {
+    --bg: #f8fafc;
+    --container-bg: #d7ccc8;
+    --text: #1e293b;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --border-clr: #e64a19;
+    --btn-shadow: #bf360c;
+}
+
+html,
+body {
+    height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Supprime totalement le scroll */
+    overflow: hidden;
 }
 
 body {
-    background-color: #222;
+    background-color: var(--bg);
     font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- TOP CONTROLS --- */
+.top-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.control-btn {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: var(--primary);
     color: white;
+    transform: translateY(-2px);
+    border-color: transparent;
 }
 
 /* --- CONTENEUR PRINCIPAL CENTRÉ --- */
@@ -23,37 +79,42 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centre verticalement le contenu */
+    justify-content: center;
     height: 100vh;
-    background-color: #5d4037;
+    background-color: var(--container-bg);
     padding: 10px;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
 /* --- TITRE ET SCORE (Tailles réduites pour éviter le scroll) --- */
 h1 {
     font-size: 2rem;
     margin: 0 0 10px 0;
-    color: #ff7660;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+    color: var(--border-clr);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 .score-container {
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--card-bg);
     padding: 5px 20px;
     border-radius: 50px;
-    border: 3px solid #ff7660;
+    border: 3px solid var(--border-clr);
     margin-bottom: 10px;
+    backdrop-filter: blur(4px);
 }
 
 .score {
     font-weight: 900;
+    color: var(--text);
     font-size: 2rem;
 }
 
 /* --- GRILLE DE JEU --- */
 .game {
     width: 100%;
-    max-width: 650px; /* Légèrement réduit pour tenir sur les petits écrans */
+    max-width: 95vw;
+    /* Ensure it fits on very narrow screens */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -62,7 +123,8 @@ h1 {
 
 .hole {
     flex: 0 0 30%;
-    height: clamp(100px, 20vh, 160px); /* Hauteur fluide selon l'écran */
+    height: clamp(100px, 20vh, 160px);
+    /* Hauteur fluide selon l'écran */
     position: relative;
     overflow: hidden;
 
@@ -75,7 +137,8 @@ h1 {
     background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1159990/dirt.svg") no-repeat bottom center;
     background-size: contain;
     width: 100%;
-    height: 40%; /* Taille proportionnelle au trou */
+    height: 40%;
+    /* Taille proportionnelle au trou */
     position: absolute;
     bottom: -2px;
     z-index: 10;
@@ -85,9 +148,11 @@ h1 {
 /* L'Animal (La Taupe) */
 .mole {
     background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1159990/mole.svg") no-repeat bottom center;
-    background-size: contain; /* Utilise 'contain' pour ne jamais être coupée */
+    background-size: contain;
+    /* Utilise 'contain' pour ne jamais être coupée */
     width: 100%;
-    height: 80%; /* Prend 80% du trou pour être bien visible */
+    height: 80%;
+    /* Prend 80% du trou pour être bien visible */
     position: absolute;
     top: 100%;
     left: 0;
@@ -97,33 +162,39 @@ h1 {
 
 /* État Sorti */
 .hole.up .mole {
-    top: 10%; /* Reste dans le trou mais bien en vue */
+    top: 10%;
+    /* Reste dans le trou mais bien en vue */
 }
 
 /* --- BOUTON START --- */
 #start {
     font-family: inherit;
-    background: #ff7660;
+    background: var(--primary);
     color: #fff;
     font-size: 1.2rem;
     font-weight: 900;
     padding: 10px 30px;
     cursor: pointer;
     border: none;
-    border-bottom: 4px solid #d35400;
+    border-bottom: 4px solid var(--btn-shadow);
     border-radius: 10px;
     margin-top: 15px;
+    transition: all 0.2s;
 }
 
 #start:active {
     transform: translateY(2px);
-    border-bottom: 1px solid #d35400;
+    border-bottom: 1px solid var(--btn-shadow);
 }
 
 /* --- AJUSTEMENTS POUR PETITS ÉCRANS --- */
 @media (max-width: 600px) {
     .hole {
-        flex: 0 0 42%; /* 2 par ligne sur mobile pour gagner de la place */
+        flex: 0 0 42%;
+        /* 2 par ligne sur mobile pour gagner de la place */
     }
-    h1 { font-size: 1.5rem; }
+
+    h1 {
+        font-size: 1.5rem;
+    }
 }

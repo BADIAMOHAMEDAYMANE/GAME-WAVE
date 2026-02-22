@@ -92,8 +92,12 @@ body {
     position: relative;
     grid-row: 1 / -1;
     grid-column: 1;
-    width: 350px;
-    height: 315px;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    aspect-ratio: 350 / 315;
+    max-height: 70vh;
+    /* Prevent vertical overflow */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -143,6 +147,7 @@ body {
     0% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(1.2);
     }
@@ -280,10 +285,13 @@ a:hover {
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.1);
     }
+
     50% {
         transform: scale(1.1);
         box-shadow: 0 0 30px rgba(0, 0, 0, 1), inset 0 0 15px rgba(255, 255, 255, 0.2);

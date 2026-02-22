@@ -1,99 +1,214 @@
 @-webkit-keyframes animLand {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -335px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -335px 0px;
+   }
 }
+
 @-moz-keyframes animLand {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -335px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -335px 0px;
+   }
 }
+
 @-o-keyframes animLand {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -335px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -335px 0px;
+   }
 }
+
 @keyframes animLand {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -335px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -335px 0px;
+   }
 }
 
 @-webkit-keyframes animSky {
-   0% { background-position: 0px 100%; }
-   100% { background-position: -275px 100%; }
+   0% {
+      background-position: 0px 100%;
+   }
+
+   100% {
+      background-position: -275px 100%;
+   }
 }
+
 @-moz-keyframes animSky {
-   0% { background-position: 0px 100%; }
-   100% { background-position: -275px 100%; }
+   0% {
+      background-position: 0px 100%;
+   }
+
+   100% {
+      background-position: -275px 100%;
+   }
 }
+
 @-o-keyframes animSky {
-   0% { background-position: 0px 100%; }
-   100% { background-position: -275px 100%; }
+   0% {
+      background-position: 0px 100%;
+   }
+
+   100% {
+      background-position: -275px 100%;
+   }
 }
+
 @keyframes animSky {
-   0% { background-position: 0px 100%; }
-   100% { background-position: -275px 100%; }
+   0% {
+      background-position: 0px 100%;
+   }
+
+   100% {
+      background-position: -275px 100%;
+   }
 }
 
 @-webkit-keyframes animBird {
-   from { background-position: 0px 0px; }
-   to { background-position: 0px -96px; }
+   from {
+      background-position: 0px 0px;
+   }
+
+   to {
+      background-position: 0px -96px;
+   }
 }
+
 @-moz-keyframes animBird {
-   from { background-position: 0px 0px; }
-   to { background-position: 0px -96px; }
+   from {
+      background-position: 0px 0px;
+   }
+
+   to {
+      background-position: 0px -96px;
+   }
 }
+
 @-o-keyframes animBird {
-   from { background-position: 0px 0px; }
-   to { background-position: 0px -96px; }
+   from {
+      background-position: 0px 0px;
+   }
+
+   to {
+      background-position: 0px -96px;
+   }
 }
+
 @keyframes animBird {
-   from { background-position: 0px 0px; }
-   to { background-position: 0px -96px; }
+   from {
+      background-position: 0px 0px;
+   }
+
+   to {
+      background-position: 0px -96px;
+   }
 }
 
 @-webkit-keyframes animPipe {
-   0% { left: 900px; }
-   100% { left: -100px; }
+   0% {
+      left: 900px;
+   }
+
+   100% {
+      left: -100px;
+   }
 }
+
 @-moz-keyframes animPipe {
-   0% { left: 900px; }
-   100% { left: -100px; }
+   0% {
+      left: 900px;
+   }
+
+   100% {
+      left: -100px;
+   }
 }
+
 @-o-keyframes animPipe {
-   0% { left: 900px; }
-   100% { left: -100px; }
+   0% {
+      left: 900px;
+   }
+
+   100% {
+      left: -100px;
+   }
 }
+
 @keyframes animPipe {
-   0% { left: 900px; }
-   100% { left: -100px; }
+   0% {
+      left: 900px;
+   }
+
+   100% {
+      left: -100px;
+   }
 }
 
 @-webkit-keyframes animCeiling {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -63px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -63px 0px;
+   }
 }
+
 @-moz-keyframes animCeiling {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -63px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -63px 0px;
+   }
 }
+
 @-o-keyframes animCeiling {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -63px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -63px 0px;
+   }
 }
+
 @keyframes animCeiling {
-   0% { background-position: 0px 0px; }
-   100% { background-position: -63px 0px; }
+   0% {
+      background-position: 0px 0px;
+   }
+
+   100% {
+      background-position: -63px 0px;
+   }
 }
 
 
 *,
 *:before,
-*:after
-{
+*:after {
    /* border box */
    -moz-box-sizing: border-box;
    -webkit-box-sizing: border-box;
    box-sizing: border-box;
    /* gpu acceleration */
-   -webkit-transition: translate3d(0,0,0);
+   -webkit-transform: translate3d(0, 0, 0);
+   transform: translate3d(0, 0, 0);
    /* select disable */
    -webkit-touch-callout: none;
    -webkit-user-select: none;
@@ -104,8 +219,7 @@
 }
 
 html,
-body
-{
+body {
    height: 100%;
    overflow: hidden;
    font-family: monospace;
@@ -113,26 +227,24 @@ body
    color: #fff;
 }
 
-#gamecontainer
-{
+#gamecontainer {
    position: relative;
    width: 100%;
    height: 100%;
-   min-height: 525px;
+   min-height: 0;
+   flex: 1;
 }
 
 /*
 Screen - Game
 */
-#gamescreen
-{
+#gamescreen {
    position: absolute;
    width: 100%;
    height: 100%;
 }
 
-#sky
-{
+#sky {
    position: absolute;
    top: 0;
    width: 100%;
@@ -146,16 +258,14 @@ Screen - Game
    animation: animSky 7s linear infinite;
 }
 
-#flyarea
-{
+#flyarea {
    position: absolute;
    bottom: 0;
    height: 420px;
    width: 100%;
 }
 
-#ceiling
-{
+#ceiling {
    position: absolute;
    top: -16px;
    height: 16px;
@@ -167,8 +277,7 @@ Screen - Game
    animation: animCeiling 481ms linear infinite;
 }
 
-#land
-{
+#land {
    position: absolute;
    bottom: 0;
    width: 100%;
@@ -182,22 +291,19 @@ Screen - Game
    animation: animLand 2516ms linear infinite;
 }
 
-#bigscore
-{
+#bigscore {
    position: absolute;
    top: 20px;
    left: 150px;
    z-index: 100;
 }
 
-#bigscore img
-{
+#bigscore img {
    display: inline-block;
    padding: 1px;
 }
 
-#splash
-{
+#splash {
    position: absolute;
    opacity: 0;
    top: 75px;
@@ -208,8 +314,7 @@ Screen - Game
    background-repeat: no-repeat;
 }
 
-#scoreboard
-{
+#scoreboard {
    position: absolute;
    display: none;
    opacity: 0;
@@ -223,8 +328,7 @@ Screen - Game
    z-index: 1000;
 }
 
-#medal
-{
+#medal {
    position: absolute;
    opacity: 0;
    top: 114px;
@@ -233,8 +337,7 @@ Screen - Game
    height: 44px;
 }
 
-#currentscore
-{
+#currentscore {
    position: absolute;
    top: 105px;
    left: 107px;
@@ -243,13 +346,11 @@ Screen - Game
    text-align: right;
 }
 
-#currentscore img
-{
+#currentscore img {
    padding-left: 2px;
 }
 
-#highscore
-{
+#highscore {
    position: absolute;
    top: 147px;
    left: 107px;
@@ -258,13 +359,11 @@ Screen - Game
    text-align: right;
 }
 
-#highscore img
-{
+#highscore img {
    padding-left: 2px;
 }
 
-#replay
-{
+#replay {
    position: absolute;
    opacity: 0;
    top: 205px;
@@ -274,8 +373,7 @@ Screen - Game
    cursor: pointer;
 }
 
-.boundingbox
-{
+.boundingbox {
    position: absolute;
    display: none;
    top: 0;
@@ -285,14 +383,12 @@ Screen - Game
    border: 1px solid red;
 }
 
-#player
-{
+#player {
    left: 60px;
    top: 200px;
 }
 
-.bird
-{
+.bird {
    position: absolute;
    width: 34px;
    height: 24px;
@@ -302,8 +398,7 @@ Screen - Game
    animation: animBird 300ms steps(4) infinite;
 }
 
-.pipe
-{
+.pipe {
    position: absolute;
    left: -100px;
    width: 52px;
@@ -314,8 +409,7 @@ Screen - Game
    animation: animPipe 7500ms linear;
 }
 
-.pipe_upper
-{
+.pipe_upper {
    position: absolute;
    top: 0;
    width: 52px;
@@ -324,8 +418,7 @@ Screen - Game
    background-position: center;
 }
 
-.pipe_upper:after
-{
+.pipe_upper:after {
    content: "";
    position: absolute;
    bottom: 0;
@@ -334,8 +427,7 @@ Screen - Game
    background-image: url('../assets/pipe-down.png');
 }
 
-.pipe_lower
-{
+.pipe_lower {
    position: absolute;
    bottom: 0;
    width: 52px;
@@ -344,8 +436,7 @@ Screen - Game
    background-position: center;
 }
 
-.pipe_lower:after
-{
+.pipe_lower:after {
    content: "";
    position: absolute;
    top: 0;
@@ -354,8 +445,7 @@ Screen - Game
    background-image: url('../assets/pipe-up.png');
 }
 
-#footer
-{
+#footer {
    position: absolute;
    bottom: 3px;
    left: 3px;
@@ -365,8 +455,7 @@ Screen - Game
 #footer a:link,
 #footer a:visited,
 #footer a:hover,
-#footer a:active
-{
+#footer a:active {
    display: block;
    padding: 2px;
    text-decoration: none;
