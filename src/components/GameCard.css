@@ -13,6 +13,7 @@
 
 .game-card:hover {
     border-color: var(--primary);
+    border-radius: var(--radius);
     box-shadow: 0 0 20px rgba(34, 211, 238, 0.3), 0 0 40px rgba(34, 211, 238, 0.2), 0 10px 30px rgba(0, 0, 0, 0.3);
     will-change: auto;
     z-index: 2;
@@ -167,6 +168,50 @@
     background-image: linear-gradient(90deg, var(--card) 25%, rgba(255, 255, 255, 0.05) 50%, var(--card) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
+}
+
+/* Light mode specific hover effects */
+[data-theme='light'] .game-card:hover::before {
+    content: '';
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+[data-theme='light'] .game-card:hover .image-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    aspect-ratio: auto;
+    border-radius: var(--radius);
+}
+
+[data-theme='light'] .game-card:hover .image-wrapper img {
+    height: 100%;
+}
+
+[data-theme='light'] .game-card:hover .image-wrapper::after {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%);
+    z-index: 2;
+}
+
+[data-theme='light'] .game-card:hover .image-wrapper::before {
+    z-index: 10;
+}
+
+[data-theme='light'] .game-card:hover .game-title {
+    position: relative;
+    z-index: 10;
+    color: #ffffff;
+    text-align: center;
+    transform: translateY(-15px);
+    width: 100%;
 }
 
 @media (max-width: 768px) {
