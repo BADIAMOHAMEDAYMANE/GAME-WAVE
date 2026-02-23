@@ -13,13 +13,13 @@ let velocity = 0;
 let position = 180;
 let rotation = 0;
 const jump = -4.6;
-const flyArea = $("#flyarea").height();
+let flyArea = 0;
 
 let score = 0;
 let highscore = 0;
 
 let pipeheight = 90;
-const pipewidth = 52;
+let pipewidth = 52;
 let pipes = new Array();
 
 let replayclickable = false;
@@ -37,11 +37,29 @@ buzz.all().setVolume(volume);
 let loopGameloop;
 let loopPipeloop;
 
+// Update game dimensions for responsiveness
+function updateGameDimensions() {
+   flyArea = $("#flyarea").height();
+   const constraint = flyArea - pipeheight - (pipeheight * 0.6);
+   if (constraint > 0) {
+      pipeheight = Math.max(50, Math.min(150, flyArea * 0.22));
+   }
+}
+
 $(document).ready(function() {
+   updateGameDimensions();
+   
    if(window.location.search == "?debug")
       debugmode = true;
    if(window.location.search == "?easy")
-      pipeheight = 200;
+      pipeheight = Math.max(flyArea * 0.35, 80);
+   else
+      pipeheight = Math.max(flyArea * 0.22, 60);
+
+   // Handle window resize for responsive behavior
+   $(window).on('resize', function() {
+      updateGameDimensions();
+   });
 
    //get the highscore
    const savedscore = getCookie("highscore");
@@ -78,7 +96,7 @@ function showSplash()
 
    //set the defaults (again)
    velocity = 0;
-   position = 180;
+   position = flyArea * 0.4; // Responsive position (40% of flyarea)
    rotation = 0;
    score = 0;
 
@@ -448,7 +466,7 @@ function updatePipes()
    $(".pipe").filter(function() { return $(this).position().left <= -100; }).remove()
 
    //add a new pipe (top height + bottom height  + pipeheight == flyArea) and put it in our tracker
-   const padding = 80;
+   const padding = flyArea * 0.15; // Responsive padding (15% of flyarea)
    const constraint = flyArea - pipeheight - (padding * 2); //double padding (for top and bottom)
    const topheight = Math.floor((Math.random()*constraint) + padding); //add lower padding
    const bottomheight = (flyArea - pipeheight) - topheight;

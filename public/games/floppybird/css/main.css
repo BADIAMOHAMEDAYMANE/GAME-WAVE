@@ -79,42 +79,90 @@
 }
 
 @-webkit-keyframes animBird {
-   from {
-      background-position: 0px 0px;
+   0% {
+      background-position: 0% 0%;
    }
 
-   to {
-      background-position: 0px -96px;
+   25% {
+      background-position: 0% -25%;
+   }
+
+   50% {
+      background-position: 0% -50%;
+   }
+
+   75% {
+      background-position: 0% -75%;
+   }
+
+   100% {
+      background-position: 0% -100%;
    }
 }
 
 @-moz-keyframes animBird {
-   from {
-      background-position: 0px 0px;
+   0% {
+      background-position: 0% 0%;
    }
 
-   to {
-      background-position: 0px -96px;
+   25% {
+      background-position: 0% -25%;
+   }
+
+   50% {
+      background-position: 0% -50%;
+   }
+
+   75% {
+      background-position: 0% -75%;
+   }
+
+   100% {
+      background-position: 0% -100%;
    }
 }
 
 @-o-keyframes animBird {
-   from {
-      background-position: 0px 0px;
+   0% {
+      background-position: 0% 0%;
    }
 
-   to {
-      background-position: 0px -96px;
+   25% {
+      background-position: 0% -25%;
+   }
+
+   50% {
+      background-position: 0% -50%;
+   }
+
+   75% {
+      background-position: 0% -75%;
+   }
+
+   100% {
+      background-position: 0% -100%;
    }
 }
 
 @keyframes animBird {
-   from {
-      background-position: 0px 0px;
+   0% {
+      background-position: 0% 0%;
    }
 
-   to {
-      background-position: 0px -96px;
+   25% {
+      background-position: 0% -25%;
+   }
+
+   50% {
+      background-position: 0% -50%;
+   }
+
+   75% {
+      background-position: 0% -75%;
+   }
+
+   100% {
+      background-position: 0% -100%;
    }
 }
 
@@ -388,18 +436,22 @@ Screen - Game
 }
 
 #player {
-   left: 60px;
-   top: 200px;
+   left: 8%;
+   top: 50%;
+   transform: translateY(-50%);
 }
 
 .bird {
    position: absolute;
-   width: 34px;
-   height: 24px;
-   background-image: url('../assets/bird.png');
-
-   -webkit-animation: animBird 300ms steps(4) infinite;
-   animation: animBird 300ms steps(4) infinite;
+   width: clamp(24px, 5vw, 40px);
+   height: clamp(18px, 3.75vw, 30px);
+   background-image: url('../assets/bird-new.svg');
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+   image-rendering: pixelated;
+   image-rendering: -moz-crisp-edges;
+   image-rendering: crisp-edges;
 }
 
 .pipe {

@@ -124,6 +124,32 @@
             width: 100% !important;
             height: 100% !important;
         }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 768px) {
+            .btn-fullscreen,
+            .btn-theme-toggle {
+                padding: 6px 10px;
+                font-size: 11px;
+                top: 10px;
+            }
+
+            .btn-fullscreen {
+                right: 5px;
+            }
+
+            .btn-theme-toggle {
+                left: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-fullscreen,
+            .btn-theme-toggle {
+                padding: 5px 8px;
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 
