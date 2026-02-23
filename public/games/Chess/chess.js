@@ -21,18 +21,19 @@ let dragOffset = { x: 0, y: 0 };
 let originalSquare = null;
 let gameMode = 'pvp';
 let isAiThinking = false;
+let possibleMoves = [];
 
 // --- Theme & Fullscreen ---
 function initTheme() {
   const savedTheme = localStorage.getItem('chess-theme') || 'dark';
-  document.body.dataset.theme = savedTheme;
+  document.documentElement.dataset.theme = savedTheme;
   updateThemeIcon(savedTheme);
 }
 
 function toggleTheme() {
-  const currentTheme = document.body.dataset.theme;
+  const currentTheme = document.documentElement.dataset.theme;
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  document.body.dataset.theme = newTheme;
+  document.documentElement.dataset.theme = newTheme;
   localStorage.setItem('chess-theme', newTheme);
   updateThemeIcon(newTheme);
 }
@@ -45,7 +46,7 @@ function updateThemeIcon(theme) {
 }
 
 function toggleFullscreen() {
-  const elem = document.getElementById('game-container');
+  const elem = document.documentElement;
   const icon = document.querySelector('#btn-fullscreen i');
   if (document.fullscreenElement) {
     document.exitFullscreen().then(() => {
@@ -67,7 +68,7 @@ document.addEventListener('fullscreenchange', () => {
   }
 });
 
-// --- Evaluation Tables for AI ---
+
 const Weights = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 20000 };
 const PST = {
   p: [
@@ -282,6 +283,11 @@ function handleStart(clientX, clientY) {
   dragOffset.x = mx - (p.x + OFFSET.x);
   dragOffset.y = my - (p.y + OFFSET.y);
   originalSquare = { x: p.x, y: p.y, sx, sy };
+
+  // Calculate possible moves
+  const from = String.fromCodePoint(97 + sx) + (8 - sy);
+  possibleMoves = game.moves({ square: from, verbose: true });
+  draw();
 }
 
 function handleMove(clientX, clientY) {
@@ -312,6 +318,8 @@ function handleEnd() {
     draw();
   }
   draggingIndex = -1;
+  possibleMoves = [];
+  draw();
 }
 
 canvas.addEventListener('mousedown', (ev) => handleStart(ev.clientX, ev.clientY));
@@ -338,6 +346,7 @@ canvas.addEventListener('mouseleave', () => {
     pieces[draggingIndex].x = originalSquare.x;
     pieces[draggingIndex].y = originalSquare.y;
     draggingIndex = -1;
+    possibleMoves = [];
     draw();
   }
 });
@@ -395,6 +404,19 @@ function draw() {
       }
     });
   }
+
+  // Draw possible moves
+  possibleMoves.forEach(move => {
+    const col = move.to.codePointAt(0) - 97;
+    const row = 8 - Number.parseInt(move.to[1], 10);
+    const x = col * SIZE + OFFSET.x;
+    const y = row * SIZE + OFFSET.y;
+
+    // Red for captures, Green for normal moves
+    const isCapture = move.captured || move.flags.includes('c') || move.flags.includes('e');
+    ctx.fillStyle = isCapture ? 'rgba(244, 67, 54, 0.4)' : 'rgba(76, 175, 80, 0.4)';
+    ctx.fillRect(x, y, SIZE, SIZE);
+  });
 }
 
 boardImg.onload = draw;
