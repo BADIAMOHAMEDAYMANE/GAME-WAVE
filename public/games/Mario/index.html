@@ -1,312 +1,81 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en-us">
 
 <head>
-    <meta charset="utf-8">
-    <title>Super Mario Bros - Game</title>
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
+    <meta charset="utf-8" />
+    <title>Full Screen Mario</title>
+    <meta name="keywords"
+        content="fullscreenmario, full, screen, mario, javascript, html5, gaming, online, online game, fun, distraction" />
+    <meta name="description"
+        content="FullScreenMario is a free HTML5 remake of Nintendo's original Super Mario Bros. Play it here!" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-        crossorigin="anonymous"></script>
+    <!-- build:css index.min.css -->
+    <link href="index.css" rel="stylesheet" />
+    <!-- /build -->
 
-    <style type="text/css">
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            background-color: #5C94FC;
-            /* Bleu ciel Mario */
-            display: flex;
-            flex-direction: column;
-            font-family: 'Arial', sans-serif;
-            cursor: auto !important;
-        }
-
-        #main-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-        }
-
-        /* Zones Publicitaires */
-        .ad-zone {
-            height: 50px;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        /* Zone de Jeu */
-        #game-wrapper {
-            flex: 1;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        /* Le canvas du jeu */
-        canvas {
-            width: 100% !important;
-            height: 100% !important;
-            display: block;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: pixelated;
-            object-fit: fill;
-        }
-
-        /* Interface utilisateur (Bouton et Infos) */
-        .ui-container {
-            text-align: center;
-            color: white;
-            padding: 10px;
-            z-index: 20;
-        }
-
-        .btn-restart {
-            background-color: #E74C3C;
-            color: #595959;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            text-transform: uppercase;
-            box-shadow: 0 4px #C0392B;
-            transition: all 0.1s;
-        }
-
-        .btn-restart:active {
-            box-shadow: 0 0 #C0392B;
-            transform: translateY(4px);
-        }
-
-        .info p {
-            margin: 5px 0;
-            font-size: 14px;
-            text-shadow: 2px 2px #000000;
-        }
-
-        /* Fullscreen Button */
-        .btn-fullscreen {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 15px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 8px;
-            z-index: 100;
-            transition: all 0.3s;
-        }
-
-        .btn-fullscreen:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: scale(1.05);
-        }
-
-        #joystick-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 150px;
-            height: 150px;
-            z-index: 1000;
-        }
-
-        #jump-button {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 80px;
-            height: 80px;
-            background-color: rgba(231, 76, 60, 0.7);
-            border: 4px solid #fff;
-            border-radius: 50%;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            user-select: none;
-            touch-action: manipulation;
-        }
-
-        /* Hide ONLY on desktop-size screens, keep visible on mobile landscape */
-        @media (min-width: 1024px) and (min-height: 600px) {
-
-            #joystick-container,
-            #jump-button {
-                display: none;
-            }
-        }
-
-        /* Hide internal fullscreen button on mobile */
-        @media (max-width: 1024px) {
-            .btn-fullscreen {
-                display: none !important;
-            }
-        }
-    </style>
+    <link rel="shortcut icon" href="Theme/Mario.gif">
 </head>
 
 <body>
 
-    <div id="main-container">
-        <button class="btn-fullscreen" id="fullscreen-btn">⛶ Fullscreen</button>
+    <section id="game">
+        <!-- FSM.UserWrapper will fill out this section... -->
+    </section>
 
-        <div id="game-wrapper">
-
-        </div>
-
-        <div id="joystick-container"></div>
-        <div id="jump-button">JUMP</div>
+    <section id="controls">
+        <!-- FSM.UserWrapper will fill out this section... -->
+    </section>
 
 
-    </div>
 
-    <script>
-        function toggleFullscreen() {
-            const elem = document.documentElement;
+    <!-- build:js FullScreenMario.min.js -->
+    <script src="GameStartr/EightBittr/EightBittr.js"></script>
+    <script src="GameStartr/GameStartr.js"></script>
+    <script src="GameStartr/AudioPlayr/AudioPlayr.js"></script>
+    <script src="GameStartr/ChangeLinr/ChangeLinr.js"></script>
+    <script src="GameStartr/FPSAnalyzr/FPSAnalyzr.js"></script>
+    <script src="GameStartr/GamesRunnr/GamesRunnr.js"></script>
+    <script src="GameStartr/GroupHoldr/GroupHoldr.js"></script>
+    <script src="GameStartr/InputWritr/InputWritr.js"></script>
+    <script src="GameStartr/LevelEditr/LevelEditr.js"></script>
+    <script src="GameStartr/LevelEditr/beautify.js"></script>
+    <script src="GameStartr/NumberMakr/NumberMakr.js"></script>
+    <script src="GameStartr/MapsCreatr/MapsCreatr.js"></script>
+    <script src="GameStartr/MapScreenr/MapScreenr.js"></script>
+    <script src="GameStartr/MapsHandlr/MapsHandlr.js"></script>
+    <script src="GameStartr/ModAttachr/ModAttachr.js"></script>
+    <script src="GameStartr/PixelDrawr/PixelDrawr.js"></script>
+    <script src="GameStartr/PixelRendr/PixelRendr.js"></script>
+    <script src="GameStartr/ObjectMakr/ObjectMakr.js"></script>
+    <script src="GameStartr/StatsHoldr/StatsHoldr.js"></script>
+    <script src="GameStartr/StringFilr/StringFilr.js"></script>
+    <script src="GameStartr/ThingHittr/ThingHittr.js"></script>
+    <script src="GameStartr/TimeHandlr/TimeHandlr.js"></script>
+    <script src="GameStartr/QuadsKeepr/QuadsKeepr.js"></script>
+    <script src="GameStartr/UserWrappr/UserWrappr.js"></script>
+    <script src="GameStartr/WorldSeedr/WorldSeedr.js"></script>
+    <script src="FullScreenMario.js"></script>
+    <script src="settings/audio.js"></script>
+    <script src="settings/collisions.js"></script>
+    <script src="settings/editor.js"></script>
+    <script src="settings/generator.js"></script>
+    <script src="settings/groups.js"></script>
+    <script src="settings/events.js"></script>
+    <script src="settings/input.js"></script>
+    <script src="settings/maps.js"></script>
+    <script src="settings/mods.js"></script>
+    <script src="settings/objects.js"></script>
+    <script src="settings/quadrants.js"></script>
+    <script src="settings/renderer.js"></script>
+    <script src="settings/runner.js"></script>
+    <script src="settings/sprites.js"></script>
+    <script src="settings/statistics.js"></script>
+    <script src="settings/ui.js"></script>
+    <!-- /build -->
 
-            if (!document.fullscreenElement && !document.webkitFullscreenElement &&
-                !document.mozFullScreenElement && !document.msFullscreenElement) {
-                // Enter fullscreen
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
-                } else if (elem.mozRequestFullScreen) {
-                    elem.mozRequestFullScreen();
-                } else if (elem.msRequestFullscreen) {
-                    elem.msRequestFullscreen();
-                }
-            } else if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-        }
-    </script>
-
-    <script type="text/javascript" src="js/util.js"></script>
-    <script type="text/javascript" src="js/input.js"></script>
-    <script type="text/javascript" src="js/resources.js"></script>
-    <script type="text/javascript" src="js/sprite.js"></script>
-    <script type="text/javascript" src="js/entity.js"></script>
-    <script type="text/javascript" src="js/pipe.js"></script>
-    <script type="text/javascript" src="js/mushroom.js"></script>
-    <script type="text/javascript" src="js/fireflower.js"></script>
-    <script type="text/javascript" src="js/star.js"></script>
-    <script type="text/javascript" src="js/fireball.js"></script>
-    <script type="text/javascript" src="js/coin.js"></script>
-    <script type="text/javascript" src="js/bcoin.js"></script>
-    <script type="text/javascript" src="js/goomba.js"></script>
-    <script type="text/javascript" src="js/koopa.js"></script>
-    <script type="text/javascript" src="js/floor.js"></script>
-    <script type="text/javascript" src="js/block.js"></script>
-    <script type="text/javascript" src="js/rubble.js"></script>
-    <script type="text/javascript" src="js/prop.js"></script>
-    <script type="text/javascript" src="js/player.js"></script>
-    <script type="text/javascript" src="js/flag.js"></script>
-    <script type="text/javascript" src="js/levels/level.js"></script>
-    <script type="text/javascript" src="js/levels/11.js"></script>
-    <script type="text/javascript" src="js/levels/11tunnel.js"></script>
-    <script type="text/javascript" src="js/game.js"></script>
-
-    <script type="text/javascript">
-        // Virtual Joystick Initialization
-        const joystickOptions = {
-            zone: document.getElementById('joystick-container'),
-            mode: 'static',
-            position: { left: '75px', bottom: '75px' },
-            color: 'white',
-            size: 100
-        };
-        const manager = nipplejs.create(joystickOptions);
-
-        let currentDirections = { LEFT: false, RIGHT: false, DOWN: false, UP: false };
-
-        manager.on('move', function (evt, data) {
-            if (data.direction) {
-                const angle = data.direction.angle;
-                const dist = data.distance;
-
-                // Threshold to trigger movement
-                if (dist > 2) { // Extremely low distance threshold for 'agility'
-                    const newDirections = { LEFT: false, RIGHT: false, DOWN: false, UP: false };
-
-                    if (angle === 'left') newDirections.LEFT = true;
-                    if (angle === 'right') newDirections.RIGHT = true;
-                    if (angle === 'down') newDirections.DOWN = true;
-                    if (angle === 'up') newDirections.UP = true;
-
-                    // Update states only if changed
-                    for (const dir in newDirections) {
-                        if (newDirections[dir] !== currentDirections[dir]) {
-                            globalThis.input.setKeyState(dir, newDirections[dir]);
-                            currentDirections[dir] = newDirections[dir];
-                        }
-                    }
-                }
-            }
-        });
-
-        manager.on('end', function () {
-            for (const dir in currentDirections) {
-                globalThis.input.setKeyState(dir, false);
-                currentDirections[dir] = false;
-            }
-        });
-
-        // Jump Button
-        const jumpBtn = document.getElementById('jump-button');
-
-        const jumpStart = function (e) {
-            e.preventDefault();
-            globalThis.input.setKeyState('JUMP', true);
-            jumpBtn.style.backgroundColor = 'rgba(231, 76, 60, 0.9)';
-        };
-
-        const jumpEnd = function (e) {
-            e.preventDefault();
-            globalThis.input.setKeyState('JUMP', false);
-            jumpBtn.style.backgroundColor = 'rgba(231, 76, 60, 0.7)';
-        };
-
-        jumpBtn.addEventListener('touchstart', jumpStart);
-        jumpBtn.addEventListener('touchend', jumpEnd);
-        jumpBtn.addEventListener('mousedown', jumpStart);
-        jumpBtn.addEventListener('mouseup', jumpEnd);
-        jumpBtn.addEventListener('mouseleave', jumpEnd);
-
-        // Fullscreen button event handler
-        document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
-    </script>
-
+    <!-- build:js index.min.js -->
+    <script src="index.js"></script>
+    <!-- /build -->
 </body>
 
 </html>

@@ -1,71 +1,42 @@
+## FullScreenMario [![Build Status](https://travis-ci.org/FullScreenShenanigans/FullScreenMario.svg?branch=master)](https://travis-ci.org/FullScreenShenanigans/FullScreenMario)
 
-[![Mario](http://www.garrettjohnson.net/images/fulls/mariofull.png)](http://www.garrettjohnson.net/mario)
-#Mario
-[Mario.js](www.garrettjohnson.net/mario "Mario.js") is a clone of Super Mario Bros. for the Nintendo Entertainment System, implemented in Javascript.  It implements a hand-built game engine using the HTML5 Canvas.
-
-Disclaimer: This project is for demonstration only. If you really want to play Mario, please do it on a console. The graphics, sounds, and original design of Super Mario Bros. are all owned by Nintendo.
-
-#Engine
-
-##Game Flow
-The main loop tries to render at 60fps. Each frame, we go through a few steps to update the game, and then render.
-
-First, we get the controls. Depending on what the player is pressing, we make some changes to the player object.
-
-Then, we update each entity, and the general game state. Entities are game objects which have data about their position, movement, collision boxes, and sprite, as well as functions for updating that state, and rendering to the canvas.
-
-Scrolling is implemented using a viewport position that increases as Mario travels to the right. We only render or do calculations on objects that are close enough to the left edge of the screen. As in the original game, enemies become active slightly before they appear on screen.
-
-The update function contains all of the logic for mutating the object's state without data from other entities. Once each object has updated, we check collisions. Independent movement, such as coins popping out of blocks, or Mario grabbing the flag and running out of the stage, are controlled here.
-
-##Collision
-For obstacles such as walls, the ground, and the various blocks, they are indexed by their position in the game, so each entity only needs to check the area around itself for collision with those.
-
-Then, each entity iterates through the other active entities to determine collision with moving objects, calling functions to update positions and state as appropriate.
-
-The player object only checks collision with terrain. Enemies and items check their collision with the player and tell it how to update.
-
-Note that collision boxes are separate from the display position of the entity's sprite. This was the case in the original game as well. Generally speaking, making the collision slightly more generous improves game feel.
-
-##Rendering
-Once everything is in its proper place, we call each object's render function. Since the canvas doesn't implement a z-axis, the layering effect is handled entirely by rendering the objects in this order:
-
-Background
-Props
-Items
-Enemies
-Projectiles
-Terrain
-Player
-Pipes
-
-Each object in the game holds a reference to a sprite object. Sprites identify which slice of what image to use, and data about which other frames in the sheet are part of the current animation, and how fast it should animate.
-
-Sprites assume that the entire animation is contained on a single row of the sheet. For the few exceptions, we force the sprite into the correct frame in the entity's update function.
-
-Similarly, entities which need to face left and right replace the image reference in their sprite object with a flipped counterpart.
+#### A free HTML5 remake of Nintendo's original Super Mario Bros, expanded for the modern web. It includes the original 32 levels, a random map generator, a level editor, and over a dozen custom mods.
 
 
-#Level Generation
-Each level object is created with references to the sprites to use for each type of object in the game. In this case, there are only a few tile sets, so individual levels could inherit from level subclasses for overworld, underground, castle, etc.
+## How to Play
 
-The level is constructed using a series of calls to functions that populate the tables of objects in the game world.
+Although you may no longer play on [fullscreenmario.com](http://www.fullscreenmario.com), it is easy to play your own copy.
 
-Pipes work by setting up the animation, and then calling a function to load the new level. Exit pipes use the same code for moving Mario, but with another callback that puts the player into position after setting up the stage.
+#### Newcomers (non-coders)
 
-Known Bugs and Features to Come
-===============================
--Scaling sprites makes them appear with awkward borders. Some fiddling helps this (as you can see in the live version), but they are still not quite perfect.
--A rare case that causes invincibility from getting hit to never end.
--Goombas don't animate in sync with each other.
--Sometimes goombas can get stuck inside each other. I'm not entirely sure what causes this.
--Some sounds might not work due to format compatibility, especially in IE. Yes, IE doesn't support Microsoft's own file format. Really.
+[Download the .zip](https://github.com/Diogenesthecynic/FullScreenMario-JSON/archive/master.zip) of this project, extract that onto your computer, and open **index.html** in a browser (preferably Google Chrome). That's it!
 
-All of the features to be implemented are the actual features of the game!
-Namely, a score counter, more types of enemies, and 1up mushrooms.
+#### In your own site
 
-And more levels!
+Upload the latest release of FullScreenMario (or your built version) to your FTP server. 
 
-Also, it should be possible to scale the game to any size, although in order to preserve sprite dimensions changing the actual size of the play area will be necessary for widescreen. For now, the game is rendered in 768x720.
 
-Beyond that, it would be nice to recreate the original game in even more detail, including the precise replication of the 21-frame rule, and glitches such as well-ejection errors, alternate pipes, and various simultaneous left+right input shenanigans.
+## Developing
+
+#### Build Process
+
+FullScreenMario uses [Grunt](http://gruntjs.com/) to automate building, which requires [Node.js](http://node.js.org). The process is straightforward; see [Grunt's help page](http://gruntjs.com/getting-started).
+
+The root index.html file includes all the raw .js and .css files, and thus should only be used for development. The dist/index.html file uses the built and minified output so it should be used as production code.
+
+#### Coding
+
+FullScreenMario is built on a modular framework called GameStartr. The [GameStartr](GameStartr/) directory contains GameStartr, its parent class EightBittr, and the 22 modules used by the GameStartr framework. These all (theoretically) have their own README files, which you should skim before developing for FullScreenMario itself.
+
+The main game code outside the framework is stored in FullScreenMario.js. The FullScreenMario class inherits from GameStartr and has a global 'FSM' instance set up by the UserWrappr module in index.js. GameStartr's constructor (its reset function) contains a reset function for each module that stores the modules within it as `FSM.AudioPlayer`, `FSM.ChangeLiner`, etc. 
+
+The FullScreenMario.js class declaration contains class functions and some constants, while static settings to be added to the FullScreenMario prototype, such as map layouts and object attributes, are stored in files under [settings](settings), such as audio.js and collisions.js.
+
+See [Getting Started.md](Getting Started.md) for an in-depth guide on getting started programming with FullScreenMario.
+
+
+## Legal
+
+This is released under the [Attribution Non-Commercial Share-Alike License](http://creativecommons.org/licenses/by-nc-sa/3.0/) (see [License.txt](License.txt)). FullScreenMario is meant to be both a proof of concept and an entertaining pasttime, not a source of income. 
+
+The FullScreenMario project started October 21st, 2012. The initial beta release in October 2013 saw the [primary host website](http://www.fullscreenmario.com) receive approximately 2.68 million unique visitors within a month, after which Nintendo shut the site down with a DMCA complaint (no action was taken against GitHub or other hosting websites). The coding project then underwent an extensive rewrite and architecture change to become a modular project centered on the [EightBittr and GameStartr](GameStartr/) platform.
