@@ -12,7 +12,7 @@ import ImgLoadRunner from "../assets/LoadRunner.png";
 import FlappyBirdImg from "../assets/FlappyBird.png";
 import fruitsImg from "../assets/fruits.png";
 import OutRunImg from "../assets/outrun.png";
-import PacManImg from "../assets/PacMan.png";
+import PacManImg from "../assets/Pacman.png";
 import ChessImg from "../assets/Chess.jpg";
 export const categories = [
     {
