@@ -6,7 +6,6 @@ import PongImg from "../assets/pong-game.png";
 import Minesweeper from "../assets/Minesweeper.png";
 import CandycrashImg from "../assets/Candy-crash.png";
 import GeometryDashImg from "../assets/geometry-dash.png";
-import MarioImg from "../assets/SuperMario.png";
 import Img2048 from "../assets/2048.png";
 import ImgLoadRunner from "../assets/LoadRunner.png";
 import FlappyBirdImg from "../assets/FlappyBird.png";
@@ -14,6 +13,8 @@ import fruitsImg from "../assets/fruits.png";
 import OutRunImg from "../assets/outrun.png";
 import PacManImg from "../assets/Pacman.png";
 import ChessImg from "../assets/Chess.jpg";
+import TetrisImg from "../assets/tetris-game.png";
+
 export const categories = [
     {
         id: 1,
@@ -108,14 +109,6 @@ export const categories = [
                 isNew: false
             },
             {
-                id: 13,
-                title: "Mario",
-                description: "Join Mario on an epic adventure to rescue the princess.",
-                image: MarioImg,
-                gamePath: "/games/Mario/index.html",
-                isNew: true
-            },
-            {
                 id: 14,
                 title: " Fruits",
                 description: "Slice and dice juicy fruits like a true ninja!",
@@ -145,6 +138,14 @@ export const categories = [
                 description: "Outsmart your opponent in the ultimate game of strategy.",
                 image: ChessImg,
                 gamePath: "/games/Chess/chess.html",
+                isNew: true
+            },
+            {
+                id: 18,
+                title: "Tetris",
+                description: "Clear lines with falling blocks in this classic puzzle game.",
+                image: TetrisImg,
+                gamePath: "/games/tetris-game/index.html",
                 isNew: true
             }
         ]

@@ -35,11 +35,11 @@
 | 9 | 🔢 2048 | ✅ |
 | 10 | 🏃 Load Runner | ✅ New |
 | 11 | 🐦 Flappy Bird | ✅ adjust the game rules on the mobile display |
-| 12 | 🍄 Mario | ✅ New |
-| 13 | 🍉 Fruits | ✅ |
-| 14 | 🏎️ OutRun | ✅ New |
-| 15 | 👻 PacMan | ✅ New |
-| 16 | ♟️ Chess | ✅ New |
+| 12 | 🍉 Fruits | ✅ |
+| 13 | 🏎️ OutRun | ✅ New |
+| 14 | 👻 PacMan | ✅ New |
+| 15 | ♟️ Chess | ✅ New |
+| 16 | 🧱 Tetris | ✅ New |
 
 ---
 
